@@ -2,9 +2,9 @@ const { Octokit } = require("@octokit/core");
 const express = require("express");
 const app = express();
 const port = 3000;
-require("dotenv").config();
+// const dotenv = require("dotenv").config();
 const octokit = new Octokit({
-  auth: process.env.GITHUB_API_TOKEN,
+  auth: `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`,
 });
 
 app.get("/", (req, res) => {
