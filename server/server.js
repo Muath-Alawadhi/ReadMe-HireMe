@@ -1,0 +1,74 @@
+//---------- Read READMI.md if the code doesn't work on your local laptop  ---------------
+const express = require("express");
+const app = express();
+require("dotenv").config();
+const cors = require("cors");
+const bodyParser = require("body-parser"); //is a middleware for Express.js
+const port = process.env.PORT || 3002;
+
+const fetch = (
+  ...args ///////fetching (node.js library)
+) => import("node-fetch").then(({ default: fetch }) => fetch(...args));
+
+//------------------------GitHub OAuth (1)Apps information ----------------------
+//// the ClintID and ClintSecret info on the env file
+const ClintID = process.env.GITHUB_CLIENT_ID;
+const ClintSecret = process.env.GITHUB_CLIENT_SECRET;
+app.use(express.json());
+app.use(cors());
+app.use(bodyParser.json());
+
+//----------------testing (2)the gte--------------------------//
+app.get("/", (req, res) => {
+  console.log("welcome to my server");
+});
+//--------------------------------------------------------//
+
+//-------------- code being passed (3) from the frontend----//
+app.get("/getAccessToken", async (req, res) => {
+  console.log(req.query.code); // testing or console the outputwe will be a code from the request
+  //and we will use it to access to get  the token
+
+  const params = `?client_id=${ClintID}&client_secret=${ClintSecret}&code=${req.query.code}`;
+
+  await fetch("https://github.com/login/oauth/access_token" + params, {
+    ///// posting the token
+    method: "post",
+    headers: {
+      Accept: "application/json",
+    },
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      console.log("result", data); ///// testing the output
+      res.json(data);
+    });
+});
+//--------------------------------------------------------//
+
+////-------------------Get user(4) data---------------------//
+app.get("/getUserData", async (req, res) => {
+  await fetch("https://api.github.com/user", {
+    method: "GET",
+    headers: {
+      Authorization: await req.get("Authorization"),
+    },
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data);
+      res.json(data);
+    });
+});
+//--------------------------------------------------------//
+
+//--------------------Port listen(5) HERE-------------------//
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
+//------------------------------------------------------//
