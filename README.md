@@ -1,6 +1,6 @@
+# project-...
 
-
-Team name :RYMSN
+Team name :
 
 Team members:
 1- Rahma Berhan
@@ -16,4 +16,10 @@ Github Username :
 4- siveromar
 5- nfarah22
 
-#ReadMe-HireMe
+---
+
+///////// server.js ////
+///// If you are going to run it on your computer and it does not work, you must download these files through the terminal by typing
+npm install body-parser cors express node-fetch dotenv npm
+
+---
