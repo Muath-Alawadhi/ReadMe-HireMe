@@ -11,7 +11,7 @@ const app = express();
 require("dotenv").config();
 const cors = require("cors");
 const bodyParser = require("body-parser"); //is a middleware for Express.js
-const port = process.env.PORT || 3002;
+const port = process.env.PORT || 3000;
 
 const fetch = (
   ...args ///////fetching (node.js library)
