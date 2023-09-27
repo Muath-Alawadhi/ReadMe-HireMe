@@ -1,10 +1,13 @@
+// Given a github username I want to retrieve information about this person's
+//repos and store it in the database: access to github API
+
 const { Octokit } = require("@octokit/core");
 const express = require("express");
 const app = express();
 const port = 3000;
 // const dotenv = require("dotenv").config();
 const octokit = new Octokit({
-  auth: `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`,
+  auth: `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`,
 });
 
 app.get("/", (req, res) => {
