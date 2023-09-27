@@ -1,3 +1,10 @@
+// Given a github username I want to retrieve information about this person's
+//repos and store it in the database: access to github API
+//Issue number 4
+//Given a github username I want to retrieve information about this person's
+//repos and store it in the database:
+//Access to github API
+//Access to github token
 //---------- Read READMI.md if the code doesn't work on your local laptop  ---------------
 const express = require("express");
 const app = express();
