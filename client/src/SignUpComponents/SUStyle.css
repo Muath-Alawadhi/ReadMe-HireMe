@@ -1,21 +1,38 @@
-.SUFooterBlock{
-    display: grid;
-    
-    color:red;
-    background-color: black;
-}
-.SUGitHubBlock{
-    background-color: purple;
-}
 .SUTitleBlock{
     background-color: rgb(7, 7, 7);
-    padding-top: 10rem;
-    padding-bottom: 8rem;
+    padding-top: 50%;
+    font-family: 'Young Serif', serif;
+    font-size: x-large;
 }
+
 .HireColor{
     color: red;
     padding-right: 5px;
+    font-weight: bold;
 }
 .MeColor{
-    color: azure;
+    color: white;
+    font-weight: bold;
+}
+.SUGitHubBlock{
+    background-color:rgb(7, 7, 7);
+    color: white;
+}
+.MyButton{
+    background-color: red;
+    border:solid 0px;
+    border-radius: 1rem;
+}
+
+.SULinkBlock{
+    display: flex;
+    justify-content: center;
+    padding-top: 30%;
+    
+}
+
+.SUFooterBlock{
+    display: grid;
+    color:red;
+    background-color: rgb(7, 7, 7);
 }
