@@ -1,9 +1,10 @@
 import "./App.css";
-
+import React from "react";
+import GraduatesProfileContainer from "./GraduatesProfileContainer";
 function App() {
   return (
     <div className="App">
-      <h1> Our Project</h1>
+     <GraduatesProfileContainer />
     </div>
   );
 }
