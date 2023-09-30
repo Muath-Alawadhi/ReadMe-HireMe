@@ -1,0 +1,24 @@
+.GPMenuBarContainerBlock{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    text-align: center;
+    font-size: 25px;
+    height: 13vh;
+    padding-top: 9px;
+    color:rgb(255, 255, 255);
+    
+    
+}
+.pBlock{
+    font-size: 35px;   
+}
+.searchBlock{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 25px;
+}
+input{
+    border: solid 0px;
+    border-radius: 2rem;
+    padding-left: 10px;
+}

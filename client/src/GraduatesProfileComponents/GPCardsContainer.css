@@ -1,0 +1,29 @@
+.GPCardsContainerBlock{
+    height: 77vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-gap:40px;
+    padding-left: 70px;
+    padding-right: 70px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    
+}
+.cardsBlock{
+    text-align: center;
+    background-color: rgb(47, 47, 73);
+    border: solid 0px;
+    border-radius: 10%;
+    color: rgb(255, 255, 255);
+
+}
+.cards-img{
+    border: solid 0px;
+    border-radius: 50%;
+    padding-top: 20px;
+    width:60%;
+    height: 60%;;
+}
+.grad-name{
+    padding-top: 10px;
+}
