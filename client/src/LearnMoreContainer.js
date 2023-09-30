@@ -3,7 +3,7 @@ import "./LearnMoreContainer.css";
 function LearnMoreContainer() {
     return (
       <div className="LearnMoreBlock">
-        <p> Learn More</p>
+        <p> Let's help the future together</p>
       </div>
     );
   }

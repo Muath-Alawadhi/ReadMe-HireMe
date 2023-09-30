@@ -9,7 +9,7 @@ function SUGitHubContainer() {
   };
     return (
       <div className="SUGitHubBlock">
-        <button onClick={handleClick}>Sign Up With GitHub</button>
+        <button className="MyButton" onClick={handleClick}>Sign Up With GitHub</button>
       {buttonClicked && console.log("GitHubSignUp")}
       </div>
     );
