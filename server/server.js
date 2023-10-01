@@ -22,7 +22,7 @@ const pool = new Pool({
   port: process.env.DB_PORT,
   ssl: true,
 });
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
 const fetch = (
   ...args ///////fetching (node.js library)
@@ -68,17 +68,26 @@ app.get("/getAccessToken", async (req, res) => {
 
 ////-------------------Get user(4) data---------------------//
 app.get("/getUserData", async (req, res) => {
+  // initialises userData with a null value to store user data fetched from GitHub.
+  let userData = null;
   await fetch("https://api.github.com/user", {
     method: "GET",
     headers: {
       Authorization: await req.get("Authorization"),
     },
   })
-    .then((response) => {
-      return response.json();
-    });
+  .then((response) => response.json())
+  .then((data) => {
+    userData = data;// Stores the fetched JSON data into the userData variable.
 
-    // fetch github repos
+    // inserts the fetched name and github_username into Graduate table. If the github_username already exists, it does nothing.
+    return pool.query(
+      'INSERT INTO Graduate (name, github_username) VALUES ($1, $2) ON CONFLICT (github_username) DO NOTHING',
+      [userData.name || 'N/A', userData.login]
+    );
+  })
+  .then(async () => {
+    // fetches  github repos
     const repos = await fetch(`https://api.github.com/users/${userData.login}/repos`, {
     method: "GET",
     headers: {
@@ -103,10 +112,10 @@ app.get("/getUserData", async (req, res) => {
     for(const lang of languages) {
       await pool.query('INSERT INTO Skill (lang_name) VALUES ($1) ON CONFLICT (lang_name) DO NOTHING', [lang]);
     }
-  // insert the repo into the database and get its ID
-  const insertRepoResult = await pool.query('INSERT INTO Repository (name, prs) VALUES ($1, $2) RETURNING id', [repo.name, repo.prs]);
+  // insert the repo name into the database and get its ID
+  const insertRepoResult = await pool.query('INSERT INTO Repository (name) VALUES ($1) RETURNING id', [repo.name]);
   let repoId = null;
-  if (result.rows.length > 0) {
+  if (insertRepoResult.rows.length > 0) {
     repoId = insertRepoResult.rows[0].id;
   }
 
@@ -120,7 +129,7 @@ for(const lang of languages) {
 
 console.log(userData);
 res.json(userData);
-});
+})});
 
   
 //--------------------------------------------------------//
