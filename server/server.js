@@ -1,17 +1,10 @@
-// Given a github username I want to retrieve information about this person's
-//repos and store it in the database: access to github API
-//Issue number 4
-//Given a github username I want to retrieve information about this person's
-//repos and store it in the database:
-//Access to github API
-//Access to github token
-//---------- Read READMI.md if the code doesn't work on your local laptop  ---------------
+// ---------- Read READMI.md if the code doesn't work on your local laptop .. ---------------
 const express = require("express");
 const app = express();
 require("dotenv").config();
 const cors = require("cors");
 const bodyParser = require("body-parser"); //is a middleware for Express.js
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3002;
 
 const fetch = (
   ...args ///////fetching (node.js library)
@@ -19,8 +12,8 @@ const fetch = (
 
 //------------------------GitHub OAuth (1)Apps information ----------------------
 //// the ClintID and ClintSecret info on the env file
-const ClintID = process.env.GITHUB_CLIENT_ID;
-const ClintSecret = process.env.GITHUB_CLIENT_SECRET;
+const ClientID = process.env.GITHUB_CLIENT_ID;
+const ClientSecret = process.env.GITHUB_CLIENT_SECRET;
 app.use(express.json());
 app.use(cors());
 app.use(bodyParser.json());
@@ -36,7 +29,7 @@ app.get("/getAccessToken", async (req, res) => {
   console.log(req.query.code); // testing or console the outputwe will be a code from the request
   //and we will use it to access to get  the token
 
-  const params = `?client_id=${ClintID}&client_secret=${ClintSecret}&code=${req.query.code}`;
+  const params = `?client_id=${ClientID}&client_secret=${ClientSecret}&code=${req.query.code}`;
 
   await fetch("https://github.com/login/oauth/access_token" + params, {
     ///// posting the token
