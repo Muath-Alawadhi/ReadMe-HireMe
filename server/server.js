@@ -11,7 +11,18 @@ const app = express();
 require("dotenv").config();
 const cors = require("cors");
 const bodyParser = require("body-parser"); //is a middleware for Express.js
-const port = process.env.PORT || 3000;
+
+const { Pool } = require('pg'); // is a pacakge  for dabase interface. 
+const pool = new Pool({
+ 
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT,
+  ssl: true,
+});
+const port = process.env.PORT || 3001;
 
 const fetch = (
   ...args ///////fetching (node.js library)
@@ -57,7 +68,27 @@ app.get("/getAccessToken", async (req, res) => {
 
 ////-------------------Get user(4) data---------------------//
 app.get("/getUserData", async (req, res) => {
+  // initialises userData with a null value to store user data fetched from GitHub.
+  let userData = null;
   await fetch("https://api.github.com/user", {
+    method: "GET",
+    headers: {
+      Authorization: await req.get("Authorization"),
+    },
+  })
+  .then((response) => response.json())
+  .then((data) => {
+    userData = data;// Stores the fetched JSON data into the userData variable.
+
+    // inserts the fetched name and github_username into Graduate table. If the github_username already exists, it does nothing.
+    return pool.query(
+      'INSERT INTO Graduate (name, github_username) VALUES ($1, $2) ON CONFLICT (github_username) DO NOTHING',
+      [userData.name || 'N/A', userData.login]
+    );
+  })
+  .then(async () => {
+    // fetches  github repos
+    const repos = await fetch(`https://api.github.com/users/${userData.login}/repos`, {
     method: "GET",
     headers: {
       Authorization: await req.get("Authorization"),
@@ -65,12 +96,42 @@ app.get("/getUserData", async (req, res) => {
   })
     .then((response) => {
       return response.json();
-    })
-    .then((data) => {
-      console.log(data);
-      res.json(data);
     });
-});
+
+  for(const repo of repos) {
+    // fetch all languages used in the repository
+    const repoLanguages = await fetch(`https://api.github.com/repos/${userData.login}/${repo.name}/languages`, {
+      method: "GET",
+      headers: {
+        Authorization: await req.get("Authorization"),
+      },
+    })
+    .then((response) => response.json());
+
+    const languages = Object.keys(repoLanguages);
+    for(const lang of languages) {
+      await pool.query('INSERT INTO Skill (lang_name) VALUES ($1) ON CONFLICT (lang_name) DO NOTHING', [lang]);
+    }
+  // insert the repo name into the database and get its ID
+  const insertRepoResult = await pool.query('INSERT INTO Repository (name) VALUES ($1) RETURNING id', [repo.name]);
+  let repoId = null;
+  if (insertRepoResult.rows.length > 0) {
+    repoId = insertRepoResult.rows[0].id;
+  }
+
+// link the repo with its skills
+for(const lang of languages) {
+  await pool.query('INSERT INTO Repository_Skill (repository_id, skill_id) VALUES ($1, (SELECT id FROM Skill WHERE lang_name = $2)) ON CONFLICT DO NOTHING',
+    [repoId, lang]
+  );
+}
+}
+
+console.log(userData);
+res.json(userData);
+})});
+
+  
 //--------------------------------------------------------//
 
 //--------------------Port listen(5) HERE-------------------//
