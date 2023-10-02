@@ -24,15 +24,17 @@
     border-radius: 1rem;
 }
 
-.SULinkBlock{
-    display: flex;
+ .SULinkBlock{
     justify-content: center;
-    padding-top: 30%;
+    padding-top: 20%;
+    color:white;
     
-}
+
+} 
 
 .SUFooterBlock{
     display: grid;
     color:red;
     background-color: rgb(7, 7, 7);
 }
+

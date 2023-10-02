@@ -3,7 +3,7 @@ import "./SUStyle.css";
 function SUFooterContainer() {
     return (
       <div className="SUFooterBlock">
-        <p>Footer</p>
+        <p></p>
       </div>
     );
   }
