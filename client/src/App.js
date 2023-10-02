@@ -1,9 +1,11 @@
 import "./App.css";
+import React from "react";
+import TopContainer from "./TopContainer";
 
 function App() {
   return (
     <div className="App">
-      <h1> Our Project</h1>
+      <TopContainer />
     </div>
   );
 }

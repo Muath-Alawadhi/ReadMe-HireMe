@@ -1,0 +1,21 @@
+.SUFooterBlock{
+    display: grid;
+    
+    color:red;
+    background-color: black;
+}
+.SUGitHubBlock{
+    background-color: purple;
+}
+.SUTitleBlock{
+    background-color: rgb(7, 7, 7);
+    padding-top: 10rem;
+    padding-bottom: 8rem;
+}
+.HireColor{
+    color: red;
+    padding-right: 5px;
+}
+.MeColor{
+    color: azure;
+}
