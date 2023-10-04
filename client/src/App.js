@@ -1,9 +1,11 @@
 import "./App.css";
 
+import RouterComponent from "./components/RouterComponent";
+
 function App() {
   return (
-    <div className="App">
-      <h1> Our Project</h1>
+    <div>
+      <RouterComponent />
     </div>
   );
 }
