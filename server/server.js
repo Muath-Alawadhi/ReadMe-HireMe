@@ -16,7 +16,6 @@ app.get("/", (req, res) => {
 });
 
 //----------------- fetch Grad data ------------------
-const userName = "rahamb1";
 
 app.get("/fetchGradData", async (req, res) => {
   try {
@@ -38,10 +37,10 @@ app.get("/fetchGradData", async (req, res) => {
 
     //Send the data as a JSON response
     res.json({
-      userName: githubUsername,
+      userName: githubUserName,
       name: name,
       repos_number: reposNumber,
-      profile_pic: profilePic,
+      profile_pic: profilePicLink,
     });
 
     // res.send(userData);
