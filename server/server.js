@@ -1,5 +1,5 @@
 //install octokit
-//add env for port and auth
+//we need to add env for port and auth
 
 const { Octokit } = require("@octokit/core"); //library to fetch from Github api
 const express = require("express");
@@ -7,7 +7,7 @@ const app = express();
 const port = 6000;
 
 const octokit = new Octokit({
-  auth: `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`,
+  auth: `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`,
 });
 
 //------------------ get / -----------------
@@ -16,6 +16,7 @@ app.get("/", (req, res) => {
 });
 
 //----------------- fetch Grad data ------------------
+//----------------- name, github_username, repos, profile_pic_url ------------------
 
 app.get("/fetchGradData", async (req, res) => {
   try {
@@ -49,6 +50,27 @@ app.get("/fetchGradData", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch data from GitHub" });
   }
 });
+
+//----------------- fetch all Repos data ------------------
+//----------------- skills ------------------
+
+app.get("/fetchRepoData", async (req, res) => {
+  try {
+    const response = await octokit.request("GET /users/{owner}/repos", {
+      owner: "rahmab1",
+    });
+
+    const repositories = response.data;
+
+    // Send the data as a JSON response
+    res.json({ repositories });
+  } catch (error) {
+    console.error("Error fetching data from GitHub:", error.message);
+    res.status(500).json({ error: "Failed to fetch data from GitHub" });
+  }
+});
+
+//--------------------------------------------------------------------
 
 //---------------- listen --------------------
 app.listen(port, () => {
