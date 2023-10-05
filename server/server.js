@@ -14,6 +14,15 @@ const octokit = new Octokit({
 
 const username = "rahmab1";
 
+const userObject = {
+  userName: "",
+  fullName: "",
+  skills: [],
+  cvLink: "",
+  linkedinLink: "",
+  profilePic: "",
+};
+
 //declate object here to store all data from api response
 
 //------------------ get / -----------------
