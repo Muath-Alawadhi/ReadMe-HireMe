@@ -1,5 +1,7 @@
-//install octokit
-//add env for port and auth
+//To Do:
+//add env for port and token
+//find solution for regular token expiration
+//we still need skills from repos path
 
 const { Octokit } = require("@octokit/core"); //library to fetch from Github api
 const express = require("express");
@@ -10,6 +12,8 @@ const octokit = new Octokit({
   auth: `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`,
 });
 
+const username = "rahmab1";
+
 //------------------ get / -----------------
 app.get("/", (req, res) => {
   console.log("welcome to my server");
@@ -19,13 +23,12 @@ app.get("/", (req, res) => {
 
 app.get("/fetchGradData", async (req, res) => {
   try {
-    // Use Octokit to make an API request to GitHub
+    //------ get name , repos number , profile_pic_url ---------
+
     const response = await octokit.request("GET /users/{owner}", {
       owner: "rahmab1",
     });
 
-    // name, github_username, repos, profile_pic_url , skills, cv, linkedin ;
-    //we still need skills from repos path
     const userData = response.data;
     // console.log(userData);
 
