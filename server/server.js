@@ -6,7 +6,7 @@ const express = require("express");
 const app = express();
 // const { Pool } = require("pg");
 
-const pool = require('./dbConfig');
+const pool = require('./DbConfig');
 
 const port = 6000;
 
