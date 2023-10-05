@@ -26,7 +26,7 @@ const userObject = {
 
 //declate object here to store all data from api response
 
-//------------------ get / -----------------
+//------------------ get / ---------------------
 app.get("/", (req, res) => {
   console.log("welcome to my server");
 });
