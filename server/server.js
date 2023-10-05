@@ -9,7 +9,7 @@ const app = express();
 const port = 6000;
 
 const octokit = new Octokit({
-  auth: `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`,
+  auth: `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`,
 });
 
 const username = "rahmab1";
@@ -21,6 +21,7 @@ const userObject = {
   cvLink: "",
   linkedinLink: "",
   profilePic: "",
+  reposNumber: 0,
 };
 
 //declate object here to store all data from api response
@@ -45,9 +46,9 @@ app.get("/fetchGradData", async (req, res) => {
     //to access specific data from the object we have in response.data
     userObject.userName = userData.login || "Not available";
 
-    const name = userData.name || "Name Not available";
-    const reposNumber = userData.public_repos || "Not available";
-    const profilePicLink = userData.avatar_url || "Not available";
+    userObject.fullName = userData.name || "Name Not available";
+    userObject.reposNumber = userData.public_repos || "Not available";
+    userObject.profilePic = userData.avatar_url || "Not available";
 
     //--(2)--giving username fetch --> skills (programming langueages from all users repos) ---
     //
@@ -86,8 +87,8 @@ app.get("/fetchGradData", async (req, res) => {
     const linkedinMatch = readmeContent.match(linkedinRegex);
 
     // Extract the matched links
-    const cvLink = cvMatch ? cvMatch[0] : "CV link not found";
-    const linkedinLink = linkedinMatch
+    userObject.cvLink = cvMatch ? cvMatch[0] : "CV link not found";
+    userObject.linkedinLink = linkedinMatch
       ? linkedinMatch[0]
       : "LinkedIn link not found";
 
@@ -105,9 +106,9 @@ app.get("/fetchGradData", async (req, res) => {
 
     //-------------------DataBase starts here
 
-//
+    //
 
-    //-------------------DataBase ends here 
+    //-------------------DataBase ends here
     //Send the data as a JSON response
     res.json({
       userObject,
