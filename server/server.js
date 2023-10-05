@@ -103,11 +103,11 @@ app.get("/fetchGradData", async (req, res) => {
     //   res.status(404).json({ error: "README content not found" });
     // }
 
-    //
-    //send response here -------------
-    // res.send({});
-    //edit response to fit the new merged route -- the response should take the object after fetch then send it
+    //-------------------DataBase starts here
 
+//
+
+    //-------------------DataBase ends here 
     //Send the data as a JSON response
     res.json({
       userObject,
