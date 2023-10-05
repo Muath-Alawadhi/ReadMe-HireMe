@@ -1,0 +1,15 @@
+.GPCardsContainerBlock{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding-top: 40px;
+    grid-gap:30px;
+}
+.cardsBlock{
+
+}
+.cards-img{
+
+}
+.grad-name{
+
+}
