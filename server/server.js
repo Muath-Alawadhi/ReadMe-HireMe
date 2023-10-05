@@ -7,7 +7,7 @@ const app = express();
 const port = 6000;
 
 const octokit = new Octokit({
-  auth: `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`,
+  auth: `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`,
 });
 
 //------------------ get / -----------------
