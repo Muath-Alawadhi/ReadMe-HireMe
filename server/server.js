@@ -9,7 +9,7 @@ const app = express();
 const port = 6000;
 
 const octokit = new Octokit({
-  auth: ``,
+  auth: `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`,
 });
 
 const username = "rahmab1";
