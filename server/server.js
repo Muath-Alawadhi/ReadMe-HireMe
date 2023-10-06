@@ -33,7 +33,7 @@ app.get("/", (req, res) => {
 
 //----------------- fetch Grad data ------------------
 
-app.get("/fetchGradData", async (req, res) => {
+app.get("/fetchAllGradData", async (req, res) => {
   try {
     //--(1)--giving username fetch --> name , repos number , profile_pic_url ---
 
