@@ -1,12 +1,12 @@
-// const { Pool } = require("pg");
+const { Pool } = require("pg");
 
-// const videosPool = new Pool({
-//   connectionString:
-//     "postgres://testuser:t2rUufCbNTZy45viv2A7faB5Fc2NODAG@dpg-ck8rp4nsasqs738mn1eg-a.oregon-postgres.render.com/muath_alawadhi",
+const DBConfig = {
+  connectionString:"postgres://group_4:uo5oZDrdxycZtgTOVRNSCWn1e10U1rEY@dpg-ck9g7kf0vg2c738qm7ag-a.oregon-postgres.render.com/rymsn_7j8w",
+  ssl:{
+    rejectUnauthorized: false, 
+  },
+}; 
 
-//   ssl: {
-//     rejectUnauthorized: false,
-//   },
-// });
+const pool = new Pool(DBConfig);
 
-// module.exports = videosPool;
+module.exports = pool;
