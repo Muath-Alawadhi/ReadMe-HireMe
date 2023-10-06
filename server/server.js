@@ -7,7 +7,7 @@ const app = express();
 const port = 6000;
 
 const octokit = new Octokit({
-  auth: `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`,
+  auth: `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`,
 });
 
 //------------------ get / -----------------
@@ -35,13 +35,25 @@ app.get("/fetchGradData", async (req, res) => {
     const profilePicLink = userData.avatar_url || "Not available";
     console.log(githubUserName, name, reposNumber, profilePicLink);
 
-    //---------------------repo.languages--------------------------
+    // ---------------------repo.languages--------------------------
     const reposUrl = userData.repos_url;
     // Using the repos_url to fetch repositories first ^ ^
     const reposResponse = await octokit.request("GET " + reposUrl);
 
     // Extract language data from repositories...o-o
     const repos = reposResponse.data;
+
+    const uniqueLanguages = new Set();
+
+    repos.forEach((repo) => {
+    const language = repo.language;
+    
+    if (language && language !== "null") {
+    uniqueLanguages.add(language);
+    }
+    });
+
+    const allLanguages = [...uniqueLanguages];
 
     //-------------------end of repo.languages ----------------------
 
