@@ -14,25 +14,12 @@ const port = 6000;
 
 const octokit = new Octokit({
   auth: `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`,
+
 });
 
 
 
-const username = "rahmab1";
-
-const userObject = {
-  userName: "",
-  fullName: "",
-  skills: [],
-  cvLink: "",
-  linkedinLink: "",
-  profilePic: "",
-  reposNumber: 0,
-};
-
-//declate object here to store all data from api response
-
-//------------------ get / ---------------------
+//------------------ get / -----------------
 app.get("/", (req, res) => {
   console.log("welcome to my server");
 });
@@ -42,12 +29,13 @@ app.get("/", (req, res) => {
 app.get("/fetchGradData", async (req, res) => {
  const client = await pool.connect(); 
   try {
-    //--(1)--giving username fetch --> name , repos number , profile_pic_url ---
-
+  
     const response = await octokit.request("GET /users/{owner}", {
       owner: "rahmab1",
     });
 
+    // name, github_username, repos, profile_pic_url , skills, cv, linkedin ;
+    //we still need skills from repos path
     const userData = response.data;
     // console.log(userData);
 
@@ -93,6 +81,8 @@ app.get("/fetchGradData", async (req, res) => {
       profile_pic: profilePicLink,
       skills: allLanguages,
     });
+
+    // res.send(userData);
   } catch (error) {
     console.error("Error fetching data from GitHub:", error.message);
     res.status(500).json({ error: "Failed to fetch data from GitHub" });
