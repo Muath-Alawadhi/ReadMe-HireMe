@@ -1,16 +1,36 @@
-//install octokit
-//add env for port and auth
+//To Do:
+//add env for port and token
+//find solution for regular token expiration
+//we still need skills from repos path
 
 const { Octokit } = require("@octokit/core"); //library to fetch from Github api
 const express = require("express");
 const app = express();
+// const { Pool } = require("pg");
+
+const pool = require("./DBConfig");
+
 const port = 6000;
 
 const octokit = new Octokit({
-  auth: `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`,
+  auth: `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`,
 });
 
-//------------------ get / -----------------
+const username = "rahmab1";
+
+const userObject = {
+  userName: "",
+  fullName: "",
+  skills: [],
+  cvLink: "",
+  linkedinLink: "",
+  profilePic: "",
+  reposNumber: 0,
+};
+
+//declate object here to store all data from api response
+
+//------------------ get / ---------------------
 app.get("/", (req, res) => {
   console.log("welcome to my server");
 });
@@ -18,14 +38,14 @@ app.get("/", (req, res) => {
 //----------------- fetch Grad data ------------------
 
 app.get("/fetchGradData", async (req, res) => {
+  const client = await pool.connect();
   try {
-    // Use Octokit to make an API request to GitHub
+    //--(1)--giving username fetch --> name , repos number , profile_pic_url ---
+
     const response = await octokit.request("GET /users/{owner}", {
       owner: "rahmab1",
     });
 
-    // name, github_username, repos, profile_pic_url , skills, cv, linkedin ;
-    //we still need skills from repos path
     const userData = response.data;
     // console.log(userData);
 
@@ -56,6 +76,28 @@ app.get("/fetchGradData", async (req, res) => {
     const allLanguages = [...uniqueLanguages];
 
     //-------------------end of repo.languages ----------------------
+    await client.query("BEGIN"); // starting client
+    //  putting Grad  data into the test_graduate  table and
+    const insertQuery = `
+    INSERT INTO Test_Graduate(userName, name, repos_number, profile_pic, skills)
+    VALUES ($1, $2, $3, $4, $5)
+    RETURNING id
+  `;
+
+    // putting the  values in an array in the table  and storing the result.
+    const values = [
+      githubUserName,
+      name,
+      reposNumber,
+      profilePicLink,
+      allLanguages,
+    ];
+    const result = await client.query(insertQuery, values);
+
+    // committing client
+    await client.query("COMMIT");
+
+    client.release();
 
     //Send the data as a JSON response
     res.json({
@@ -65,11 +107,13 @@ app.get("/fetchGradData", async (req, res) => {
       profile_pic: profilePicLink,
       skills: allLanguages,
     });
-
-    // res.send(userData);
   } catch (error) {
     console.error("Error fetching data from GitHub:", error.message);
     res.status(500).json({ error: "Failed to fetch data from GitHub" });
+    await client.query("ROLLBACK");
+    throw new Error(
+      "Failed to insert data into the database. Please try again later."
+    );
   }
 });
 
