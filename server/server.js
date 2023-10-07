@@ -55,13 +55,25 @@ app.get("/fetchGradData", async (req, res) => {
     const profilePicLink = userData.avatar_url || "Not available";
     console.log(githubUserName, name, reposNumber, profilePicLink);
 
-    //---------------------repo.languages--------------------------
+    // ---------------------repo.languages--------------------------
     const reposUrl = userData.repos_url;
     // Using the repos_url to fetch repositories first ^ ^
     const reposResponse = await octokit.request("GET " + reposUrl);
 
     // Extract language data from repositories...o-o
     const repos = reposResponse.data;
+
+    const uniqueLanguages = new Set();
+
+    repos.forEach((repo) => {
+    const language = repo.language;
+    
+    if (language && language !== "null") {
+    uniqueLanguages.add(language);
+    }
+    });
+
+    const allLanguages = [...uniqueLanguages];
 
     //-------------------end of repo.languages ----------------------
     await client.query("BEGIN"); // starting client
