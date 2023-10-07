@@ -1,53 +1,30 @@
 import "./SearchBar.css";
 import React, { useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { InputGroup, FormControl , Button  } from 'react-bootstrap';
+
 
 function SearchBar() {
-  const [searchByName, setSearchByName] = useState('');
-  const [searchBySkills, setSearchBySkills] = useState('');
+  const [searchText, setSearchText] = useState('');
 
-  const handleSearchByName = () => {
-    console.log(`Searching for Input 1: ${searchByName}`);
+  const handleSearch = () => {
+     console.log(`Searching for: ${searchText}`);
   };
-
-  const handleSearchBySkills = () => {
-    console.log(`Searching for Input 2: ${searchBySkills}`);
-  };
-
   return (
-    <div className="SearchBlock">
-      <div></div>
-      <div>
-        <p className="pBlock">Search a graduate</p>
-        <div className="searchBlock">
-        <div>
-        <input
-          type="text"
-          placeholder="SearchByName..."
-          value={searchByName}
-          onChange={(e) => setSearchByName(e.target.value)}
-          onKeyPress={(e) => {
-            if (e.key === 'Enter') {
-              handleSearchByName();
-            }
-          }}
+    <div className="container mt-4">
+      <h1>Search a graduate</h1>
+      <InputGroup className="mb-3">
+        <FormControl
+          placeholder="Search by name or skill..."
+          aria-label="Search"
+          aria-describedby="basic-addon2"
+          onChange={(e) => setSearchText(e.target.value)}
+          value={searchText}
         />
-      </div>
-      <div>
-        <input
-          type="text"
-          placeholder="SearchBySkills..."
-          value={searchBySkills}
-          onChange={(e) => setSearchBySkills(e.target.value)}
-          onKeyPress={(e) => {
-            if (e.key === 'Enter') {
-              handleSearchBySkills();
-            }
-          }}
-        />
-      </div>
-      </div>
-      </div>
-      <div></div>
+          <Button variant="danger" onClick={handleSearch}>
+            <i className="fas fa-search"></i>
+          </Button>
+      </InputGroup>
     </div>
   );
 }

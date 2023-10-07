@@ -81,9 +81,9 @@ function Graduates() {
   return (
     <div>
       <SearchBar />
-  <div className="GPCardsContainerBlock">
+  <div className="CardsContainerBlock">
     {grads.map((grad, index) => (
-  <Card style={{ width: '20rem' }}  key={index}>
+  <Card style={{ width: '17rem' }}  key={index}>
 <Card.Img variant="top" src={grad.image} alt={grad.name} className="cards-img" />
 <Card.Body>
   <Card.Title>{grad.name}</Card.Title>
