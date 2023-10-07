@@ -1,15 +1,19 @@
-.GPCardsContainerBlock{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+.CardsContainerBlock{
     padding-top: 40px;
     grid-gap:30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 .cardsBlock{
-
+ width: 6px;
 }
+
 .cards-img{
 
 }
 .grad-name{
+
+}
+.GraduatesBlock{
 
 }

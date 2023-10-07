@@ -5,13 +5,19 @@ import Graduates from "./Graduates/Graduates";
 import Signup from "./signup/Signup";
 
 function RouterComponent() {
+  const customNavbarStyle = {
+    backgroundColor: 'rgb(34, 25, 74, 0.848)',
+  };
+  const myPage ={
+   color: 'azure',
+  };
   return (
     <Router>
-      <div>
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div style={myPage}>
+        <nav style={customNavbarStyle} className="navbar navbar-expand-lg ">
           {" "}
           <div className="container">
-            <Link className="navbar-brand" to="/Home">
+            <Link className="navbar-brand" to="/Home"style={myPage} >
               ReadMe-HireMe
             </Link>
             <button
@@ -29,17 +35,17 @@ function RouterComponent() {
               <ul className="navbar-nav ml-auto">
                 {" "}
                 <li className="nav-item">
-                  <Link className="nav-link" to="/Home">
+                  <Link className="nav-link" to="/Home" style={myPage}>
                     Home
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/graduates">
+                  <Link className="nav-link" to="/graduates" style={myPage}>
                     Graduates
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/signup">
+                  <Link className="nav-link" to="/signup" style={myPage}>
                     Signup
                   </Link>
                 </li>

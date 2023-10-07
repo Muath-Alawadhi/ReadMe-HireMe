@@ -5,6 +5,7 @@
     font-size: 25px;
     height: 13vh;
     padding-top: 9px;
+    /* background-color: rgba(34, 25, 74, 0.848); */
 
 
 }
@@ -12,12 +13,13 @@
     font-size: 35px;   
 }
 .searchBlock{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 25px;
+
 }
 input{
     border: solid 4px;
     border-radius: 2rem;
     padding-left: 10px;
+}
+.buttonBlock{
+ 
 }
