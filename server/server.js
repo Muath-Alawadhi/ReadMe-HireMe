@@ -2,6 +2,11 @@
 //add env for port and token
 //find solution for regular token expiration
 //we still need skills from repos path
+//
+//sometimes when trying to test code , we are having issues with DB connection
+//so, we just need comment out all DB code in order to test other parts, then uncomment them
+//or we can wait for some time till the DB connection is back to normal
+//
 
 const { Octokit } = require("@octokit/core"); //library to fetch from Github api
 const express = require("express");
@@ -13,7 +18,7 @@ const pool = require("./DBConfig");
 const port = 6000;
 
 const octokit = new Octokit({
-  auth: `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`,
+  auth: `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`,
 });
 
 const username = "rahmab1";
@@ -53,7 +58,7 @@ app.get("/fetchGradData", async (req, res) => {
     const name = userData.name || "Name Not available";
     const reposNumber = userData.public_repos || "Not available";
     const profilePicLink = userData.avatar_url || "Not available";
-    console.log(githubUserName, name, reposNumber, profilePicLink);
+    // console.log(githubUserName, name, reposNumber, profilePicLink);
 
     // ---------------------repo.languages--------------------------
     const reposUrl = userData.repos_url;
@@ -66,53 +71,69 @@ app.get("/fetchGradData", async (req, res) => {
     const uniqueLanguages = new Set();
 
     repos.forEach((repo) => {
-    const language = repo.language;
-    
-    if (language && language !== "null") {
-    uniqueLanguages.add(language);
-    }
+      const language = repo.language;
+
+      if (language && language !== "null") {
+        uniqueLanguages.add(language);
+      }
     });
 
     const allLanguages = [...uniqueLanguages];
 
     //-------------------end of repo.languages ----------------------
+
     //------------------- fetch readme file  ----------------------
-  const readmeDataResponse = await octokit.request(
-    "Get /repos/{owner}/{repo}/readme",
-    {owner: "rahmab1",repo: "rahmab1" , }
-  );
-// The README content will be in base64-encoded,so we need to decode it
-const readmeContent =Buffer.from(
-  readmeDataResponse.data.content,
-  "base64"
-).toString("utf-8");
-console.log(readmeContent);
+    const readmeDataResponse = await octokit.request(
+      "Get /repos/{owner}/{repo}/readme",
+      { owner: "rahmab1", repo: "rahmab1" }
+    );
+    // The README content will be in base64-encoded,so we need to decode it
+    const readmeContent = Buffer.from(
+      readmeDataResponse.data.content,
+      "base64"
+    ).toString("utf-8");
+    // console.log(readmeContent);
 
+    // cvRegex & linkedinRegex to match CV and LinkedIn links
+    const cvRegex =
+      /(?:cv|resume|portfolio)\s*:\s*?(https?:\/\/(?:www\.)?(?:[a-zA-Z0-9-]+\.)+(?:[a-zA-Z]{2,})(?:\/[^\s]*)?)/i;
+    const linkedinRegex = /(https?:\/\/www\.linkedin\.com\/\S+)/i;
 
- //------------------- end of readme file  ----------------------
+    // Search for CV and LinkedIn links in the README content
+    const cvMatch = readmeContent.match(cvRegex);
+    const linkedinMatch = readmeContent.match(linkedinRegex);
 
-  //   await client.query("BEGIN"); // starting client
-  //   //  putting Grad  data into the test_graduate  table and
-  //   const insertQuery = `
-  //   INSERT INTO Test_Graduate(userName, name, repos_number, profile_pic, skills)
-  //   VALUES ($1, $2, $3, $4, $5)
-  //   RETURNING id
-  // `;
+    const cvLink = cvMatch ? cvMatch[0] : "CV link not found";
+    const linkedin = linkedinMatch
+      ? linkedinMatch[0]
+      : "LinkedIn link not found";
+
+    //still need to add cvLink and linkedin to DB in separate branch
+
+    //------------------- end of readme file  ----------------------
+
+    await client.query("BEGIN"); // starting client
+    //  putting Grad  data into the test_graduate  table and
+    const insertQuery = `
+      INSERT INTO Test_Graduate(userName, name, repos_number, profile_pic, skills)
+      VALUES ($1, $2, $3, $4, $5)
+      RETURNING id
+    `;
 
     // putting the  values in an array in the table  and storing the result.
-    // const values = [
-    //   githubUserName,
-    //   name,
-    //   reposNumber,
-    //   profilePicLink,
-    //   allLanguages,
-    // ];
-    // const result = await client.query(insertQuery, values);
+    const values = [
+      githubUserName,
+      name,
+      reposNumber,
+      profilePicLink,
+      allLanguages,
+    ];
+    const result = await client.query(insertQuery, values);
 
     // // committing client
-    // await client.query("COMMIT");
+    await client.query("COMMIT");
 
-    // client.release();
+    client.release();
 
     //Send the data as a JSON response
     res.json({
@@ -121,14 +142,16 @@ console.log(readmeContent);
       repos_number: reposNumber,
       profile_pic: profilePicLink,
       skills: allLanguages,
+      cv: cvLink,
+      linkedIn: linkedin,
     });
   } catch (error) {
     console.error("Error fetching data from GitHub:", error.message);
     res.status(500).json({ error: "Failed to fetch data from GitHub" });
-    // await client.query("ROLLBACK");
-    // throw new Error(
-    //   "Failed to insert data into the database. Please try again later."
-    // );
+    await client.query("ROLLBACK");
+    throw new Error(
+      "Failed to insert data into the database. Please try again later."
+    );
   }
 });
 
