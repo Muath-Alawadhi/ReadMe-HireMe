@@ -13,7 +13,7 @@ const pool = require("./DBConfig");
 const port = 6000;
 
 const octokit = new Octokit({
-  auth: `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`,
+  auth: `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`,
 });
 
 const username = "rahmab1";
@@ -79,9 +79,7 @@ app.get("/fetchGradData", async (req, res) => {
     //------------------- fetch readme file  ----------------------
   const readmeDataResponse = await octokit.request(
     "Get /repos/{owner}/{repo}/readme",
-    {owner: "rahmab1 ",
-    repo: "rahmab1 " ,
-  }
+    {owner: "rahmab1",repo: "rahmab1" , }
   );
 // The README content will be in base64-encoded,so we need to decode it
 const readmeContent =Buffer.from(
@@ -127,10 +125,10 @@ console.log(readmeContent);
   } catch (error) {
     console.error("Error fetching data from GitHub:", error.message);
     res.status(500).json({ error: "Failed to fetch data from GitHub" });
-    await client.query("ROLLBACK");
-    throw new Error(
-      "Failed to insert data into the database. Please try again later."
-    );
+    // await client.query("ROLLBACK");
+    // throw new Error(
+    //   "Failed to insert data into the database. Please try again later."
+    // );
   }
 });
 
