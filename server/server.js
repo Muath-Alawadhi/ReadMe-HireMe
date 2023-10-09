@@ -164,7 +164,7 @@ app.get("/api/fetchGradData", async (req, res) => {
 
     client.release();
 
-    const gradData = resultOfQuery.rows; //gradData is an array of abjects , each object is a row
+    const gradData = resultOfQuery.rows; //gradData is an array of objects , each object is a row
 
     res.json(gradData);
   } catch (error) {
