@@ -2,6 +2,11 @@
 //add env for port and token
 //find solution for regular token expiration
 //we still need skills from repos path
+//
+//sometimes when trying to test code , we are having issues with DB connection
+//so, we just need comment out all DB code in order to test other parts, then uncomment them
+//or we can wait for some time till the DB connection is back to normal
+//
 
 const { Octokit } = require("@octokit/core"); //library to fetch from Github api
 const express = require("express");
@@ -98,6 +103,10 @@ app.get("/fetchGradData", async (req, res) => {
     const cvMatch = readmeContent.match(cvRegex);
     const linkedinMatch = readmeContent.match(linkedinRegex);
 
+    const cvLink = cvMatch ? cvMatch[0] : "CV link not found";
+    const linkedin = linkedinMatch
+      ? linkedinMatch[0]
+      : "LinkedIn link not found";
     //------------------- end of readme file  ----------------------
 
     await client.query("BEGIN"); // starting client
@@ -130,8 +139,8 @@ app.get("/fetchGradData", async (req, res) => {
       repos_number: reposNumber,
       profile_pic: profilePicLink,
       skills: allLanguages,
-      cv: cvMatch,
-      linkedIn: linkedinMatch,
+      cv: cvLink,
+      linkedIn: linkedin,
     });
   } catch (error) {
     console.error("Error fetching data from GitHub:", error.message);
