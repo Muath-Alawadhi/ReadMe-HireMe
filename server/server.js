@@ -13,7 +13,7 @@ const pool = require("./DBConfig");
 const port = 6000;
 
 const octokit = new Octokit({
-  auth: `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`,
+  auth: `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`,
 });
 
 const username = "rahmab1";
@@ -53,7 +53,7 @@ app.get("/fetchGradData", async (req, res) => {
     const name = userData.name || "Name Not available";
     const reposNumber = userData.public_repos || "Not available";
     const profilePicLink = userData.avatar_url || "Not available";
-    console.log(githubUserName, name, reposNumber, profilePicLink);
+    // console.log(githubUserName, name, reposNumber, profilePicLink);
 
     // ---------------------repo.languages--------------------------
     const reposUrl = userData.repos_url;
@@ -87,7 +87,16 @@ app.get("/fetchGradData", async (req, res) => {
       readmeDataResponse.data.content,
       "base64"
     ).toString("utf-8");
-    console.log(readmeContent);
+    // console.log(readmeContent);
+
+    // cvRegex & linkedinRegex to match CV and LinkedIn links
+    const cvRegex =
+      /(?:cv|resume|portfolio)\s*:\s*?(https?:\/\/(?:www\.)?(?:[a-zA-Z0-9-]+\.)+(?:[a-zA-Z]{2,})(?:\/[^\s]*)?)/i;
+    const linkedinRegex = /(https?:\/\/www\.linkedin\.com\/\S+)/i;
+
+    // Search for CV and LinkedIn links in the README content
+    const cvMatch = readmeContent.match(cvRegex);
+    const linkedinMatch = readmeContent.match(linkedinRegex);
 
     //------------------- end of readme file  ----------------------
 
@@ -121,6 +130,8 @@ app.get("/fetchGradData", async (req, res) => {
       repos_number: reposNumber,
       profile_pic: profilePicLink,
       skills: allLanguages,
+      cv: cvMatch,
+      linkedIn: linkedinMatch,
     });
   } catch (error) {
     console.error("Error fetching data from GitHub:", error.message);
