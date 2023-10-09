@@ -13,7 +13,7 @@ const pool = require("./DBConfig");
 const port = 6000;
 
 const octokit = new Octokit({
-  auth: `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`,
+  auth: `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`,
 });
 
 const username = "rahmab1";
@@ -66,38 +66,37 @@ app.get("/fetchGradData", async (req, res) => {
     const uniqueLanguages = new Set();
 
     repos.forEach((repo) => {
-    const language = repo.language;
-    
-    if (language && language !== "null") {
-    uniqueLanguages.add(language);
-    }
+      const language = repo.language;
+
+      if (language && language !== "null") {
+        uniqueLanguages.add(language);
+      }
     });
 
     const allLanguages = [...uniqueLanguages];
 
     //-------------------end of repo.languages ----------------------
     //------------------- fetch readme file  ----------------------
-  const readmeDataResponse = await octokit.request(
-    "Get /repos/{owner}/{repo}/readme",
-    {owner: "rahmab1",repo: "rahmab1" , }
-  );
-// The README content will be in base64-encoded,so we need to decode it
-const readmeContent =Buffer.from(
-  readmeDataResponse.data.content,
-  "base64"
-).toString("utf-8");
-console.log(readmeContent);
+    const readmeDataResponse = await octokit.request(
+      "Get /repos/{owner}/{repo}/readme",
+      { owner: "rahmab1", repo: "rahmab1" }
+    );
+    // The README content will be in base64-encoded,so we need to decode it
+    const readmeContent = Buffer.from(
+      readmeDataResponse.data.content,
+      "base64"
+    ).toString("utf-8");
+    console.log(readmeContent);
 
+    //------------------- end of readme file  ----------------------
 
- //------------------- end of readme file  ----------------------
-
-  //   await client.query("BEGIN"); // starting client
-  //   //  putting Grad  data into the test_graduate  table and
-  //   const insertQuery = `
-  //   INSERT INTO Test_Graduate(userName, name, repos_number, profile_pic, skills)
-  //   VALUES ($1, $2, $3, $4, $5)
-  //   RETURNING id
-  // `;
+    //   await client.query("BEGIN"); // starting client
+    //   //  putting Grad  data into the test_graduate  table and
+    //   const insertQuery = `
+    //   INSERT INTO Test_Graduate(userName, name, repos_number, profile_pic, skills)
+    //   VALUES ($1, $2, $3, $4, $5)
+    //   RETURNING id
+    // `;
 
     // putting the  values in an array in the table  and storing the result.
     // const values = [
