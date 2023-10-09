@@ -13,7 +13,7 @@ const pool = require("./DBConfig");
 const port = 6000;
 
 const octokit = new Octokit({
-  auth: `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`,
+  auth: `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`,
 });
 
 const username = "rahmab1";
@@ -83,34 +83,38 @@ app.get("/fetchGradData", async (req, res) => {
     repo: "rahmab1 " ,
   }
   );
-
-
+// The README content will be in base64-encoded,so we need to decode it
+const readmeContent =Buffer.from(
+  readmeDataResponse.data.content,
+  "base64"
+).toString("utf-8");
+console.log(readmeContent);
 
 
  //------------------- end of readme file  ----------------------
 
-    await client.query("BEGIN"); // starting client
-    //  putting Grad  data into the test_graduate  table and
-    const insertQuery = `
-    INSERT INTO Test_Graduate(userName, name, repos_number, profile_pic, skills)
-    VALUES ($1, $2, $3, $4, $5)
-    RETURNING id
-  `;
+  //   await client.query("BEGIN"); // starting client
+  //   //  putting Grad  data into the test_graduate  table and
+  //   const insertQuery = `
+  //   INSERT INTO Test_Graduate(userName, name, repos_number, profile_pic, skills)
+  //   VALUES ($1, $2, $3, $4, $5)
+  //   RETURNING id
+  // `;
 
     // putting the  values in an array in the table  and storing the result.
-    const values = [
-      githubUserName,
-      name,
-      reposNumber,
-      profilePicLink,
-      allLanguages,
-    ];
-    const result = await client.query(insertQuery, values);
+    // const values = [
+    //   githubUserName,
+    //   name,
+    //   reposNumber,
+    //   profilePicLink,
+    //   allLanguages,
+    // ];
+    // const result = await client.query(insertQuery, values);
 
-    // committing client
-    await client.query("COMMIT");
+    // // committing client
+    // await client.query("COMMIT");
 
-    client.release();
+    // client.release();
 
     //Send the data as a JSON response
     res.json({
