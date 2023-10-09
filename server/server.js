@@ -157,7 +157,14 @@ app.get("/fetchGradData", async (req, res) => {
 
 //------------------ Endpoint for FrontEnd --------------
 
-app.get("/api/fetchGradData", async (req, res) => {});
+app.get("/api/fetchGradData", async (req, res) => {
+  try {
+    const client = await pool.connect();
+    //
+    //
+    client.release();
+  } catch {}
+});
 
 //---------------- end of Endpoint for FrontEnd  --------------------
 
