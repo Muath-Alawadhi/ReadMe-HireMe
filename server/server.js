@@ -162,10 +162,10 @@ app.get("/api/fetchGradData", async (req, res) => {
     const client = await pool.connect();
     const resultOfQuery = await client.query(`select * from test_graduate;`);
 
-    //
     client.release();
 
-    const gradData = resultOfQuery.rows;
+    const gradData = resultOfQuery.rows; //gradData is an array of abjects , each object is a row
+
     res.json(gradData);
   } catch (error) {
     console.log(error);
