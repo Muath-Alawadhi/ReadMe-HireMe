@@ -155,6 +155,26 @@ app.get("/fetchGradData", async (req, res) => {
   }
 });
 
+//------------------ Endpoint for FrontEnd --------------
+
+app.get("/api/fetchGradData", async (req, res) => {
+  try {
+    const client = await pool.connect();
+    const resultOfQuery = await client.query(`select * from test_graduate;`);
+
+    client.release();
+
+    const gradData = resultOfQuery.rows; //gradData is an array of objects , each object is a row
+
+    res.json(gradData);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: `internal connection to DB error` });
+  }
+});
+
+//---------------- end of Endpoint for FrontEnd  --------------------
+
 //---------------- listen --------------------
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
