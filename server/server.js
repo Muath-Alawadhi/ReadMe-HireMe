@@ -76,6 +76,7 @@ app.get("/fetchGradData", async (req, res) => {
     const allLanguages = [...uniqueLanguages];
 
     //-------------------end of repo.languages ----------------------
+
     //------------------- fetch readme file  ----------------------
     const readmeDataResponse = await octokit.request(
       "Get /repos/{owner}/{repo}/readme",
@@ -90,28 +91,28 @@ app.get("/fetchGradData", async (req, res) => {
 
     //------------------- end of readme file  ----------------------
 
-    //   await client.query("BEGIN"); // starting client
-    //   //  putting Grad  data into the test_graduate  table and
-    //   const insertQuery = `
-    //   INSERT INTO Test_Graduate(userName, name, repos_number, profile_pic, skills)
-    //   VALUES ($1, $2, $3, $4, $5)
-    //   RETURNING id
-    // `;
+    await client.query("BEGIN"); // starting client
+    //  putting Grad  data into the test_graduate  table and
+    const insertQuery = `
+      INSERT INTO Test_Graduate(userName, name, repos_number, profile_pic, skills)
+      VALUES ($1, $2, $3, $4, $5)
+      RETURNING id
+    `;
 
     // putting the  values in an array in the table  and storing the result.
-    // const values = [
-    //   githubUserName,
-    //   name,
-    //   reposNumber,
-    //   profilePicLink,
-    //   allLanguages,
-    // ];
-    // const result = await client.query(insertQuery, values);
+    const values = [
+      githubUserName,
+      name,
+      reposNumber,
+      profilePicLink,
+      allLanguages,
+    ];
+    const result = await client.query(insertQuery, values);
 
     // // committing client
-    // await client.query("COMMIT");
+    await client.query("COMMIT");
 
-    // client.release();
+    client.release();
 
     //Send the data as a JSON response
     res.json({
@@ -124,10 +125,10 @@ app.get("/fetchGradData", async (req, res) => {
   } catch (error) {
     console.error("Error fetching data from GitHub:", error.message);
     res.status(500).json({ error: "Failed to fetch data from GitHub" });
-    // await client.query("ROLLBACK");
-    // throw new Error(
-    //   "Failed to insert data into the database. Please try again later."
-    // );
+    await client.query("ROLLBACK");
+    throw new Error(
+      "Failed to insert data into the database. Please try again later."
+    );
   }
 });
 
