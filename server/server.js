@@ -76,6 +76,14 @@ app.get("/fetchGradData", async (req, res) => {
     const allLanguages = [...uniqueLanguages];
 
     //-------------------end of repo.languages ----------------------
+    //------------------- fetch readme file  ----------------------
+
+
+
+
+    
+ //------------------- end of readme file  ----------------------
+
     await client.query("BEGIN"); // starting client
     //  putting Grad  data into the test_graduate  table and
     const insertQuery = `
