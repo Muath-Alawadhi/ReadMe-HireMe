@@ -107,6 +107,9 @@ app.get("/fetchGradData", async (req, res) => {
     const linkedin = linkedinMatch
       ? linkedinMatch[0]
       : "LinkedIn link not found";
+
+    //still need to add cvLink and linkedin to DB in separate branch
+
     //------------------- end of readme file  ----------------------
 
     await client.query("BEGIN"); // starting client
