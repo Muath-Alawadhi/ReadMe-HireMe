@@ -155,6 +155,12 @@ app.get("/fetchGradData", async (req, res) => {
   }
 });
 
+//------------------ Endpoint for FrontEnd --------------
+
+app.get("/api/fetchGradData", async (req, res) => {});
+
+//---------------- end of Endpoint for FrontEnd  --------------------
+
 //---------------- listen --------------------
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

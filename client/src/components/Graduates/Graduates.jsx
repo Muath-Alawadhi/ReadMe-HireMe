@@ -4,6 +4,8 @@ import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import SearchBar from "./SearchBar";
 
+
+
 const grads = [
   {
     name: "Siver",
@@ -76,6 +78,8 @@ const grads = [
     image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfu1mi6LAfuv1HSVFYUtOVgBsIB5f96Ui_Xw&usqp=CAU"
   }
 ];
+
+
 
 function Graduates() {
   return (
