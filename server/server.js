@@ -160,9 +160,13 @@ app.get("/fetchGradData", async (req, res) => {
 app.get("/api/fetchGradData", async (req, res) => {
   try {
     const client = await pool.connect();
-    //
+    const resultOfQuery = await client.query(`select * from test_graduates;`);
+
     //
     client.release();
+
+    const gradData = resultOfQuery.rows;
+    res.json(gradData);
   } catch {}
 });
 
