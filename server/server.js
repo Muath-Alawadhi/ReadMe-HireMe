@@ -77,11 +77,16 @@ app.get("/fetchGradData", async (req, res) => {
 
     //-------------------end of repo.languages ----------------------
     //------------------- fetch readme file  ----------------------
+  const readmeDataResponse = await octakit.request(
+    "Get /repos/{owner}/{repo}/readme",
+    {owner: "rahmab1 ",
+    repo: "rahmab1 " ,
+  }
+  );
 
 
 
 
-    
  //------------------- end of readme file  ----------------------
 
     await client.query("BEGIN"); // starting client
