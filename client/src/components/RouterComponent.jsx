@@ -3,14 +3,14 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Home from "./Home/Home";
 import Graduates from "./Graduates/Graduates";
 import Signup from "./signup/Signup";
-import GraduatesProfile from "./Graduates/GraduatesProfile";
+import GraduatesProfile from "./GraduatesProfile/GraduatesProfile";
 
 function RouterComponent() {
   const customNavbarStyle = {
-    backgroundColor: 'rgb(34, 25, 74, 0.848)',
+    backgroundColor: "rgb(34, 25, 74, 0.848)",
   };
-  const myPage ={
-   color: 'azure',
+  const myPage = {
+    color: "azure",
   };
   return (
     <Router>
@@ -18,7 +18,7 @@ function RouterComponent() {
         <nav style={customNavbarStyle} className="navbar navbar-expand-lg ">
           {" "}
           <div className="container">
-            <Link className="navbar-brand" to="/Home"style={myPage} >
+            <Link className="navbar-brand" to="/Home" style={myPage}>
               ReadMe-HireMe
             </Link>
             <button
@@ -60,7 +60,10 @@ function RouterComponent() {
             <Route path="/Home" element={<Home />} />
             <Route path="/graduates" element={<Graduates />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/Graduates/GraduatesProfile" element={<GraduatesProfile />} />
+            <Route
+              path="/Graduates/GraduatesProfile"
+              element={<GraduatesProfile />}
+            />
           </Routes>
         </div>
       </div>
