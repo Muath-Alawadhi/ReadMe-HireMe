@@ -8,30 +8,47 @@
 //or we can wait for some time till the DB connection is back to normal
 //
 
-const { Octokit } = require("@octokit/core"); //library to fetch from Github api
+const axios = require("axios"); //library to fetch from Github api
 const express = require("express");
 const app = express();
-// const { Pool } = require("pg");
-
 const pool = require("./DBConfig");
+const cors = require("cors"); //Middleware: to handle CORS-related headers and behavior.
+const bodyParser = require("body-parser"); //Middleware: To handle incoming HTTP requests
+require("dotenv").config();
 
-const port = 6000;
+const port = 8000;
+app.use(bodyParser.json());
+app.use(cors());
 
-const octokit = new Octokit({
-  auth: `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`,
+//-------------GitHup OAuth----------------------
+const clientId = process.env.GITHUB_CLIENT_ID;
+const clientSecret = process.env.GITHUB_CLIENT_SECRET;
+//-----------------------------------------------
+let githubAccessToken = null; // Variable to store the access token
+
+//---------------- get the access_token --------------------
+app.post("/access-code", async (req, res) => {
+  const { code } = req.body;
+  console.log(code);
+  const response = await axios.post(
+    "https://github.com/login/oauth/access_token",
+    null,
+    {
+      params: {
+        client_id: clientId,
+        client_secret: clientSecret,
+        code,
+      },
+      headers: {
+        Accept: "application/json",
+      },
+    }
+  );
+
+  const { access_token } = response.data;
+  githubAccessToken = access_token;
+  console.log(githubAccessToken); // printing the access token
 });
-
-const username = "rahmab1";
-
-const userObject = {
-  userName: "",
-  fullName: "",
-  skills: [],
-  cvLink: "",
-  linkedinLink: "",
-  profilePic: "",
-  reposNumber: 0,
-};
 
 //declate object here to store all data from api response
 
