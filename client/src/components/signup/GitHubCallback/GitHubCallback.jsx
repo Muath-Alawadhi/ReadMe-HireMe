@@ -1,6 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import Alert from "@mui/material/Alert";
 
 function GitHubCallback() {
+  const [message, setMessage] = useState("Processing Your Data...");
+  const [success, setSuccess] = useState(false);
+
   useEffect(() => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
@@ -18,15 +22,51 @@ function GitHubCallback() {
         .then((response) => response.json())
         .then((data) => {
           console.log("Access Token:", data.access_token);
+          setMessage(
+            "Your profile has been added successfully! Go to graduates to see your profile."
+          );
+          setSuccess(true);
         })
         .catch((error) => {
           console.error("Error exchanging code for access token:", error);
+          setMessage("Error occurred while processing your request.");
         });
     }
   }, []);
 
+  const alertStyle = {
+    fontSize: "20px",
+  };
 
-  return <div>Processing GitHub callback...</div>;
+  return (
+    <div
+      className="container d-flex justify-content-center align-items-center"
+      style={{ minHeight: "60vh" }}
+    >
+      <div className="text-center">
+        {success ? (
+          <Alert
+            icon={<i className="fa fa-check" style={{ fontSize: "35px" }} />}
+            severity="success"
+            style={alertStyle}
+          >
+            {message}
+          </Alert>
+        ) : (
+          <div className="progress" style={alertStyle}>
+            <div
+              className="progress-bar progress-bar-striped progress-bar-animated"
+              role="progressbar"
+              style={{ width: "100%" }}
+            >
+              <i className="fa fa-spinner" style={{ fontSize: "8px" }}></i>{" "}
+              {message}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
 
 export default GitHubCallback;
