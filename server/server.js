@@ -172,9 +172,9 @@ async function fetchAndInsertData() {
     } catch (error) {
       console.error("Error fetching and inserting data:", error.message);
       // await client.query("ROLLBACK");
-      throw new Error(
-        "Failed to insert data into the database. Please try again later."
-      );
+      // throw new Error(
+      //   "Failed to insert data into the database. Please try again later."
+      // );
     }
   });
 }

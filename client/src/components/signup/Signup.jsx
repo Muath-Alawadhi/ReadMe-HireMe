@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import "./Signup.css";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 
 function Signup() {
   //signup authentication
@@ -8,31 +8,6 @@ function Signup() {
     const clientId = "4b7ee8342a11859ac626";
     window.location.href = `https://github.com/login/oauth/authorize?client_id=${clientId}`;
   };
-
-  useEffect(() => {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const code = urlParams.get("code");
-    console.log(code);
-
-    if (code) {
-      // Send the code to backend to exchange it for an access token
-      fetch("http://localhost:8000/access-code", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ code }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Access Token:", data.access_token); // testing the Access result
-        })
-        .catch((error) => {
-          console.error("Error exchanging code for access token:", error);
-        });
-    }
-  }, []);
 
   return (
     <div className="SignupBlock">
