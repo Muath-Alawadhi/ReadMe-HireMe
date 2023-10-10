@@ -18,7 +18,7 @@ const pool = require("./DBConfig");
 const port = 6000;
 
 const octokit = new Octokit({
-  auth: `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`,
+  auth: `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`,
 });
 
 const username = "rahmab1";
@@ -160,11 +160,11 @@ app.get("/fetchGradData", async (req, res) => {
 app.get("/api/fetchGradData", async (req, res) => {
   try {
     const client = await pool.connect();
-    const resultOfQuery = await client.query(`select * from test_graduate;`);
+    const getDataFromDb = await client.query(`SELECT profile_pic, name, userName, skills FROM test_graduate;`);
 
     client.release();
 
-    const gradData = resultOfQuery.rows; //gradData is an array of objects , each object is a row
+    const gradData = getDataFromDb.rows; //gradData is an array of objects , each object is a row
 
     res.json(gradData);
   } catch (error) {
