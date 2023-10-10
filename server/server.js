@@ -48,6 +48,10 @@ app.post("/access-code", async (req, res) => {
   const { access_token } = response.data;
   githubAccessToken = access_token;
   console.log(githubAccessToken); // printing the access token
+
+  // After getting the token, immediately fetch and insert data into the database
+  await fetchAndInsertData();
+  res.json({ success: true });
 });
 
 //declate object here to store all data from api response
@@ -64,9 +68,12 @@ app.get("/fetchGradData", async (req, res) => {
   try {
     //--(1)--giving username fetch --> name , repos number , profile_pic_url ---
 
-    const response = await octokit.request("GET /users/{owner}", {
-      owner: "rahmab1",
+    const userDataResponse = await axios.get("https://api.github.com/user", {
+      headers: {
+        Authorization: `token ${githubAccessToken}`,
+      },
     });
+    console.log(userDataResponse);
 
     const userData = response.data;
     // console.log(userData);
