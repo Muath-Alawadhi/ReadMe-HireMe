@@ -35,7 +35,13 @@ function GitHubCallback() {
   }, []);
 
   const alertStyle = {
-    fontSize: "20px",
+    fontSize: "30px",
+
+  };
+  const prograssStyle = {
+    fontSize: "30px",
+    height:"35px",
+
   };
 
   return (
@@ -53,13 +59,13 @@ function GitHubCallback() {
             {message}
           </Alert>
         ) : (
-          <div className="progress" style={alertStyle}>
+          <div className="progress" style={prograssStyle}>
             <div
               className="progress-bar progress-bar-striped progress-bar-animated"
               role="progressbar"
               style={{ width: "100%" }}
             >
-              <i className="fa fa-spinner" style={{ fontSize: "8px" }}></i>{" "}
+              <i className="fa fa-spinner" style={{ fontSize: "1px" }}></i>{" "}
               {message}
             </div>
           </div>
