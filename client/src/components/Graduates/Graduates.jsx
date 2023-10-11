@@ -1,109 +1,66 @@
-import React from "react";
+// For installing the last version of react-router-dom
+// npm install react-router-dom@latest
+import React, { useState } from 'react';
+import graduates from '../data';
 import "./Graduates.css";
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import SearchBar from "./SearchBar";
+import { Link } from "react-router-dom";
+import GraduatesProfile from '../GraduatesProfile/GraduatesProfile';
 
 
-
-const grads = [
-  {
-    name: "Siver",
-    username: "siveromar",
-    repo:"23",
-    language:"HTML,CSS,JS,React",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfu1mi6LAfuv1HSVFYUtOVgBsIB5f96Ui_Xw&usqp=CAU"
-  },
-  {
-    name: "Yesna",
-    username: "Yesna-Omar",
-    repo:"23",
-    language:"HTML,CSS,JS,React",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfu1mi6LAfuv1HSVFYUtOVgBsIB5f96Ui_Xw&usqp=CAU"
-  },
-  {
-    name: "Rahma",
-    username: "rahmaB1",
-    repo:"23",
-    language:"HTML,CSS,JS,React",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfu1mi6LAfuv1HSVFYUtOVgBsIB5f96Ui_Xw&usqp=CAU"
-  },
-  {
-    name: "Muath",
-    username: "Muath-Alawadhi",
-    repo:"23",
-    language:"HTML,CSS,JS,React",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfu1mi6LAfuv1HSVFYUtOVgBsIB5f96Ui_Xw&usqp=CAU"
-  },
-  {
-    name: "Najah",
-    username: "nfarah22",
-    repo:"23",
-    language:"HTML,CSS,JS,React",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfu1mi6LAfuv1HSVFYUtOVgBsIB5f96Ui_Xw&usqp=CAU"
-  },
-  {
-    name: "Siver1",
-    username: "siveromar",
-    repo:"23",
-    language:"HTML,CSS,JS,React",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfu1mi6LAfuv1HSVFYUtOVgBsIB5f96Ui_Xw&usqp=CAU"
-  },
-  {
-    name: "Yesna1",
-    username: "Yesna-Omar",
-    repo:"23",
-    language:"HTML,CSS,JS,React",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfu1mi6LAfuv1HSVFYUtOVgBsIB5f96Ui_Xw&usqp=CAU"
-  },
-  {
-    name: "Rahma1",
-    username: "rahmaB1",
-    repo:"23",
-    language:"HTML,CSS,JS,React",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfu1mi6LAfuv1HSVFYUtOVgBsIB5f96Ui_Xw&usqp=CAU"
-  },
-  {
-    name: "Muath1",
-    username: "Muath-Alawadhi",
-    repo:"23",
-    language:"HTML,CSS,JS,React",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfu1mi6LAfuv1HSVFYUtOVgBsIB5f96Ui_Xw&usqp=CAU"
-  },
-  {
-    name: "Najah1",
-    username: "nfarah22",
-    repo:"23",
-    language:"HTML,CSS,JS,React",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfu1mi6LAfuv1HSVFYUtOVgBsIB5f96Ui_Xw&usqp=CAU"
-  }
-];
+function GradCard({ grad, onViewMore }) {
+  return (
+    <div>
+       <div>
+       <Card style={{ width: '17rem' }} key={grad.id}>
+             <Card.Img variant="top" src={grad.image} alt={grad.name} className="cards-img" />
+             <Card.Body>
+              <Card.Title>{grad.name}</Card.Title>
+            </Card.Body>
+            <ListGroup className="list-group-flush">
+              <ListGroup.Item>Username: {grad.username}</ListGroup.Item>
+              <ListGroup.Item>Repo: {grad.repo}</ListGroup.Item>
+              <ListGroup.Item>Languages: {grad.language} </ListGroup.Item>
+            </ListGroup>
+            <Card.Body>
+              <Link onClick={() => onViewMore(grad)}>View More</Link>
+            </Card.Body>
+          </Card>
+    </div>
+    </div>
+  );
+}
 
 
 
 function Graduates() {
+  const [selectedGrad, setSelectedGrad] = useState(null);
+
+  const handleViewMore = (grad) => {
+    setSelectedGrad(grad);
+  };
+
+  const handleGoBack = () => {
+    setSelectedGrad(null);
+  };
+
   return (
     <div>
-      <SearchBar />
-  <div className="CardsContainerBlock">
-    {grads.map((grad, index) => (
-  <Card style={{ width: '17rem' }}  key={index}>
-<Card.Img variant="top" src={grad.image} alt={grad.name} className="cards-img" />
-<Card.Body>
-  <Card.Title>{grad.name}</Card.Title>
-</Card.Body>
-<ListGroup className="list-group-flush">
-  <ListGroup.Item>Username: {grad.username}</ListGroup.Item>
-  <ListGroup.Item>Repo: {grad.repo}</ListGroup.Item>
-  <ListGroup.Item>Languages: {grad.language} </ListGroup.Item>
-</ListGroup>
-<Card.Body>
-  <Card.Link href="#">View More</Card.Link>
-</Card.Body>
-</Card>
-))}
-</div>
-</div>
+      {selectedGrad ? (
+        <GraduatesProfile grad={selectedGrad} onGoBack={handleGoBack} />
+      ) : (
+        <div className="grad-cards">
+           <SearchBar />
+           <div  className="CardsContainerBlock">
+          {graduates.map((grad) => (
+            <GradCard key={grad.id} grad={grad} onViewMore={handleViewMore} />
+          ))}
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
 

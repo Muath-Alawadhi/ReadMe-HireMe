@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Home from "./Home/Home";
 import Graduates from "./Graduates/Graduates";
 import Signup from "./signup/Signup";
+import GraduatesProfile from "./GraduatesProfile/GraduatesProfile";
 import GitHubCallback from "./signup/GitHubCallback/GitHubCallback";
 
 
@@ -60,6 +61,10 @@ function RouterComponent() {
             <Route path="/Home" element={<Home />} />
             <Route path="/graduates" element={<Graduates />} />
             <Route path="/signup" element={<Signup />} />
+            <Route
+              path="/Graduates/GraduatesProfile"
+              element={<GraduatesProfile />}
+            />
             <Route path="/github-callback" element={<GitHubCallback />} />
 
           </Routes>
