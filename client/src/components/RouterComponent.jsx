@@ -4,6 +4,8 @@ import Home from "./Home/Home";
 import Graduates from "./Graduates/Graduates";
 import Signup from "./signup/Signup";
 import GraduatesProfile from "./GraduatesProfile/GraduatesProfile";
+import GitHubCallback from "./signup/GitHubCallback/GitHubCallback";
+
 
 function RouterComponent() {
   const customNavbarStyle = {
@@ -16,7 +18,6 @@ function RouterComponent() {
     <Router>
       <div style={myPage}>
         <nav style={customNavbarStyle} className="navbar navbar-expand-lg ">
-          {" "}
           <div className="container">
             <Link className="navbar-brand" to="/Home" style={myPage}>
               ReadMe-HireMe
@@ -64,6 +65,8 @@ function RouterComponent() {
               path="/Graduates/GraduatesProfile"
               element={<GraduatesProfile />}
             />
+            <Route path="/github-callback" element={<GitHubCallback />} />
+
           </Routes>
         </div>
       </div>
