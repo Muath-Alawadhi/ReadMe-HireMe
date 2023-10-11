@@ -135,67 +135,66 @@ async function fetchAndInsertData() {
       // still need to add cvLink and linkedin to DB in separate branch
 
       //------------------- end of readme file  ----------------------
-
-      // await client.query("BEGIN"); // starting client
-      // //  putting Grad  data into the test_graduate  table and
-      // const insertQuery = `
-      //   INSERT INTO Test_Graduate(userName, name, repos_number, profile_pic, skills)
-      //   VALUES ($1, $2, $3, $4, $5)
-      //   RETURNING id
-      // `;
-
-      // putting the  values in an array in the table  and storing the result.
-      // const values = [
-      //   githubUserName,
-      //   name,
-      //   reposNumber,
-      //   profilePicLink,
-      //   allLanguages,
-      // ];
-      // const result = await client.query(insertQuery, values);
-
-      // // Commit the client
-      // await client.query("COMMIT");
-
-      // client.release();
-
-      //Send the data as a JSON response
-      res.json({
-        userName: githubUserName,
-        name: name,
-        repos_number: reposNumber,
-        profile_pic: profilePicLink,
-        skills: allLanguages,
-        cv: cvLink,
-        linkedIn: linkedin,
+      // -----------------Database-----------------------------------------
+      // putting data into graduates 
+      app.post("/insertData", async (req, res) => {
+      await client.query(
+        'INSERT INTO graduates (github_username, name, profile_pic_url, readme_content, cv_link, linkedin_link) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT (github_username) DO UPDATE SET name = EXCLUDED.name, profile_pic_url = EXCLUDED.profile_pic_url, readme_content = EXCLUDED.readme_content, cv_link = EXCLUDED.cv_link, linkedin_link = EXCLUDED.linkedin_link RETURNING id',
+        [githubUserName, name, profilePicLink, readmeContent, cvLink, linkedin]
+      ).then(res => {
+        const graduateId = res.rows[0].id;
+        // putting data into repository
+        for (const repo of repos) {
+          client.query(
+            'INSERT INTO repositories (graduate_id, repo_name, repo_language) VALUES ($1, $2, $3) ON CONFLICT (graduate_id, repo_name) DO UPDATE SET repo_language = EXCLUDED.repo_language',
+            [graduateId, repo.name, repo.language]
+          );
+        }
+        // putting data into skills 
+        for (const language of allLanguages) {
+          client.query(
+            'INSERT INTO skills (graduate_id, language) VALUES ($1, $2) ON CONFLICT (graduate_id, language) DO NOTHING',
+            [graduateId, language]
+          );
+        }
       });
-    } catch (error) {
-      console.error("Error fetching and inserting data:", error.message);
-      // await client.query("ROLLBACK");
-      // throw new Error(
-      //   "Failed to insert data into the database. Please try again later."
-      // );
-    }
-  });
-}
-
+         await client.query('COMMIT');
+    client.release();
+    res.json({ success: true });
+      });
+  
+  }catch (error) {
+     await client.query('ROLLBACK');
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+})};
 //------------------ Endpoint for FrontEnd --------------
-
-app.get("/api/fetchGradData", async (req, res) => {
+/* app.get("/api/fetchGradData", async (req, res) => {
   try {
     const client = await pool.connect();
-    const getDataFromDb = await client.query(`SELECT profile_pic, name, userName, skills FROM test_graduate;`);
+
+    // fetch data from the 'graduates' table
+    const graduateData = await client.query('SELECT id, github_username, name, profile_pic_url, readme_content, cv_link, linkedin_link FROM graduates;');
+
+    // fetch related repositories and skills for each graduate
+    const grads = graduateData.rows;
+    for (const grad of grads) {
+      const reposData = await client.query('SELECT repo_name, repo_language FROM repositories WHERE graduate_id = $1;', [grad.id]);
+      const skillsData = await client.query('SELECT language FROM skills WHERE graduate_id = $1;', [grad.id]);
+
+      grad.repos = reposData.rows;
+      grad.skills = skillsData.rows.map(row => row.language);
+    }
 
     client.release();
+    res.json(grads);
 
-    const gradData = getDataFromDb.rows; //gradData is an array of objects , each object is a row
-
-    res.json(gradData);
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: `internal connection to DB error` });
   }
-});
+}); */
 
 //---------------- end of Endpoint for FrontEnd  --------------------
 
