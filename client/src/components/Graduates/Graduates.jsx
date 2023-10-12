@@ -40,7 +40,7 @@ function Graduates() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:6000/api/fetchgraddata`);
+        const response = await fetch(`http://localhost:8000/api/fetchgraddata` );
         //need to handle error here....
         const data = await response.json();
         // const jsonData = await response.json();
@@ -52,7 +52,7 @@ function Graduates() {
     };
 
     fetchData();
-  }, []);
+  },[userData]);
 
 
 
