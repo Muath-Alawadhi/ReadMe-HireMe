@@ -177,32 +177,65 @@ app.get("/fetchGradData", async (req, res) => {
 
 //-------------------------------------------------------------------------------------------
 
-//------------------ Endpoint for FrontEnd --------------
-/* app.get("/api/fetchGradData", async (req, res) => {
+//------------------ Endpoint for FrontEnd --------------------------------------------------------
+/* having all the related data made into single object for each graduate makes 
+it easier to display the info on the front-end. it will make  an array of graduate object from the API, and each object ( uses the id )will contain 
+all the information you need to display: this is what it will look like 
+{
+  id: 1,
+  github_username: "nfarah22",
+  name: "Name Not Available",
+  profile_pic_link: "https://avatars.githubusercontent.com/u/61600465?v=4",
+  skills: ["JavaScript", "HTML"],
+  readme: {
+    user_id: 1,
+    cv_link: "CV link not found",
+    linkedin: "LinkedIn link not found",
+    readme_content: "# nfarah2"
+  }
+}
+*/
+app.get("/api/fetchGradData", async (req, res) => {
   try {
     const client = await pool.connect();
 
-    // fetch data from the 'graduates' table
-    const graduateData = await client.query('SELECT id, github_username, name, profile_pic_url, readme_content, cv_link, linkedin_link FROM graduates;');
-
-    // fetch related repositories and skills for each graduate
+    // fetch data from graduates_user
+    const graduateQuery = 'SELECT id, github_username, name, profile_pic_link FROM graduates_user;';
+    const graduateData = await client.query(graduateQuery);
     const grads = graduateData.rows;
-    for (const grad of grads) {
-      const reposData = await client.query('SELECT repo_name, repo_language FROM repositories WHERE graduate_id = $1;', [grad.id]);
-      const skillsData = await client.query('SELECT language FROM skills WHERE graduate_id = $1;', [grad.id]);
 
-      grad.repos = reposData.rows;
-      grad.skills = skillsData.rows.map(row => row.language);
+    // fetch data from readme
+    const readmeQuery = 'SELECT user_id, cv_link, linkedin, readme_content FROM readme;';
+    const readmeData = await client.query(readmeQuery);
+    const readmes = readmeData.rows;
+
+    // fetch data from skills
+    const skillsQuery = 'SELECT user_id, languages FROM skills;';
+    const skillsData = await client.query(skillsQuery);
+    const skills = skillsData.rows;
+
+    // merge all the data using user_id
+    for (const grad of grads) {
+      // add readme info
+      const matchingReadme = readmes.find(readme => readme.user_id === grad.id);
+      if (matchingReadme) {
+        grad.readme = matchingReadme;
+      }
+
+      // add skills info
+      const matchingSkills = skills.filter(skill => skill.user_id === grad.id);
+      grad.skills = matchingSkills.map(skill => skill.languages).flat();
     }
 
     client.release();
-    res.json(grads);
+
+    res.json({ graduates: grads });
 
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: `internal connection to DB error` });
+    res.status(500).json({ error: "Internal connection to DB error" });
   }
-}); */
+});
 
 //---------------- end of Endpoint for FrontEnd  --------------------
 
