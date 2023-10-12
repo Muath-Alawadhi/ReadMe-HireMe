@@ -57,118 +57,126 @@ app.get("/", (req, res) => {
 });
 
 //----------------- fetch Grad data ------------------
-async function fetchAndInsertData() {
-  app.get("/fetchGradData", async (req, res) => {
-    const client = await pool.connect();
-    try {
-      //--(1)--giving username fetch --> name , repos number , profile_pic_url ---
-      const userDataResponse = await axios.get("https://api.github.com/user", {
-        headers: {
-          Authorization: `token ${githubAccessToken}`,
-        },
-      });
-      console.log(userDataResponse);
+async function fetchAndInsertData(res) {
+  const client = await pool.connect();
+  try {
+    //--(1)--giving username fetch --> name , repos number , profile_pic_url ---
+    const userDataResponse = await axios.get("https://api.github.com/user", {
+      headers: {
+        Authorization: `token ${githubAccessToken}`,
+      },
+    });
+    console.log(userDataResponse);
 
-      const userData = userDataResponse.data;
-      const githubUserName = userData.login || "Not available";
-      const name = userData.name || "Name Not available";
-      const reposNumber = userData.public_repos || "Not available";
-      const profilePicLink = userData.avatar_url || "Not available";
-      // console.log(githubUserName, name, reposNumber, profilePicLink);
+    const userData = userDataResponse.data;
+    const githubUserName = userData.login || "Not available";
+    const name = userData.name || "Name Not available";
+    const reposNumber = userData.public_repos || 0;
+    const profilePicLink = userData.avatar_url || "Not available";
 
-      // ---------------------repo.languages--------------------------
-      const reposResponse = await axios.get(userData.repos_url, {
-        // Using the repos_url to fetch repositories first ^ ^
-        headers: {
-          Authorization: `token ${githubAccessToken}`,
-        },
-      });
-      // Extract language data from repositories...o-o
-      const repos = reposResponse.data;
-      console.log(repos);
+    // ---------------------repo.languages--------------------------
+    const reposResponse = await axios.get(userData.repos_url, {
+      // Using the repos_url to fetch repositories first ^ ^
+      headers: {
+        Authorization: `token ${githubAccessToken}`,
+      },
+    });
+    // Extract language data from repositories...o-o
+    const repos = reposResponse.data;
+    console.log(repos);
 
-      const uniqueLanguages = new Set();
+    const uniqueLanguages = new Set();
 
-      // Iterate through user's repositories to extract languages
-      for (const repo of repos) {
-        const language = repo.language;
-        if (language && language !== "null") {
-          uniqueLanguages.add(language);
-        }
+    // Iterate through user's repositories to extract languages
+    for (const repo of repos) {
+      const language = repo.language;
+      if (language && language !== "null") {
+        uniqueLanguages.add(language);
       }
+    }
 
-      const allLanguages = [...uniqueLanguages];
-      //-------------------end of repo.languages ----------------------
+    const allLanguages = [...uniqueLanguages];
+    //-------------------end of repo.languages ----------------------
 
-      //  ------------------- fetch readme file  ----------------------
-      const readmeDataResponse = await axios.get(
-        `https://api.github.com/repos/${githubUserName}/${githubUserName}/readme`,
+    //  ------------------- fetch readme file  ----------------------
+    const readmeDataResponse = await axios.get(
+      `https://api.github.com/repos/${githubUserName}/${githubUserName}/readme`,
 
-        {
-          headers: {
-            Authorization: `token ${githubAccessToken}`,
-          },
-        }
-      );
+      {
+        headers: {
+          Authorization: `token ${githubAccessToken}`,
+        },
+      }
+    );
 
-      // The README content will be in base64-encoded,so we need to decode it
-      const readmeContent = Buffer.from(
-        readmeDataResponse.data.content,
-        "base64"
-      ).toString("utf-8");
-      // console.log(readmeContent);
+    // The README content will be in base64-encoded,so we need to decode it
+    const readmeContent = Buffer.from(
+      readmeDataResponse.data.content,
+      "base64"
+    ).toString("utf-8");
+    // console.log(readmeContent);
 
-      // cvRegex & linkedinRegex to match CV and LinkedIn links
-      const cvRegex =
-        /(?:cv|resume|portfolio)\s*:\s*?(https?:\/\/(?:www\.)?(?:[a-zA-Z0-9-]+\.)+(?:[a-zA-Z]{2,})(?:\/[^\s]*)?)/i;
-      const linkedinRegex = /(https?:\/\/www\.linkedin\.com\/\S+)/i;
+    // cvRegex & linkedinRegex to match CV and LinkedIn links
+    const cvRegex =
+      /(?:cv|resume|portfolio)\s*:\s*?(https?:\/\/(?:www\.)?(?:[a-zA-Z0-9-]+\.)+(?:[a-zA-Z]{2,})(?:\/[^\s]*)?)/i;
+    const linkedinRegex = /(https?:\/\/www\.linkedin\.com\/\S+)/i;
 
-      // Search for CV and LinkedIn links in the README content
-      const cvMatch = readmeContent.match(cvRegex);
-      const linkedinMatch = readmeContent.match(linkedinRegex);
+    // Search for CV and LinkedIn links in the README content
+    const cvMatch = readmeContent.match(cvRegex);
+    const linkedinMatch = readmeContent.match(linkedinRegex);
 
-      const cvLink = cvMatch ? cvMatch[0] : "CV link not found";
-      const linkedin = linkedinMatch
-        ? linkedinMatch[0]
-        : "LinkedIn link not found";
+    const cvLink = cvMatch ? cvMatch[0] : "CV link not found";
+    const linkedin = linkedinMatch
+      ? linkedinMatch[0]
+      : "LinkedIn link not found";
 
-      // still need to add cvLink and linkedin to DB in separate branch
+    // still need to add cvLink and linkedin to DB in separate branch
 
-      //------------------- end of readme file  ----------------------
-      // -----------------Database-----------------------------------------
-      // putting data into graduates 
-      app.post("/insertData", async (req, res) => {
-      await client.query(
-        'INSERT INTO graduates (github_username, name, profile_pic_url, readme_content, cv_link, linkedin_link) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT (github_username) DO UPDATE SET name = EXCLUDED.name, profile_pic_url = EXCLUDED.profile_pic_url, readme_content = EXCLUDED.readme_content, cv_link = EXCLUDED.cv_link, linkedin_link = EXCLUDED.linkedin_link RETURNING id',
-        [githubUserName, name, profilePicLink, readmeContent, cvLink, linkedin]
-      ).then(res => {
-        const graduateId = res.rows[0].id;
-        // putting data into repository
-        for (const repo of repos) {
-          client.query(
-            'INSERT INTO repositories (graduate_id, repo_name, repo_language) VALUES ($1, $2, $3) ON CONFLICT (graduate_id, repo_name) DO UPDATE SET repo_language = EXCLUDED.repo_language',
-            [graduateId, repo.name, repo.language]
-          );
-        }
-        // putting data into skills 
-        for (const language of allLanguages) {
-          client.query(
-            'INSERT INTO skills (graduate_id, language) VALUES ($1, $2) ON CONFLICT (graduate_id, language) DO NOTHING',
-            [graduateId, language]
-          );
-        }
-      });
-         await client.query('COMMIT');
-    client.release();
-    res.json({ success: true });
-      });
-  
-  }catch (error) {
-     await client.query('ROLLBACK');
+    //------------------- end of readme file  ----------------------
+
+    // -----------------Start of Database---------------------------
+
+    // Insert data into the Graduates_user table with conflict handling
+    const userInsertQuery = {
+      text: "INSERT INTO graduates_user (github_username, name, repos_number, profile_pic_link) VALUES ($1, $2, $3, $4) ON CONFLICT (github_username) DO NOTHING",
+      values: [githubUserName, name, reposNumber, profilePicLink],
+    };
+    await client.query(userInsertQuery);
+
+    // Insert data into the skill table ( array of languages)
+    const languageInsertQuery = {
+      text: "INSERT INTO skills (user_id, languages) VALUES ((SELECT id FROM graduates_user WHERE github_username = $1), $2) ON CONFLICT (user_id) DO NOTHING",
+      values: [githubUserName, allLanguages],
+    };
+    await client.query(languageInsertQuery);
+
+    // Insert data into the Readme table
+    const readmeInsertQuery = {
+      text: "INSERT INTO readme (user_id, cv_link, linkedin, readme_content) VALUES ((SELECT id FROM graduates_user WHERE github_username = $1), $2, $3, $4) ON CONFLICT (user_id) DO NOTHING",
+      values: [githubUserName, cvLink, linkedin, readmeContent],
+    };
+    await client.query(readmeInsertQuery);
+
+    // -----------------end of Database----------------------------
+  } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
+  } finally {
+    client.release();
   }
-})};
+}
+
+//--------- trigger data insertion (Put the data into the database after signing up)---------
+
+app.get("/fetchGradData", async (req, res) => {
+  await fetchAndInsertData(); //  this function to trigger data insertion
+
+  // Respond with success message
+  res.json({ success: true });
+});
+
+//-------------------------------------------------------------------------------------------
+
 //------------------ Endpoint for FrontEnd --------------
 /* app.get("/api/fetchGradData", async (req, res) => {
   try {
