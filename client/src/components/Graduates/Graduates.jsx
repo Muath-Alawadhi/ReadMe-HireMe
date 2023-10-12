@@ -1,6 +1,6 @@
 // For installing the last version of react-router-dom
 // npm install react-router-dom@latest
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import graduates from '../data';
 import "./Graduates.css";
 import Card from 'react-bootstrap/Card';
@@ -36,6 +36,26 @@ function GradCard({ grad, onViewMore }) {
 
 
 function Graduates() {
+  const [userData, setUserData] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://localhost:6000/api/fetchgraddata`);
+        //need to handle error here....
+        const data = await response.json();
+        // const jsonData = await response.json();
+        setUserData(data);
+        console.log(userData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+
+
   const [selectedGrad, setSelectedGrad] = useState(null);
 
   const handleViewMore = (grad) => {
