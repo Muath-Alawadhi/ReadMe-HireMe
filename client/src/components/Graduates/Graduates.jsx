@@ -51,6 +51,8 @@ function Graduates() {
     const [graduates, setGraduates] = useState([]);
 
   const [selectedGrad, setSelectedGrad] = useState(null);
+  const [isLoading, setIsLoading] = useState(true); // Add a loading state
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -58,6 +60,7 @@ function Graduates() {
         const response = await fetch(`http://localhost:8000/api/fetchGradData` );
         const data = await response.json();
         setGraduates(data);
+         setIsLoading(false); 
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -90,7 +93,7 @@ useEffect(() => {
             <GradCard key={grad.id} grad={grad} onViewMore={handleViewMore} />
           ))}
           </div> */}
-          <div className="CardsContainerBlock">
+          {/* <div className="CardsContainerBlock">
           {graduates.length > 0 ? ( // Check if graduates is not empty
             graduates.map((grad) => (
               <GradCard key={grad.id} grad={grad} onViewMore={handleViewMore} />
@@ -99,7 +102,17 @@ useEffect(() => {
             // Display a loading message if graduates is empty.
             <p>Loading data...</p>
           )}
-        </div>
+        </div> */}
+<div className="CardsContainerBlock">
+            {isLoading ? ( // Check loading state
+              <p>Loading data...</p>
+            ) : (
+              graduates.map((grad) => (
+                <GradCard key={grad.id} grad={grad} onViewMore={handleViewMore} />
+              ))
+            )}
+          </div>
+
         </div>
       )}
     </div>
