@@ -34,20 +34,8 @@ function GradCard({ grad, onViewMore }) {
 }
 
 
-
-//   const [graduates, setGraduates] = useState([]);
-// useEffect(() => {
-//     fetch(`http://localhost:8000/api/fetchGradData`)
-//       .then((response) => response.json())
-//       .then((data) => {
-//         setGraduates([...data]);
-//         console.log(graduates);
-//       })
-//       .catch((error) => console.log(error));
-//   }, []);
-
 function Graduates() {
-  // const [userData, setUserData] = useState([]);
+
     const [graduates, setGraduates] = useState([]);
 
   const [selectedGrad, setSelectedGrad] = useState(null);
@@ -58,16 +46,11 @@ function Graduates() {
     const fetchData = async () => {
       try {
         const response = await fetch(`http://localhost:8000/api/fetchGradData` );
-        // const data = await response.json();
-
-        const responseData = await response.json();
-      const data = responseData.graduates; // Access the 'graduates' key
-
-      console.log("Data from API:", data);
-
-
+         const responseData = await response.json();
+        const data = responseData.graduates; // Access the 'graduates' key as the response from api is--> res.json({ graduates: grads });
+        console.log("Data from API:", data);
         setGraduates(data);
-         setIsLoading(false); 
+        setIsLoading(false); 
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -95,22 +78,7 @@ useEffect(() => {
       ) : (
         <div className="grad-cards">
            <SearchBar />
-           {/* <div  className="CardsContainerBlock">
-          {graduates.map((grad) => (
-            <GradCard key={grad.id} grad={grad} onViewMore={handleViewMore} />
-          ))}
-          </div> */}
-          {/* <div className="CardsContainerBlock">
-          {graduates.length > 0 ? ( // Check if graduates is not empty
-            graduates.map((grad) => (
-              <GradCard key={grad.id} grad={grad} onViewMore={handleViewMore} />
-            ))
-          ) : (
-            // Display a loading message if graduates is empty.
-            <p>Loading data...</p>
-          )}
-        </div> */}
-<div className="CardsContainerBlock">
+           <div className="CardsContainerBlock">
             {isLoading ? ( // Check loading state
               <p>Loading data...</p>
             ) : (
