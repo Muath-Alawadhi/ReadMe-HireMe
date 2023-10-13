@@ -4,12 +4,26 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { InputGroup, FormControl , Button  } from 'react-bootstrap';
 
 
-function SearchBar() {
+function SearchBar({ onSearchResults = () => {} }) {
   const [searchText, setSearchText] = useState('');
 
-  const handleSearch = () => {
-     console.log(`Searching for: ${searchText}`);
+  const handleSearch = async () => {
+    try {
+      const response = await fetch(`http://localhost:8000/search?name=${searchText}&skills=${searchText}`);
+      const data = await response.json();
+
+      if (response.ok) {
+        onSearchResults(data);  
+      } else {
+        console.error("Failed to fetch data:", data);
+      }
+    } catch (err) {
+      console.error("An error occurred:", err);
+    }
   };
+
+
+  
   return (
     <div className="container mt-4">
       <h1>Search a graduate</h1>
