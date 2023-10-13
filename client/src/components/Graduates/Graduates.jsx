@@ -1,7 +1,7 @@
 // For installing the last version of react-router-dom
 // npm install react-router-dom@latest
 import React, { useState , useEffect } from 'react';
-import graduates from '../data';
+// import graduates from '../data';
 import "./Graduates.css";
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
@@ -47,31 +47,28 @@ function GradCard({ grad, onViewMore }) {
 //   }, []);
 
 function Graduates() {
-  const [userData, setUserData] = useState([]);
+  // const [userData, setUserData] = useState([]);
+    const [graduates, setGraduates] = useState([]);
 
+  const [selectedGrad, setSelectedGrad] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(`http://localhost:8000/api/fetchGradData` );
-        //need to handle error here....
         const data = await response.json();
-        
-        setUserData(data);
+        setGraduates(data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-
     fetchData();
   },[]);
 
 useEffect(() => {
-  console.log(userData);
-}, [userData]);
+  console.log(graduates);
+}, [graduates]);
 
-
-  const [selectedGrad, setSelectedGrad] = useState(null);
 
   const handleViewMore = (grad) => {
     setSelectedGrad(grad);
@@ -88,11 +85,21 @@ useEffect(() => {
       ) : (
         <div className="grad-cards">
            <SearchBar />
-           <div  className="CardsContainerBlock">
+           {/* <div  className="CardsContainerBlock">
           {graduates.map((grad) => (
             <GradCard key={grad.id} grad={grad} onViewMore={handleViewMore} />
           ))}
-          </div>
+          </div> */}
+          <div className="CardsContainerBlock">
+          {graduates.length > 0 ? ( // Check if graduates is not empty
+            graduates.map((grad) => (
+              <GradCard key={grad.id} grad={grad} onViewMore={handleViewMore} />
+            ))
+          ) : (
+            // Display a loading message if graduates is empty.
+            <p>Loading data...</p>
+          )}
+        </div>
         </div>
       )}
     </div>
