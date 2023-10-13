@@ -244,10 +244,25 @@ app.get("/api/fetchGradData", async (req, res) => {
 app.get('/search', async (req, res) => {
   const { name, skills } = req.query;
 
- 
+  try {
+    const search = `
+      SELECT graduates_user.id, graduates_user.name, skills.languages 
+      FROM graduates_user
+      JOIN skills ON graduates_user.id = skills.user_id
+      WHERE graduates_user.name LIKE $1 OR $2 = ANY(skills.languages);
+    `;
+    
+    const values = [`%${name}%`, skills];
 
-  res.json({ message: "Search functionality to be implemented" });
+    const result = await pool.query(search, values);
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server Error'});
+  }
 });
+
 
 
 
