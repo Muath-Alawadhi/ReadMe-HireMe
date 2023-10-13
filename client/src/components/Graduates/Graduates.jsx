@@ -1,7 +1,7 @@
 // For installing the last version of react-router-dom
 // npm install react-router-dom@latest
-import React, { useState } from 'react';
-import graduates from '../data';
+import React, { useState , useEffect } from 'react';
+// import graduates from '../data';
 import "./Graduates.css";
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
@@ -34,9 +34,34 @@ function GradCard({ grad, onViewMore }) {
 }
 
 
-
 function Graduates() {
+
+    const [graduates, setGraduates] = useState([]);
+
   const [selectedGrad, setSelectedGrad] = useState(null);
+  const [isLoading, setIsLoading] = useState(true); // Add a loading state
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://localhost:8000/api/fetchGradData` );
+         const responseData = await response.json();
+        const data = responseData.graduates; // Access the 'graduates' key as the response from api is--> res.json({ graduates: grads });
+        console.log("Data from API:", data);
+        setGraduates(data);
+        setIsLoading(false); 
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  },[]);
+
+useEffect(() => {
+  console.log(graduates);
+}, [graduates]);
+
 
   const handleViewMore = (grad) => {
     setSelectedGrad(grad);
@@ -53,11 +78,16 @@ function Graduates() {
       ) : (
         <div className="grad-cards">
            <SearchBar />
-           <div  className="CardsContainerBlock">
-          {graduates.map((grad) => (
-            <GradCard key={grad.id} grad={grad} onViewMore={handleViewMore} />
-          ))}
+           <div className="CardsContainerBlock">
+            {isLoading ? ( // Check loading state
+              <p>Loading data...</p>
+            ) : (
+              graduates.map((grad) => (
+                <GradCard key={grad.id} grad={grad} onViewMore={handleViewMore} />
+              ))
+            )}
           </div>
+
         </div>
       )}
     </div>
