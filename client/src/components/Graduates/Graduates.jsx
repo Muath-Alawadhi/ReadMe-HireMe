@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import GraduatesProfile from '../GraduatesProfile/GraduatesProfile';
 
 
+
 function GradCard({ grad, onViewMore }) {
   return (
     <div>
@@ -37,9 +38,16 @@ function GradCard({ grad, onViewMore }) {
 function Graduates() {
 
     const [graduates, setGraduates] = useState([]);
+    const [filteredGraduates, setFilteredGraduates] = useState(null);
 
   const [selectedGrad, setSelectedGrad] = useState(null);
   const [isLoading, setIsLoading] = useState(true); // Add a loading state
+
+  const handleSearchResults = (filteredData) => {
+    setFilteredGraduates(filteredData);
+  };
+
+
 
 
   useEffect(() => {
@@ -77,12 +85,12 @@ useEffect(() => {
         <GraduatesProfile grad={selectedGrad} onGoBack={handleGoBack} />
       ) : (
         <div className="grad-cards">
-           <SearchBar />
+           <SearchBar onSearchResults={handleSearchResults}  />
            <div className="CardsContainerBlock">
             {isLoading ? ( // Check loading state
               <p>Loading data...</p>
             ) : (
-              graduates.map((grad) => (
+              (filteredGraduates || graduates).map((grad) => (
                 <GradCard key={grad.id} grad={grad} onViewMore={handleViewMore} />
               ))
             )}
