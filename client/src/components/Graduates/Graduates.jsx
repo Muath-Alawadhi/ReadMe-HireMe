@@ -58,7 +58,14 @@ function Graduates() {
     const fetchData = async () => {
       try {
         const response = await fetch(`http://localhost:8000/api/fetchGradData` );
-        const data = await response.json();
+        // const data = await response.json();
+
+        const responseData = await response.json();
+      const data = responseData.graduates; // Access the 'graduates' key
+
+      console.log("Data from API:", data);
+
+
         setGraduates(data);
          setIsLoading(false); 
       } catch (error) {
