@@ -35,35 +35,40 @@ function GradCard({ grad, onViewMore }) {
 
 
 
+//   const [graduates, setGraduates] = useState([]);
+// useEffect(() => {
+//     fetch(`http://localhost:8000/api/fetchGradData`)
+//       .then((response) => response.json())
+//       .then((data) => {
+//         setGraduates([...data]);
+//         console.log(graduates);
+//       })
+//       .catch((error) => console.log(error));
+//   }, []);
+
 function Graduates() {
   const [userData, setUserData] = useState([]);
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://localhost:8000/api/fetchGradData` );
+        //need to handle error here....
+        const data = await response.json();
+        
+        setUserData(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  },[]);
+
 useEffect(() => {
-    fetch(`http://localhost:8000/api/fetchGradData`)
-      .then((response) => response.json())
-      .then((data) => {
-        setUserData([...data]);
-      })
-      .catch((error) => console.log(error));
-  }, []);
-
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await fetch(`http://localhost:8000/api/fetchGradData` );
-  //       //need to handle error here....
-  //       const data = await response.json();
-  //       // const jsonData = await response.json();
-  //       setUserData(data);
-  //       console.log(userData);
-  //     } catch (error) {
-  //       console.error("Error fetching data:", error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // },[]);
-
+  console.log(userData);
+}, [userData]);
 
 
   const [selectedGrad, setSelectedGrad] = useState(null);
