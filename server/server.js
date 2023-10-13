@@ -237,7 +237,19 @@ app.get("/api/fetchGradData", async (req, res) => {
   }
 });
 
-//---------------- end of Endpoint for FrontEnd  --------------------
+//---------------- end of Endpoint for FrontEnd  ------------------------------------------------
+//----------------------------Search functionality api -------------------------------------------
+
+
+app.get('/search', async (req, res) => {
+  const { name, skills } = req.query;
+
+ 
+
+  res.json({ message: "Search functionality to be implemented" });
+});
+
+
 
 //---------------- listen --------------------
 app.listen(port, () => {
