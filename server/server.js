@@ -130,8 +130,6 @@ async function fetchAndInsertData(res) {
       ? linkedinMatch[0]
       : "LinkedIn link not found";
 
-    // still need to add cvLink and linkedin to DB in separate branch
-
     //------------------- end of readme file  ----------------------
 
     // -----------------Start of Database---------------------------
@@ -159,11 +157,18 @@ async function fetchAndInsertData(res) {
 
     // -----------------end of Database----------------------------
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    if (error.response && error.response.status === 404) {
+      console.log("README file not found. Creating one...");
+      res.status(500).json({});
+    } else {
+      console.error(error);
+      res.status(500).json({ error: "Internal server error" });
+    }
   } finally {
     client.release();
   }
+
+// }
 }
 
 //--------- trigger data insertion (Put the data into the database after signing up)---------
