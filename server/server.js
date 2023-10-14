@@ -13,7 +13,7 @@ const cors = require("cors"); //Middleware: to handle CORS-related headers and b
 const bodyParser = require("body-parser"); //Middleware: To handle incoming HTTP requests
 require("dotenv").config();
 
-const port = 8000;
+const port = parseInt(process.env.PORT ?? "8000", 10);
 app.use(bodyParser.json());
 app.use(cors());
 
