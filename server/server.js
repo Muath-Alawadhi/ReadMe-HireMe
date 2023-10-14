@@ -118,7 +118,7 @@ async function fetchAndInsertData(res) {
 
     // cvRegex & linkedinRegex to match CV and LinkedIn links
     const cvRegex =
-      /(?:cv|resume|portfolio)\s*:\s*?(https?:\/\/(?:www\.)?(?:[a-zA-Z0-9-]+\.)+(?:[a-zA-Z]{2,})(?:\/[^\s]*)?)/i;
+    /(?<=(?:cv|resume|portfolio)\s*:\s*?)(https?:\/\/(?:www\.)?(?:[a-zA-Z0-9-]+\.)+(?:[a-zA-Z]{2,})(?:\/[^\s]*)?)/i;
     const linkedinRegex = /(https?:\/\/www\.linkedin\.com\/\S+)/i;
 
     // Search for CV and LinkedIn links in the README content
@@ -200,7 +200,7 @@ app.get("/api/fetchGradData", async (req, res) => {
     const client = await pool.connect();
 
     // fetch data from graduates_user
-    const graduateQuery = 'SELECT id, github_username, name, profile_pic_link FROM graduates_user;';
+    const graduateQuery = 'SELECT id, github_username, name, profile_pic_link,repos_number  FROM graduates_user;';
     const graduateData = await client.query(graduateQuery);
     const grads = graduateData.rows;
 
