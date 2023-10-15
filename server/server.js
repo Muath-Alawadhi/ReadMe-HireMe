@@ -252,10 +252,12 @@ app.get('/search', async (req, res) => {
       WHERE graduates_user.name LIKE $1 OR $2 = ANY(skills.languages);
     `;
     
-    const values = [`%${name}%`, skills];
+    const skillsArray = skills.split(',');
+
+    const values = [`%${name}%`, skillsArray];
 
     const result = await pool.query(search, values);
-
+    
     res.json(result.rows);
   } catch (err) {
     console.error(err);
