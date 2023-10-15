@@ -35,7 +35,7 @@ function GraduatesProfile({ grad, onGoBack }) {
                  {/* <p className="text-muted mb-4">Bay Area, San Francisco, CA</p> */}
                  <div className="d-flex justify-content-center mb-2">
                    <MDBBtn>Follow</MDBBtn>
-                   <a href={grad.readme.linkedin +'/message'}>
+                   <a href={grad.readme.linkedin +'message'}>
                    <MDBBtn outline className="ms-1">Message</MDBBtn>
                    </a>
                  </div>
