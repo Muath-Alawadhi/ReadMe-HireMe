@@ -1,7 +1,6 @@
 // For installing the last version of react-router-dom
 // npm install react-router-dom@latest
 import React, { useState , useEffect } from 'react';
-// import graduates from '../data';
 import "./Graduates.css";
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
@@ -16,14 +15,14 @@ function GradCard({ grad, onViewMore }) {
     <div>
        <div>
        <Card style={{ width: '17rem' }} key={grad.id}>
-             <Card.Img variant="top" src={grad.image} alt={grad.name} className="cards-img" />
+             <Card.Img variant="top" src={grad.profile_pic_link} alt={grad.name} className="cards-img" />
              <Card.Body>
               <Card.Title>{grad.name}</Card.Title>
             </Card.Body>
             <ListGroup className="list-group-flush">
-              <ListGroup.Item>Username: {grad.username}</ListGroup.Item>
-              <ListGroup.Item>Repo: {grad.repo}</ListGroup.Item>
-              <ListGroup.Item>Languages: {grad.language} </ListGroup.Item>
+              <ListGroup.Item>Username: {grad.github_username}</ListGroup.Item>
+              <ListGroup.Item>Repo: {grad.repos_number}</ListGroup.Item>
+              <ListGroup.Item>Languages: {grad.skills} </ListGroup.Item>
             </ListGroup>
             <Card.Body>
               <Link onClick={() => onViewMore(grad)}>View More</Link>
