@@ -9,7 +9,7 @@ import {
   MDBCardBody,
   MDBCardImage,
   MDBBtn,
-  // MDBIcon,
+  MDBIcon,
   MDBListGroup,
   MDBListGroupItem
 } from 'mdb-react-ui-kit';
@@ -40,15 +40,16 @@ function GraduatesProfile({ grad, onGoBack }) {
                </MDBCardBody>
              </MDBCard>
 
-             {/* <MDBCard className="mb-4 mb-lg-0">
+             <MDBCard className="mb-4 mb-lg-0">
                <MDBCardBody className="p-0">
                  <MDBListGroup flush className="rounded-3">
                    <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
-                     <MDBCardText>mdbootstrap</MDBCardText>
+                   <MDBIcon fab icon="github fa-lg" style={{ color: '#333333' }} />
+                     <MDBCardText><a href={grad.readme.cv}>CV Link</a></MDBCardText>
                    </MDBListGroupItem>
                  </MDBListGroup> 
                </MDBCardBody> 
-             </MDBCard> */}
+             </MDBCard>
              <MDBBtn onClick={onGoBack} outline className="ms-1  backButton">Go Back</MDBBtn>
            </MDBCol>
            <MDBCol lg="8">
@@ -77,7 +78,7 @@ function GraduatesProfile({ grad, onGoBack }) {
                      <MDBCardText>CV</MDBCardText>
                    </MDBCol>
                    <MDBCol sm="9">
-                     <MDBCardText className="text-muted">{grad.readme.cv_link}</MDBCardText>
+                     <MDBCardText className="text-muted"></MDBCardText>
                    </MDBCol>
                  </MDBRow>
                  <hr />
@@ -87,6 +88,15 @@ function GraduatesProfile({ grad, onGoBack }) {
                    </MDBCol>
                    <MDBCol sm="9">
                      <MDBCardText className="text-muted">{grad.readme.linkedin}</MDBCardText>
+                   </MDBCol>
+                 </MDBRow>
+                 <hr />
+                 <MDBRow>
+                   <MDBCol sm="3">
+                     <MDBCardText>Github Link</MDBCardText>
+                   </MDBCol>
+                   <MDBCol sm="9">
+                     <MDBCardText className="text-muted">{grad.github_url}</MDBCardText>
                    </MDBCol>
                  </MDBRow>
                  <hr />
