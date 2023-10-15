@@ -4,18 +4,18 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { InputGroup, FormControl , Button  } from 'react-bootstrap';
 
 
-function SearchBar({ onSearchResults = () => {} }) {
-  const [searchText, setSearchText] = useState('');
+function SearchBar({ onSearchResults}) {
+  const [searchQuery, setSearchQuery] = useState('');
 
   const handleSearch = async () => {
     try {
-      const response = await fetch(`http://localhost:8000/search?name=${searchText}&skills=${searchText}`);
-      const data = await response.json();
+      const response = await fetch(`http://localhost:8000/api/search?query=${searchQuery}`);
+      const filteredData = await response.json();
 
       if (response.ok) {
-        onSearchResults(data);  
+        onSearchResults(filteredData);  
       } else {
-        console.error("Failed to fetch data:", data);
+        console.error("Failed to fetch filteredData:", filteredData);
       }
     } catch (err) {
       console.error("An error occurred:", err);
@@ -32,8 +32,8 @@ function SearchBar({ onSearchResults = () => {} }) {
           placeholder="Search by name or skill..."
           aria-label="Search"
           aria-describedby="basic-addon2"
-          onChange={(e) => setSearchText(e.target.value)}
-          value={searchText}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          value={searchQuery}
         />
           <Button variant="danger" onClick={handleSearch}>
             <i className="fas fa-search"></i>

@@ -36,18 +36,11 @@ function GradCard({ grad, onViewMore }) {
 
 function Graduates() {
 
-    const [graduates, setGraduates] = useState([]);
-    const [filteredGraduates, setFilteredGraduates] = useState(null);
+  const [graduates, setGraduates] = useState([]);
+  const [filteredGraduates, setFilteredGraduates] = useState(null);
 
   const [selectedGrad, setSelectedGrad] = useState(null);
   const [isLoading, setIsLoading] = useState(true); // Add a loading state
-
-  const handleSearchResults = (filteredData) => {
-    setFilteredGraduates(filteredData);
-  };
-
-
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -76,6 +69,10 @@ useEffect(() => {
 
   const handleGoBack = () => {
     setSelectedGrad(null);
+  };
+
+  const handleSearchResults = (filteredData) => {
+    setFilteredGraduates(filteredData);
   };
 
   return (
