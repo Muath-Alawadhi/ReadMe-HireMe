@@ -35,7 +35,9 @@ function GraduatesProfile({ grad, onGoBack }) {
                  {/* <p className="text-muted mb-4">Bay Area, San Francisco, CA</p> */}
                  <div className="d-flex justify-content-center mb-2">
                    <MDBBtn>Follow</MDBBtn>
+                   <a href={grad.readme.linkedin +'/message'}>
                    <MDBBtn outline className="ms-1">Message</MDBBtn>
+                   </a>
                  </div>
                </MDBCardBody>
              </MDBCard>
@@ -45,7 +47,15 @@ function GraduatesProfile({ grad, onGoBack }) {
                  <MDBListGroup flush className="rounded-3">
                    <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
                    <MDBIcon fab icon="github fa-lg" style={{ color: '#333333' }} />
-                     <MDBCardText><a href={grad.readme.cv}>CV Link</a></MDBCardText>
+                     <MDBCardText><a href={grad.readme.cv_link}>View My CV</a></MDBCardText>
+                   </MDBListGroupItem>
+                   <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
+                   <MDBIcon fab icon="github fa-lg" style={{ color: '#333333' }} />
+                     <MDBCardText><a href={grad.readme.linkedin}>View My LinkdIn</a></MDBCardText>
+                   </MDBListGroupItem>
+                   <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
+                   <MDBIcon fab icon="github fa-lg" style={{ color: '#333333' }} />
+                     <MDBCardText><a href={grad.github_url}>View My Github</a></MDBCardText>
                    </MDBListGroupItem>
                  </MDBListGroup> 
                </MDBCardBody> 
@@ -70,33 +80,6 @@ function GraduatesProfile({ grad, onGoBack }) {
                    </MDBCol>
                    <MDBCol sm="9">
                      <MDBCardText className="text-muted">{grad.github_username}</MDBCardText>
-                   </MDBCol>
-                 </MDBRow>
-                 <hr />
-                 <MDBRow>
-                   <MDBCol sm="3">
-                     <MDBCardText>CV</MDBCardText>
-                   </MDBCol>
-                   <MDBCol sm="9">
-                     <MDBCardText className="text-muted"></MDBCardText>
-                   </MDBCol>
-                 </MDBRow>
-                 <hr />
-                 <MDBRow>
-                   <MDBCol sm="3">
-                     <MDBCardText>LinkdIn</MDBCardText>
-                   </MDBCol>
-                   <MDBCol sm="9">
-                     <MDBCardText className="text-muted">{grad.readme.linkedin}</MDBCardText>
-                   </MDBCol>
-                 </MDBRow>
-                 <hr />
-                 <MDBRow>
-                   <MDBCol sm="3">
-                     <MDBCardText>Github Link</MDBCardText>
-                   </MDBCol>
-                   <MDBCol sm="9">
-                     <MDBCardText className="text-muted">{grad.github_url}</MDBCardText>
                    </MDBCol>
                  </MDBRow>
                  <hr />
