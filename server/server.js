@@ -267,6 +267,7 @@ app.get('/search', async (req, res) => {
 -----------------------------------Data visualisation API------------------------------------*/
 
 app.get("/github/stats", async (req, res) => {
+  const client = await pool.connect();
   // fetching number of issues created by user
   try {
     const { username } = req.params;
@@ -296,8 +297,21 @@ app.get("/github/stats", async (req, res) => {
   // combining all the stats and sending them as a JSON response
   res.json({ issuesCreated, totalPullRequests, repoCommits });
 
+  // SQL query to insert the GitHub stats in the database
+  const insertStats = `
+  INSERT INTO github_stats (user_id, issues_created, pull_requests_created, repo_commits)
+  SELECT id, $1, $2, $3 FROM graduates_user WHERE github_username = $4
+ `;
+ 
+  await client.query(insertStats, [issuesCreated, totalPullRequests, JSON.stringify(repoCommits), username]);
+
+  res.json({ issuesCreated, totalPullRequests, repoCommits });
+
+
 } catch (error) {
   res.status(400).json({ error: "Unable to fetch data" });
+}finally {
+  client.release();
 }
 });
   
