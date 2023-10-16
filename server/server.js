@@ -263,6 +263,18 @@ app.get('/search', async (req, res) => {
     res.status(500).json({ message: 'Server Error'});
   }
 });
+/*---------------------------------End of search Functionality-------------------------------
+-----------------------------------Data visualisation API------------------------------------*/
+
+app.get("/github/stats", async (req, res) => {
+  // fetching number of issues created by user
+  try {
+    const { username } = req.params;
+    const getIssues = await axios.get(`https://api.github.com/users/${username}/issues`);
+    const issuesCreated = getIssues.data.length;
+  }
+
+  });
 
 
 
