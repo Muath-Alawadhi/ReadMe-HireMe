@@ -47,7 +47,11 @@ function GraduatesProfile({ grad, onGoBack }) {
                  <MDBListGroup flush className="rounded-3">
                    <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
                    <MDBIcon far icon="file-alt fa-lg" style={{color: "#598ee8",}}/>
-                     <MDBCardText><a href={grad.readme.cv_link}>View My CV</a></MDBCardText>
+                   {grad.readme.cv_link ? ( 
+                      <MDBCardText><a href={grad.readme.cv_link}>View My CV</a></MDBCardText>          
+                        ) : (
+                          <p>Not Available</p>
+                        )}
                    </MDBListGroupItem>
                    <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
                    <MDBIcon fab icon="fa-brands fa-linkedin fa-lg" style={{ color: '#0045bd' }} />
@@ -120,4 +124,8 @@ function GraduatesProfile({ grad, onGoBack }) {
 }
 
 export default GraduatesProfile;
+
+
+
+
 
