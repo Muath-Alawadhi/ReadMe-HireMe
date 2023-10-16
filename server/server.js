@@ -272,9 +272,37 @@ app.get("/github/stats", async (req, res) => {
     const { username } = req.params;
     const getIssues = await axios.get(`https://api.github.com/users/${username}/issues`);
     const issuesCreated = getIssues.data.length;
+
+  //fetching repositories
+    const getRepos = await axios.get(`https://api.github.com/users/${username}/repos`);
+    const reposData = getRepos.data;
+  
+  // fetching pull requests from each repository
+      let totalPullRequests = 0;
+      
+      for (const repo of reposData) {
+        const getPullRequests = await axios.get(`https://api.github.com/repos/${username}/${repo.name}/pulls`);
+        totalPullRequests += getPullRequests.data.length;
+      }
+  
+  
+  // fetching the number of commits for each repository
+  const repoCommits = {};
+  for (const repo of reposData) {
+    const getCommits = await axios.get(`https://api.github.com/repos/${username}/${repo.name}/commits`);
+    repoCommits[repo.name] = getCommits.data.length;
   }
 
-  });
+  // combining all the stats and sending them as a JSON response
+  res.json({ issuesCreated, totalPullRequests, repoCommits });
+
+} catch (error) {
+  res.status(400).json({ error: "Unable to fetch data" });
+}
+});
+  
+
+
 
 
 
