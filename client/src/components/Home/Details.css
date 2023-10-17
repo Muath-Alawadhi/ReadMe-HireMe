@@ -1,0 +1,103 @@
+/* Base Styles */
+.home-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 100rem;
+}
+
+.left-content,
+.right-content {
+  text-align: center;
+  padding: 20px;
+  margin-top: 10rem;
+  margin-right: 15rem;
+
+  backdrop-filter: blur(3px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+
+.button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Language Icons */
+.icons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: #fff;
+  font-size: 3rem;
+  margin: 10px;
+}
+
+.icon-html,
+.icon-css,
+.icon-js,
+.icon-react,
+.icon-node,
+.icon-psql {
+  margin: 8px;
+}
+
+/* Heading */
+.place {
+  margin-top: 40px;
+}
+
+/* Logo */
+.logo {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  height: 4rem;
+  width: 12rem;
+  z-index: 999;
+}
+
+/* Button for Exceptional Cases */
+button.btn-danger {
+  background-color: #d42c2c;
+}
+
+/* Language Icons' Colors */
+.icon-html {
+  color: #e44d26; /* HTML color */
+}
+
+.icon-css {
+  color: #264de4; /* CSS color */
+}
+
+.icon-js {
+  color: #f0db4f; /* JavaScript color */
+}
+
+.icon-react {
+  color: #61dafb; /* React color */
+}
+
+.icon-node {
+  color: #339933; /* Node.js color */
+}
+
+.icon-psql {
+  color: #336791; /* PostgreSQL color */
+}
+
+ .is-home {
+  background: url("./11118324.jpg") no-repeat center center fixed;
+  background-size: cover;
+  /* background: url("./Hero\ 8.png") center/cover no-repeat; */
+  backdrop-filter: blur(2.5px); 
+ } 
+
+
+
+

@@ -1,0 +1,179 @@
+/* Base Styles */
+/* * {
+  outline: red 1px dotted;
+} */
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden; /* Prevent any scrollbars that might create space */
+}
+.home-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 100px;
+}
+
+.left-content {
+  text-align: center;
+  margin-top: 22rem; /* Center vertically and horizontally */
+}
+
+.button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Language Icons */
+.icons {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  font-size: 3rem;
+}
+
+.icon-html,
+.icon-css,
+.icon-js,
+.icon-react,
+.icon-node,
+.icon-psql {
+  margin: 40px 40px 0px 40px;
+}
+/* Language Icons */
+.icons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center; /* Center the icons horizontally within the footer */
+  align-items: center; /* Center the icons vertically within the footer */
+  color: #fff;
+  font-size: 3rem;
+  margin-left: 100px;
+}
+
+/* Heading */
+.place {
+  margin: 20px;
+  padding: 10px;
+  color: #d12f2f;
+  font-weight: bold;
+  font-size: 30px;
+  border-bottom: 2px black solid;
+  
+  /* border: 1px solid rgba(255, 255, 255, 0.3); */
+  /* border-radius: 10px; */
+  /* backdrop-filter: blur(2px) brightness(1.2); Adjust the blur and brightness values as needed */
+}
+
+
+
+
+.icon-text {
+  margin-top: 20px;
+  color: black;
+  font-weight: bold;
+  font-size: 30px;
+}
+
+/* Logo */
+.logo {
+  position: fixed;
+  bottom: 2rem;
+  left: 70px;
+  height: 4rem;
+  width: 12rem;
+  z-index: 999;
+}
+
+/* Button for Exceptional Cases */
+button.btn-danger {
+  background-color: #d42c2c;
+}
+
+/* Language Icons' Colors */
+.icon-html {
+  color: #e44d26; /* HTML color */
+}
+
+.icon-css {
+  color: #264de4; /* CSS color */
+}
+
+.icon-js {
+  color: #f0db4f; /* JavaScript color */
+}
+
+.icon-react {
+  color: #61dafb; /* React color */
+}
+
+.icon-node {
+  color: #339933; /* Node.js color */
+}
+
+.icon-psql {
+  color: #336791; /* PostgreSQL color */
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.home {
+  position: relative;
+  height: 100vh;
+  background-color: white;
+  margin: 0; /* Remove margin for the .home element */
+  padding: 0; /* Remove padding for the .home element */
+}
+
+.home::before {
+  content: "";
+  position: absolute;
+  top: 0; /* Start from the very top */
+  bottom: 20%; /* Cover the bottom 20% of the container */
+  left: 0;
+  right: 0;
+  background: url("./11118324\ \(1\).jpg") no-repeat center top;
+  background-size: cover;
+  z-index: -1;
+}
+.footer {
+  background-color: #fff;
+  text-align: center;
+  margin-top: 22rem;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: inset 0px 105px 128px -88px rgba(0, 0, 0, 0.3);
+}
+
+.button-content {
+  margin: auto;
+  
+}
+.graduates {
+  color: #d12f2f;
+}
+
+/* .home {
+  background: url("./11118324.jpg") no-repeat center center fixed;
+  background-size: cover;
+  /* background: url("./Hero\ 8.png") center/cover no-repeat; */
+/* backdrop-filter: blur(2.5px);  
+
+}
+
+.testing {
+  margin-top: 100vh;
+} */
