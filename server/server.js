@@ -242,7 +242,7 @@ app.get("/api/fetchGradData", async (req, res) => {
 
 //----------------------------Search functionality api -------------------------------------------
 
-app.get("/search", async (req, res) => {
+app.get("/api/search", async (req, res) => {
   try {
     const { name, skills } = req.query;
 

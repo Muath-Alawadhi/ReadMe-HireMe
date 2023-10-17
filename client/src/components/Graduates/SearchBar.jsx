@@ -9,8 +9,10 @@ function SearchBar({ onSearchResults}) {
 
   const handleSearch = async () => {
     try {
-      const response = await fetch(`http://localhost:8000/api/search?query=${searchQuery}`);
+     const response = await fetch(`http://localhost:8000/api/search?name=${searchQuery}`);
+      /*const response = await fetch('http://localhost:8000/search?name=' + searchQuery);*/
       const filteredData = await response.json();
+      console.log("result",filteredData);
 
       if (response.ok) {
         onSearchResults(filteredData);  

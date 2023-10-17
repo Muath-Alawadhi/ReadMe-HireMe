@@ -73,6 +73,7 @@ useEffect(() => {
 
   const handleSearchResults = (filteredData) => {
     setFilteredGraduates(filteredData);
+    console.log("result2",filteredData);
   };
 
   return (
@@ -83,11 +84,18 @@ useEffect(() => {
         <div className="grad-cards">
            <SearchBar onSearchResults={handleSearchResults}  />
            <div className="CardsContainerBlock">
-            {isLoading ? ( // Check loading state
+            {isLoading ? (
               <p>Loading data...</p>
             ) : (
-              (filteredGraduates || graduates).map((grad) => (
-                <GradCard key={grad.id} grad={grad} onViewMore={handleViewMore} />
+              (filteredGraduates?.length > 0
+                ? filteredGraduates
+                : graduates
+              ).map((grad) => (
+                <GradCard
+                  key={grad.id}
+                  grad={grad}
+                  onViewMore={handleViewMore}
+                />
               ))
             )}
           </div>
