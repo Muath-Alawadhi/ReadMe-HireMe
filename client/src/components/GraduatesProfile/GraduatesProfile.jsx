@@ -62,7 +62,8 @@ function GraduatesProfile({ grad, onGoBack }) {
                     </MDBBtn>
                     <MDBBtn
                       outline
-                      className="ms-1"
+                      className="ms-1 custom-button"
+
                       onClick={() =>
                         window.open(
                           grad.readme.linkedin + "overlay/contact-info/",
