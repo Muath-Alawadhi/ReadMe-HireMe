@@ -88,7 +88,7 @@ function GraduatesProfile({ grad, onGoBack }) {
                       <MDBCardText>
                         {grad.readme.cv_link === "CV link not found" ? (
                           <MDBCardText className="text-muted">
-                            CV link not found !
+                            CV's so elusive, it hides even from the graduate!
                           </MDBCardText>
                         ) : (
                           <MDBCardText className="text-muted">
@@ -113,7 +113,7 @@ function GraduatesProfile({ grad, onGoBack }) {
                       <MDBCardText>
                         {grad.readme.linkedin === "LinkedIn link not found" ? (
                           <MDBCardText className="text-muted">
-                            LinkedIn link not found !
+                            link's on holiday, even from its account holder!
                           </MDBCardText>
                         ) : (
                           <MDBCardText className="text-muted">

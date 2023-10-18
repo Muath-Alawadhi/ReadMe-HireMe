@@ -104,7 +104,8 @@ async function fetchAndInsertData(res) {
     //  ------------------- fetch readme file  ----------------------
     let cvLink = "CV link not found";
     let linkedin = "LinkedIn link not found";
-    let readmeContent = "Readme content not found";
+    let readmeContent =
+      "The graduate's readme is playing hide and seek in the digital jungle!";
 
     try {
       const readmeDataResponse = await axios.get(
