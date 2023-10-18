@@ -34,6 +34,7 @@ html {
   align-items: center;
   color: #fff;
   font-size: 3rem;
+  margin-top: -10px;
 }
 
 .icon-html,
@@ -42,7 +43,7 @@ html {
 .icon-react,
 .icon-node,
 .icon-psql {
-  margin: 0px 30px 0px 40px;
+  margin: 0px 30px 30px 40px;
 }
 .icons {
   display: flex;
@@ -76,8 +77,8 @@ html {
 
 .logo {
   position: fixed;
-  bottom: 2rem;
-  left: 70px;
+  bottom: 1rem;
+  left: 10rem;
   height: 4rem;
   width: 12rem;
   z-index: 999;
