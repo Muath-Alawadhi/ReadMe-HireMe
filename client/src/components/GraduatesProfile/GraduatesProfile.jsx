@@ -193,7 +193,7 @@ function GraduatesProfile({ grad, onGoBack }) {
                     </MDBCol>
                     <MDBCol sm="9">
                       <MDBCardText className="text-muted">
-                        {grad.skills}
+                        {grad.skills.join(" ,")}
                       </MDBCardText>
                     </MDBCol>
                   </MDBRow>
