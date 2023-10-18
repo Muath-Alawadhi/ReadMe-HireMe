@@ -30,9 +30,21 @@ function GraduatesProfile({ grad, onGoBack }) {
                    className="rounded-circle"
                    style={{ width: '150px' }}
                    fluid />
-                 <p className="text-muted mb-1">Full Stack Developer</p>
+                 {/* <p className="text-muted mb-1">Full Stack Developer</p> */}
                  {/* <MDBIcon fab icon="github fa-lg" style={{ color: '#333333' }} /> */}
                  {/* <p className="text-muted mb-4">Bay Area, San Francisco, CA</p> */}
+                 <div>
+                 <MDBRow className="d-flex justify-content-center mb-2">
+                   <MDBCol sm="3">
+                    <MDBCardText className="mb-1 h5">{grad.followers}</MDBCardText>
+                    <MDBCardText className="small text-muted mb-0">Followers</MDBCardText>
+                    </MDBCol>
+                    <MDBCol sm="3">
+                    <MDBCardText className="mb-1 h5">{grad.following}</MDBCardText>
+                    <MDBCardText className="small text-muted mb-0">Following</MDBCardText>
+                    </MDBCol>
+                    </MDBRow>
+                    </div>
                  <div className="d-flex justify-content-center mb-2">
                    <MDBBtn>Follow Me</MDBBtn>
                    <a href={grad.readme.linkedin}>
