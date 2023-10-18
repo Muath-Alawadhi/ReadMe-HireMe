@@ -134,6 +134,16 @@ async function fetchAndInsertData(res) {
 
         cvLink = cvMatch ? cvMatch[0] : "CV link not found";
         linkedin = linkedinMatch ? linkedinMatch[0] : "LinkedIn link not found";
+
+        // Remove CV and LinkedIn links from the readme content
+        readmeContent = readmeContent
+          .replace(cvRegex, "")
+          .replace(linkedinRegex, "")
+          .replace(
+            /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi,
+            ""
+          ) // Remove any remaining URLs
+          .replace(/[[\]{}()]/g, ""); // Remove square brackets, curly braces, and parentheses
       }
     } catch (error) {
       console.error(error);
@@ -311,7 +321,6 @@ app.delete("/api/deleteGradData/:id", async (req, res) => {
     client.release();
   }
 });
-
 //---------------- listen --------------------
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
