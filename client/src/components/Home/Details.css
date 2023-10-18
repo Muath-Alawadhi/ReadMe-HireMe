@@ -12,8 +12,9 @@
   padding: 20px;
   margin-top: 10rem;
   margin-right: 15rem;
-
   backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  -moz-backdrop-filter: blur(3px);
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 10px;
 }
@@ -55,7 +56,7 @@
 .logo {
   position: fixed;
   bottom: 10px;
-  left: 10px;
+  left: 20px;
   height: 4rem;
   width: 12rem;
   z-index: 999;
@@ -68,36 +69,45 @@ button.btn-danger {
 
 /* Language Icons' Colors */
 .icon-html {
-  color: #e44d26; /* HTML color */
+  color: #e44d26;
 }
 
 .icon-css {
-  color: #264de4; /* CSS color */
+  color: #264de4;
 }
 
 .icon-js {
-  color: #f0db4f; /* JavaScript color */
+  color: #f0db4f;
 }
 
 .icon-react {
-  color: #61dafb; /* React color */
+  color: #61dafb;
 }
 
 .icon-node {
-  color: #339933; /* Node.js color */
+  color: #339933;
 }
 
 .icon-psql {
-  color: #336791; /* PostgreSQL color */
+  color: #336791;
 }
 
- .is-home {
+.is-home {
   background: url("./11118324.jpg") no-repeat center center fixed;
   background-size: cover;
-  /* background: url("./Hero\ 8.png") center/cover no-repeat; */
-  backdrop-filter: blur(2.5px); 
- } 
+  backdrop-filter: blur(2.5px);
+}
 
+/* Small screens (up to 768px) */
+@media screen and (max-width: 768px) {
+  .home-container {
+    flex-direction: column;
+    height: auto;
+  }
 
-
-
+  .left-content,
+  .right-content {
+    margin-top: 2rem;
+    margin-right: 0;
+  }
+}
