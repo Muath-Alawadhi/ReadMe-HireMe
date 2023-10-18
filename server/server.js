@@ -74,8 +74,8 @@ async function fetchAndInsertData(res) {
     const reposNumber = userData.public_repos || 0;
     const profilePicLink = userData.avatar_url || "Not available";
     const github_url = userData.html_url || "Not available";
-    const followers = userData.followers || "Not available";
-    const following = userData.following || "Not available";
+    const followers = userData.followers || 0;
+    const following = userData.following || 0;
 
     // ---------------------repo.languages--------------------------
     const reposResponse = await axios.get(userData.repos_url, {
