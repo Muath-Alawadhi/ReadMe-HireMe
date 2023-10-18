@@ -57,6 +57,7 @@ function Graduates() {
     };
     fetchData();
   },[]);
+  
 
 useEffect(() => {
   console.log(graduates);
@@ -73,7 +74,6 @@ useEffect(() => {
 
   const handleSearchResults = (filteredData) => {
     setFilteredGraduates(filteredData);
-    console.log("result2",filteredData);
   };
 
   return (
@@ -83,6 +83,7 @@ useEffect(() => {
       ) : (
         <div className="grad-cards">
            <SearchBar onSearchResults={handleSearchResults}  />
+           
            <div className="CardsContainerBlock">
             {isLoading ? (
               <p>Loading data...</p>
