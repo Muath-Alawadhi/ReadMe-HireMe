@@ -63,7 +63,6 @@ function GraduatesProfile({ grad, onGoBack }) {
                     <MDBBtn
                       outline
                       className="ms-1 custom-button"
-
                       onClick={() =>
                         window.open(
                           grad.readme.linkedin + "overlay/contact-info/",
@@ -87,7 +86,15 @@ function GraduatesProfile({ grad, onGoBack }) {
                         style={{ color: "#333333" }}
                       />
                       <MDBCardText>
-                        <a href={grad.readme.cv_link}>View My CV</a>
+                        {grad.readme.cv_link === "CV link not found" ? (
+                          <MDBCardText className="text-muted">
+                            CV link not found !
+                          </MDBCardText>
+                        ) : (
+                          <MDBCardText className="text-muted">
+                            <a href={grad.readme.cv_link}>View My CV </a>
+                          </MDBCardText>
+                        )}
                       </MDBCardText>
                     </MDBListGroupItem>
                     <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
@@ -96,8 +103,19 @@ function GraduatesProfile({ grad, onGoBack }) {
                         icon="fa-brands fa-linkedin fa-lg"
                         style={{ color: "#333333" }}
                       />
-                      <MDBCardText>
+                      {/* <MDBCardText>
                         <a href={grad.readme.linkedin}>View My LinkdIn</a>
+                      </MDBCardText> */}
+                      <MDBCardText>
+                        {grad.readme.linkedin === "LinkedIn link not found" ? (
+                          <MDBCardText className="text-muted">
+                            LinkedIn link not found !
+                          </MDBCardText>
+                        ) : (
+                          <MDBCardText className="text-muted">
+                            <a href={grad.readme.linkedin}>View My LinkdIn </a>
+                          </MDBCardText>
+                        )}
                       </MDBCardText>
                     </MDBListGroupItem>
                     <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
