@@ -1,51 +1,40 @@
-.SignupBlock{
-    background-color: rgb(0, 0, 0);
-    height:86vh;
-    width:54vh;
-    text-decoration-color:white;
+.SignupBlock {
+  background-color: rgb(0, 0, 0);
+  height: 86vh;
+  width: 54vh;
+  text-decoration-color: white;
+  background-size: cover;
 }
-.Hire-me{
-    display: flex;
-    background-color: rgb(7, 7, 7);
-    padding-top: 10rem;
-    padding-bottom: 8rem;  
-    justify-content:center;
-    font-size: 250%;
-   
-   
-   
+.Hire-me {
+  display: flex;
+  background-color: rgb(7, 7, 7);
+  padding-top: 10rem;
+  padding-bottom: 8rem;
+  justify-content: center;
+  font-size: 250%;
 }
-.HireColor{
-   
-    color: red;
-    padding-right: 5px;
-    
-
+.HireColor {
+  color: red;
+  padding-right: 5px;
 }
-.MeColor{
-    
-    color: white;
-   
+.MeColor {
+  color: white;
 }
 
-.click-button-text{
-    color: white;
-    text-align: center;
+.click-button-text {
+  color: white;
+  text-align: center;
 }
- 
-.button{
-    
-    background-color:red;
-    border: 0cqmax;
-    margin-left: 28%;
-    margin-bottom: 3%;
-    border: solid ;
-    border-radius: 55px;
-   
 
+.button {
+  background-color: red;
+  border: 0cqmax;
+  margin-left: 28%;
+  margin-bottom: 3%;
+  border: solid;
+  border-radius: 55px;
 }
-.Already-Signed-Up{
-    color: white;
-    text-align: center;
+.Already-Signed-Up {
+  color: white;
+  text-align: center;
 }
-    
