@@ -74,6 +74,8 @@ async function fetchAndInsertData(res) {
     const reposNumber = userData.public_repos || 0;
     const profilePicLink = userData.avatar_url || "Not available";
     const github_url = userData.html_url || "Not available";
+    const followers = userData.followers || 0;
+    const following = userData.following || 0;
 
     // ---------------------repo.languages--------------------------
     const reposResponse = await axios.get(userData.repos_url, {
@@ -139,8 +141,8 @@ async function fetchAndInsertData(res) {
 
     // Insert data into the Graduates_user table with conflict handling
     const userInsertQuery = {
-      text: "INSERT INTO graduates_user (github_username, name, repos_number, profile_pic_link, github_url ) VALUES ($1, $2, $3, $4, $5) ON CONFLICT (github_username) DO NOTHING",
-      values: [githubUserName, name, reposNumber, profilePicLink, github_url],
+      text: "INSERT INTO graduates_user (github_username, name, repos_number, profile_pic_link, github_url, followers, following) VALUES ($1, $2, $3, $4, $5, $6, $7) ON CONFLICT (github_username) DO NOTHING",
+      values: [githubUserName, name, reposNumber, profilePicLink, github_url , followers, following ],
     };
     await client.query(userInsertQuery);
 
@@ -201,7 +203,7 @@ app.get("/api/fetchGradData", async (req, res) => {
     const client = await pool.connect();
 
     // fetch data from graduates_user
-    const graduateQuery = 'SELECT id, github_username, name, profile_pic_link,repos_number,github_url  FROM graduates_user;';
+    const graduateQuery = 'SELECT id, github_username, name, profile_pic_link,repos_number,github_url,followers,following  FROM graduates_user;';
     const graduateData = await client.query(graduateQuery);
     const grads = graduateData.rows;
 
