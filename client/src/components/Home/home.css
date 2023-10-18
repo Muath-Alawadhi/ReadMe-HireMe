@@ -6,7 +6,7 @@ html {
   margin: 0;
   padding: 0;
   height: 100%;
-  overflow: hidden; 
+  overflow: hidden;
 }
 .home-container {
   display: flex;
@@ -17,7 +17,7 @@ html {
 
 .left-content {
   text-align: center;
-  margin-top: 22rem; 
+  margin-top: 22rem;
 }
 
 .button {
@@ -48,7 +48,7 @@ html {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: center; 
+  align-items: center;
   color: #fff;
   font-size: 3rem;
   margin-left: 100px;
@@ -88,11 +88,11 @@ button.btn-danger {
 }
 
 .icon-html {
-  color: #e44d26; 
+  color: #e44d26;
 }
 
 .icon-css {
-  color: #264de4; 
+  color: #264de4;
 }
 
 .icon-js {
@@ -108,7 +108,7 @@ button.btn-danger {
 }
 
 .icon-psql {
-  color: #336791; 
+  color: #336791;
 }
 
 body,
@@ -122,15 +122,15 @@ html {
   position: relative;
   height: 100vh;
   background-color: white;
-  margin: 0; 
-  padding: 0; 
+  margin: 0;
+  padding: 0;
 }
 
 .home::before {
   content: "";
   position: absolute;
-  top: 0; 
-  bottom: 20%; 
+  top: 0;
+  bottom: 20%;
   left: 0;
   right: 0;
   background: url("./11118324\ \(1\).jpg") no-repeat center top;
@@ -167,20 +167,19 @@ html {
   margin-top: 100vh;
 } */
 
-
 .animate-message {
   font-weight: bold;
   display: inline-block;
   white-space: nowrap;
   overflow: hidden;
-  width: calc(52rem - 10rem); 
-  animation: moveText 15s linear infinite; 
-  animation-delay: 2s; 
+  width: calc(52rem - 10rem);
+  animation: moveText 15s linear infinite;
+  animation-delay: 2s;
 }
 
 @keyframes moveText {
   0% {
-    transform: translateX(110%); 
+    transform: translateX(110%);
     opacity: 0;
   }
   10% {
@@ -197,4 +196,3 @@ html {
     opacity: 0;
   }
 }
-
