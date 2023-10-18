@@ -9,7 +9,7 @@ import {
   MDBCardBody,
   MDBCardImage,
   MDBBtn,
-  // MDBIcon,
+  MDBIcon,
   MDBListGroup,
   MDBListGroupItem
 } from 'mdb-react-ui-kit';
@@ -34,21 +34,32 @@ function GraduatesProfile({ grad, onGoBack }) {
                  {/* <MDBIcon fab icon="github fa-lg" style={{ color: '#333333' }} /> */}
                  {/* <p className="text-muted mb-4">Bay Area, San Francisco, CA</p> */}
                  <div className="d-flex justify-content-center mb-2">
-                   <MDBBtn>Follow</MDBBtn>
-                   <MDBBtn outline className="ms-1">Message</MDBBtn>
+                   <MDBBtn>Follow Me</MDBBtn>
+                   <a href={grad.readme.linkedin}>
+                   <MDBBtn outline className="ms-1">Contact Me</MDBBtn>
+                   </a>
                  </div>
                </MDBCardBody>
              </MDBCard>
 
-             {/* <MDBCard className="mb-4 mb-lg-0">
+             <MDBCard className="mb-4 mb-lg-0">
                <MDBCardBody className="p-0">
                  <MDBListGroup flush className="rounded-3">
                    <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
-                     <MDBCardText>mdbootstrap</MDBCardText>
+                   <MDBIcon far icon="file-alt fa-lg" style={{color: '#333333'}}/>
+                   <MDBCardText><a href={grad.readme.cv_link}>View My CV</a></MDBCardText>        
+                   </MDBListGroupItem>
+                   <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
+                   <MDBIcon fab icon="fa-brands fa-linkedin fa-lg" style={{ color: '#333333' }} />
+                     <MDBCardText><a href={grad.readme.linkedin}>View My LinkdIn</a></MDBCardText>
+                   </MDBListGroupItem>
+                   <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
+                   <MDBIcon fab icon="github fa-lg" style={{ color: '#333333' }} />
+                     <MDBCardText><a href={grad.github_url}>View My Github</a></MDBCardText>
                    </MDBListGroupItem>
                  </MDBListGroup> 
                </MDBCardBody> 
-             </MDBCard> */}
+             </MDBCard>
              <MDBBtn onClick={onGoBack} outline className="ms-1  backButton">Go Back</MDBBtn>
            </MDBCol>
            <MDBCol lg="8">
@@ -69,24 +80,6 @@ function GraduatesProfile({ grad, onGoBack }) {
                    </MDBCol>
                    <MDBCol sm="9">
                      <MDBCardText className="text-muted">{grad.github_username}</MDBCardText>
-                   </MDBCol>
-                 </MDBRow>
-                 <hr />
-                 <MDBRow>
-                   <MDBCol sm="3">
-                     <MDBCardText>CV</MDBCardText>
-                   </MDBCol>
-                   <MDBCol sm="9">
-                     <MDBCardText className="text-muted">{grad.readme.cv_link}</MDBCardText>
-                   </MDBCol>
-                 </MDBRow>
-                 <hr />
-                 <MDBRow>
-                   <MDBCol sm="3">
-                     <MDBCardText>LinkdIn</MDBCardText>
-                   </MDBCol>
-                   <MDBCol sm="9">
-                     <MDBCardText className="text-muted">{grad.readme.linkedin}</MDBCardText>
                    </MDBCol>
                  </MDBRow>
                  <hr />
@@ -127,4 +120,8 @@ function GraduatesProfile({ grad, onGoBack }) {
 }
 
 export default GraduatesProfile;
+
+
+
+
 
