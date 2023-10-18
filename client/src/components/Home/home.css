@@ -1,13 +1,12 @@
-/* Base Styles */
-/* * {
-  outline: red 1px dotted;
-} */
+* {
+  /* outline: red 1px dotted; */
+}
 body,
 html {
   margin: 0;
   padding: 0;
   height: 100%;
-  overflow: hidden; /* Prevent any scrollbars that might create space */
+  overflow: hidden; 
 }
 .home-container {
   display: flex;
@@ -18,7 +17,7 @@ html {
 
 .left-content {
   text-align: center;
-  margin-top: 22rem; /* Center vertically and horizontally */
+  margin-top: 22rem; 
 }
 
 .button {
@@ -30,7 +29,6 @@ html {
   cursor: pointer;
 }
 
-/* Language Icons */
 .icons {
   display: flex;
   align-items: center;
@@ -44,20 +42,18 @@ html {
 .icon-react,
 .icon-node,
 .icon-psql {
-  margin: 40px 40px 0px 40px;
+  margin: 0px 30px 0px 40px;
 }
-/* Language Icons */
 .icons {
   display: flex;
   flex-direction: row;
-  justify-content: center; /* Center the icons horizontally within the footer */
-  align-items: center; /* Center the icons vertically within the footer */
+  justify-content: center;
+  align-items: center; 
   color: #fff;
   font-size: 3rem;
   margin-left: 100px;
 }
 
-/* Heading */
 .place {
   margin: 20px;
   padding: 10px;
@@ -65,14 +61,11 @@ html {
   font-weight: bold;
   font-size: 30px;
   border-bottom: 2px black solid;
-  
+
   /* border: 1px solid rgba(255, 255, 255, 0.3); */
   /* border-radius: 10px; */
   /* backdrop-filter: blur(2px) brightness(1.2); Adjust the blur and brightness values as needed */
 }
-
-
-
 
 .icon-text {
   margin-top: 20px;
@@ -81,7 +74,6 @@ html {
   font-size: 30px;
 }
 
-/* Logo */
 .logo {
   position: fixed;
   bottom: 2rem;
@@ -91,34 +83,32 @@ html {
   z-index: 999;
 }
 
-/* Button for Exceptional Cases */
 button.btn-danger {
   background-color: #d42c2c;
 }
 
-/* Language Icons' Colors */
 .icon-html {
-  color: #e44d26; /* HTML color */
+  color: #e44d26; 
 }
 
 .icon-css {
-  color: #264de4; /* CSS color */
+  color: #264de4; 
 }
 
 .icon-js {
-  color: #f0db4f; /* JavaScript color */
+  color: #f0db4f;
 }
 
 .icon-react {
-  color: #61dafb; /* React color */
+  color: #61dafb;
 }
 
 .icon-node {
-  color: #339933; /* Node.js color */
+  color: #339933;
 }
 
 .icon-psql {
-  color: #336791; /* PostgreSQL color */
+  color: #336791; 
 }
 
 body,
@@ -132,15 +122,15 @@ html {
   position: relative;
   height: 100vh;
   background-color: white;
-  margin: 0; /* Remove margin for the .home element */
-  padding: 0; /* Remove padding for the .home element */
+  margin: 0; 
+  padding: 0; 
 }
 
 .home::before {
   content: "";
   position: absolute;
-  top: 0; /* Start from the very top */
-  bottom: 20%; /* Cover the bottom 20% of the container */
+  top: 0; 
+  bottom: 20%; 
   left: 0;
   right: 0;
   background: url("./11118324\ \(1\).jpg") no-repeat center top;
@@ -160,7 +150,6 @@ html {
 
 .button-content {
   margin: auto;
-  
 }
 .graduates {
   color: #d12f2f;
@@ -177,3 +166,35 @@ html {
 .testing {
   margin-top: 100vh;
 } */
+
+
+.animate-message {
+  font-weight: bold;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  width: calc(52rem - 10rem); 
+  animation: moveText 15s linear infinite; 
+  animation-delay: 2s; 
+}
+
+@keyframes moveText {
+  0% {
+    transform: translateX(110%); 
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 0;
+  }
+  90% {
+    opacity: -1;
+  }
+  100% {
+    transform: translateX(-110%);
+    opacity: 0;
+  }
+}
+
