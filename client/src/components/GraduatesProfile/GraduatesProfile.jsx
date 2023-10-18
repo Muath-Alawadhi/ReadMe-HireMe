@@ -92,7 +92,13 @@ function GraduatesProfile({ grad, onGoBack }) {
                           </MDBCardText>
                         ) : (
                           <MDBCardText className="text-muted">
-                            <a href={grad.readme.cv_link}>View My CV </a>
+                            <a
+                              href={grad.readme.cv_link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              View My CV
+                            </a>
                           </MDBCardText>
                         )}
                       </MDBCardText>
@@ -103,9 +109,7 @@ function GraduatesProfile({ grad, onGoBack }) {
                         icon="fa-brands fa-linkedin fa-lg"
                         style={{ color: "#333333" }}
                       />
-                      {/* <MDBCardText>
-                        <a href={grad.readme.linkedin}>View My LinkdIn</a>
-                      </MDBCardText> */}
+
                       <MDBCardText>
                         {grad.readme.linkedin === "LinkedIn link not found" ? (
                           <MDBCardText className="text-muted">
@@ -113,7 +117,13 @@ function GraduatesProfile({ grad, onGoBack }) {
                           </MDBCardText>
                         ) : (
                           <MDBCardText className="text-muted">
-                            <a href={grad.readme.linkedin}>View My LinkdIn </a>
+                            <a
+                              href={grad.readme.linkedin}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              View My LinkdIn
+                            </a>
                           </MDBCardText>
                         )}
                       </MDBCardText>
@@ -125,7 +135,13 @@ function GraduatesProfile({ grad, onGoBack }) {
                         style={{ color: "#333333" }}
                       />
                       <MDBCardText>
-                        <a href={grad.github_url}>View My Github</a>
+                        <a
+                          href={grad.github_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          View My Github
+                        </a>
                       </MDBCardText>
                     </MDBListGroupItem>
                   </MDBListGroup>
