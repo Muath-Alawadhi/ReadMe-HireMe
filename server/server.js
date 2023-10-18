@@ -102,47 +102,70 @@ async function fetchAndInsertData(res) {
     //-------------------end of repo.languages ----------------------
 
     //  ------------------- fetch readme file  ----------------------
-    const readmeDataResponse = await axios.get(
-      `https://api.github.com/repos/${githubUserName}/${githubUserName}/readme`,
+    let cvLink = "CV link not found";
+    let linkedin = "LinkedIn link not found";
+    let readmeContent =
+      "The graduate's readme is playing hide and seek in the digital jungle!";
 
-      {
-        headers: {
-          Authorization: `token ${githubAccessToken}`,
-        },
+    try {
+      const readmeDataResponse = await axios.get(
+        `https://api.github.com/repos/${githubUserName}/${githubUserName}/readme`,
+        {
+          headers: {
+            Authorization: `token ${githubAccessToken}`,
+          },
+        }
+      );
+
+      if (readmeDataResponse.status === 200) {
+        // The README content will be in base64-encoded, so we need to decode it
+        readmeContent = Buffer.from(
+          readmeDataResponse.data.content,
+          "base64"
+        ).toString("utf-8");
+
+        // cvRegex & linkedinRegex to match CV and LinkedIn links
+        const cvRegex =
+          /(?<=(?:cv|resume|portfolio)\s*:\s*?)(https?:\/\/(?:www\.)?(?:[a-zA-Z0-9-]+\.)+(?:[a-zA-Z]{2,})(?:\/[^\s]*)?)/i;
+        const linkedinRegex = /(https?:\/\/www\.linkedin\.com\/\S+)/i;
+
+        // Search for CV and LinkedIn links in the README content
+        const cvMatch = readmeContent.match(cvRegex);
+        const linkedinMatch = readmeContent.match(linkedinRegex);
+
+        cvLink = cvMatch ? cvMatch[0] : "CV link not found";
+        linkedin = linkedinMatch ? linkedinMatch[0] : "LinkedIn link not found";
+
+        // Remove CV and LinkedIn links from the readme content
+        readmeContent = readmeContent
+          .replace(cvRegex, "")
+          .replace(linkedinRegex, "")
+          .replace(
+            /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi,
+            ""
+          ) // Remove any remaining URLs
+          .replace(/[[\]{}()]/g, ""); // Remove square brackets, curly braces, and parentheses
       }
-    );
+    } catch (error) {
+      console.error(error);
+    }
 
-    // The README content will be in base64-encoded,so we need to decode it
-    const readmeContent = Buffer.from(
-      readmeDataResponse.data.content,
-      "base64"
-    ).toString("utf-8");
-    // console.log(readmeContent);
-
-    // cvRegex & linkedinRegex to match CV and LinkedIn links
-    const cvRegex =
-    /(?<=(?:cv|resume|portfolio)\s*:\s*?)(https?:\/\/(?:www\.)?(?:[a-zA-Z0-9-]+\.)+(?:[a-zA-Z]{2,})(?:\/[^\s]*)?)/i;
-    const linkedinRegex = /(https?:\/\/www\.linkedin\.com\/\S+)/i;
-
-    // Search for CV and LinkedIn links in the README content
-    const cvMatch = readmeContent.match(cvRegex);
-    const linkedinMatch = readmeContent.match(linkedinRegex);
-
-    const cvLink = cvMatch ? cvMatch[0] : "CV link not found";
-    const linkedin = linkedinMatch
-      ? linkedinMatch[0]
-      : "LinkedIn link not found";
-
-    // still need to add cvLink and linkedin to DB in separate branch
-
-    //------------------- end of readme file  ----------------------
+    //------------------- end of readme file  ---------------------
 
     // -----------------Start of Database---------------------------
 
     // Insert data into the Graduates_user table with conflict handling
     const userInsertQuery = {
       text: "INSERT INTO graduates_user (github_username, name, repos_number, profile_pic_link, github_url, followers, following) VALUES ($1, $2, $3, $4, $5, $6, $7) ON CONFLICT (github_username) DO NOTHING",
-      values: [githubUserName, name, reposNumber, profilePicLink, github_url , followers, following ],
+      values: [
+        githubUserName,
+        name,
+        reposNumber,
+        profilePicLink,
+        github_url,
+        followers,
+        following,
+      ],
     };
     await client.query(userInsertQuery);
 
@@ -203,37 +226,42 @@ app.get("/api/fetchGradData", async (req, res) => {
     const client = await pool.connect();
 
     // fetch data from graduates_user
-    const graduateQuery = 'SELECT id, github_username, name, profile_pic_link,repos_number,github_url,followers,following  FROM graduates_user;';
+    const graduateQuery =
+      "SELECT id, github_username, name, profile_pic_link,repos_number,github_url,followers,following  FROM graduates_user;";
     const graduateData = await client.query(graduateQuery);
     const grads = graduateData.rows;
 
     // fetch data from readme
-    const readmeQuery = 'SELECT user_id, cv_link, linkedin, readme_content FROM readme;';
+    const readmeQuery =
+      "SELECT user_id, cv_link, linkedin, readme_content FROM readme;";
     const readmeData = await client.query(readmeQuery);
     const readmes = readmeData.rows;
 
     // fetch data from skills
-    const skillsQuery = 'SELECT user_id, languages FROM skills;';
+    const skillsQuery = "SELECT user_id, languages FROM skills;";
     const skillsData = await client.query(skillsQuery);
     const skills = skillsData.rows;
 
     // merge all the data using user_id
     for (const grad of grads) {
       // add readme info
-      const matchingReadme = readmes.find(readme => readme.user_id === grad.id);
+      const matchingReadme = readmes.find(
+        (readme) => readme.user_id === grad.id
+      );
       if (matchingReadme) {
         grad.readme = matchingReadme;
       }
 
       // add skills info
-      const matchingSkills = skills.filter(skill => skill.user_id === grad.id);
-      grad.skills = matchingSkills.map(skill => skill.languages).flat();
+      const matchingSkills = skills.filter(
+        (skill) => skill.user_id === grad.id
+      );
+      grad.skills = matchingSkills.map((skill) => skill.languages).flat();
     }
 
     client.release();
 
     res.json({ graduates: grads });
-
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Internal connection to DB error" });
@@ -243,8 +271,7 @@ app.get("/api/fetchGradData", async (req, res) => {
 //---------------- end of Endpoint for FrontEnd  ------------------------------------------------
 //----------------------------Search functionality api -------------------------------------------
 
-
-app.get('/search', async (req, res) => {
+app.get("/search", async (req, res) => {
   const { name, skills } = req.query;
 
   try {
@@ -254,7 +281,7 @@ app.get('/search', async (req, res) => {
       JOIN skills ON graduates_user.id = skills.user_id
       WHERE graduates_user.name LIKE $1 OR $2 = ANY(skills.languages);
     `;
-    
+
     const values = [`%${name}%`, skills];
 
     const result = await pool.query(search, values);
@@ -262,13 +289,39 @@ app.get('/search', async (req, res) => {
     res.json(result.rows);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Server Error'});
+    res.status(500).json({ message: "Server Error" });
   }
 });
 
+app.delete("/api/deleteGradData/:id", async (req, res) => {
+  const userId = req.params.id;
+  const client = await pool.connect();
 
+  try {
+    const deleteReadmeQuery = {
+      text: "DELETE FROM readme WHERE user_id = $1",
+      values: [userId],
+    };
+    await client.query(deleteReadmeQuery);
 
+    const deleteSkillsQuery = {
+      text: "DELETE FROM skills WHERE user_id = $1",
+      values: [userId],
+    };
+    await client.query(deleteSkillsQuery);
 
+    const deleteUserQuery = {
+      text: "DELETE FROM graduates_user WHERE id = $1",
+      values: [userId],
+    };
+    await client.query(deleteUserQuery);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  } finally {
+    client.release();
+  }
+});
 //---------------- listen --------------------
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
