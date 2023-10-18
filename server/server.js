@@ -134,6 +134,57 @@ async function fetchAndInsertData(res) {
     // still need to add cvLink and linkedin to DB in separate branch
 
     //------------------- end of readme file  ----------------------
+// ----------------------- start of  fetching for graph------------------------------------
+    // initialise counters for created issues, pull requests, and commits in repositories
+let issuesCreated = 0;
+let totalPullRequests = 0;
+let repoCommits = 0;
+
+// fetching repos
+const getRepos = await axios.get(`https://api.github.com/users/${githubUserName}/repos`);
+const repoData = getRepos.data;
+
+// looping through each repo to fetch issues, pull requests, and commits
+for (const repo of repoData) {
+  // fetching number of issues created by user
+  const getIssues = await axios.get(
+    `https://api.github.com/repos/${githubUserName}/${repo.name}/issues`,
+    {
+      headers: {
+        Authorization: `token ${githubAccessToken}`,
+      },
+    }
+  );
+  issuesCreated += getIssues.data.length;
+
+  // fetching pull requests
+  const getPullRequests = await axios.get(
+    `https://api.github.com/repos/${githubUserName}/${repo.name}/pulls`,
+    {
+      headers: {
+        Authorization: `token ${githubAccessToken}`,
+      },
+    }
+  );
+  totalPullRequests += getPullRequests.data.length;
+
+  // fetching commits
+  const getCommits = await axios.get(
+    `https://api.github.com/repos/${githubUserName}/${repo.name}/commits`,
+    {
+      headers: {
+        Authorization: `token ${githubAccessToken}`,
+      },
+    }
+  );
+  repoCommits += getCommits.data.length;
+}
+// console logging to see what the terminal prints 
+console.log(`Total Issues Created: ${issuesCreated}`);
+console.log(`Total Pull Requests Created: ${totalPullRequests}`);
+console.log(`Total Repo Commits: ${repoCommits}`);
+
+
 
     // -----------------Start of Database---------------------------
 
@@ -157,11 +208,18 @@ async function fetchAndInsertData(res) {
       values: [githubUserName, cvLink, linkedin, readmeContent],
     };
     await client.query(readmeInsertQuery);
+    // SQL query to insert the GitHub stats into the database
+      const insertStats = `
+      INSERT INTO github_stats (user_id, issues_created, pull_requests_created, repo_commits)
+      SELECT id, $1, $2, $3 FROM graduates_user WHERE github_username = $4
+     `;
+
+await client.query(insertStats, [issuesCreated, totalPullRequests, repoCommits, githubUserName]);
+     
 
     // -----------------end of Database----------------------------
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    console.error({ error: "Internal server error" });
   } finally {
     client.release();
   }
@@ -263,63 +321,7 @@ app.get('/search', async (req, res) => {
     res.status(500).json({ message: 'Server Error'});
   }
 });
-/*---------------------------------End of search Functionality-------------------------------
------------------------------------Data visualisation API------------------------------------*/
-
-app.get("/github/stats", async (req, res) => {
-  const client = await pool.connect();
-  // fetching number of issues created by user
-  try {
-    const { username } = req.params;
-    const getIssues = await axios.get(`https://api.github.com/users/${username}/issues`);
-    const issuesCreated = getIssues.data.length;
-
-  //fetching repositories
-    const getRepos = await axios.get(`https://api.github.com/users/${username}/repos`);
-    const reposData = getRepos.data;
-  
-  // fetching pull requests from each repository
-      let totalPullRequests = 0;
-      
-      for (const repo of reposData) {
-        const getPullRequests = await axios.get(`https://api.github.com/repos/${username}/${repo.name}/pulls`);
-        totalPullRequests += getPullRequests.data.length;
-      }
-  
-  
-  // fetching the number of commits for each repository
-  const repoCommits = {};
-  for (const repo of reposData) {
-    const getCommits = await axios.get(`https://api.github.com/repos/${username}/${repo.name}/commits`);
-    repoCommits[repo.name] = getCommits.data.length;
-  }
-
-  // combining all the stats and sending them as a JSON response
-  res.json({ issuesCreated, totalPullRequests, repoCommits });
-
-  // SQL query to insert the GitHub stats in the database
-  const insertStats = `
-  INSERT INTO github_stats (user_id, issues_created, pull_requests_created, repo_commits)
-  SELECT id, $1, $2, $3 FROM graduates_user WHERE github_username = $4
- `;
- 
-  await client.query(insertStats, [issuesCreated, totalPullRequests, JSON.stringify(repoCommits), username]);
-
-  res.json({ issuesCreated, totalPullRequests, repoCommits });
-
-
-} catch (error) {
-  res.status(400).json({ error: "Unable to fetch data" });
-}finally {
-  client.release();
-}
-});
-  
-
-
-
-
-
+//---------------------------------End of search Functionality-------------------------------
 
 //---------------- listen --------------------
 app.listen(port, () => {
