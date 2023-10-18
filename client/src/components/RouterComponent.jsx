@@ -31,7 +31,10 @@ function RouterComponent() {
         >
           <div className="container">
             <Link className="navbar-brand" to="/Home" style={linkStyle}>
-              <span style={{ color: "#d12f2f",fontWeight:"bold" }}>ReadMe</span><span style={{ fontWeight:"bold" }}>-HireMe</span> 
+              <span style={{ color: "#d12f2f", fontWeight: "bold" }}>
+                ReadMe
+              </span>
+              <span style={{ fontWeight: "bold" }}>-HireMe</span>
             </Link>
             <button
               className="navbar-toggler"
@@ -68,6 +71,7 @@ function RouterComponent() {
         </nav>
         <div className="container mt-4">
           <Routes>
+            <Route path="/" element={<Home />} />
             <Route path="/Home" element={<Home />} />
             <Route path="/graduates" element={<Graduates />} />
             <Route path="/signup" element={<Signup />} />

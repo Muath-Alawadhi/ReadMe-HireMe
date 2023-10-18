@@ -1,12 +1,8 @@
-
-
 .SignupBlock {
   background-color: rgb(0, 0, 0);
   height: 86vh;
   width: 54vh;
   text-decoration-color: white;
-  background: url("https://www.cdyf.me/images/Coding-your-Future-CDYF.png")
-    no-repeat center center fixed;
   background-size: cover;
 }
 .Hire-me {
