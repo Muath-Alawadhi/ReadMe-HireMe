@@ -1,5 +1,5 @@
 import "./SearchBar.css";
-import React, { useState ,useEffect } from 'react';
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { InputGroup, FormControl , Button  } from 'react-bootstrap';
 
@@ -16,7 +16,7 @@ function SearchBar({ onSearchResults}) {
       if (response.ok) {
         onSearchResults(filteredData);  
       } else {
-        console.error("Failed to fetch filteredData:", filteredData);
+        console.error("Failed to fetch filteredData:", response.status, response.statusText);
       }
     } catch (err) {
       console.error("An error occurred:", err);
@@ -24,26 +24,26 @@ function SearchBar({ onSearchResults}) {
   };
 
 
-  useEffect(() => {
-    // Add an event listener to detect the 'keydown' event on the search input
-    const handleKeyDown = (event) => {
-      if (event.key === 'Backspace') {
-        // Check if the search input is empty
-        if (searchQuery === '') {
-          // Trigger the search function to update with an empty query
-          handleSearch();
-        }
-      }
-    };
+  // useEffect(() => {
+  //   // Add an event listener to detect the 'keydown' event on the search input
+  //   const handleKeyDown = (event) => {
+  //     if (event.key === 'Backspace') {
+  //       // Check if the search input is empty
+  //       if (searchQuery === '') {
+  //         // Trigger the search function to update with an empty query
+  //         handleSearch();
+  //       }
+  //     }
+  //   };
 
-    // Attach the event listener
-    document.addEventListener('keydown', handleKeyDown);
+  //   // Attach the event listener
+  //   document.addEventListener('keydown', handleKeyDown);
 
-    // Clean up the event listener when the component unmounts
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [searchQuery]);
+  //   // Clean up the event listener when the component unmounts
+  //   return () => {
+  //     document.removeEventListener('keydown', handleKeyDown);
+  //   };
+  // }, [searchQuery]);
 
 
 
@@ -58,6 +58,11 @@ function SearchBar({ onSearchResults}) {
           aria-describedby="basic-addon2"
           onChange={(e) => setSearchQuery(e.target.value)}
           value={searchQuery}
+          onKeyPress={(e) => {
+            if (e.key === 'Enter') {
+              handleSearch();
+            }
+          }}
         />
           <Button variant="danger" onClick={handleSearch}>
             <i className="fas fa-search"></i>
