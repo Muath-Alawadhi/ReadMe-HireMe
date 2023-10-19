@@ -248,20 +248,24 @@ app.get("/api/search", async (req, res) => {
 
     const client = await pool.connect();
 
-    let searchQuery =
-      "SELECT id, github_username, name, profile_pic_link, repos_number, github_url FROM graduates_user WHERE 1 = 1";
-
+    // let searchQuery =
+    //   "SELECT id, github_username, name, profile_pic_link, repos_number, github_url FROM graduates_user WHERE 1 = 1";
+    let searchQuery = `
+    SELECT gu.id, gu.github_username, gu.name, gu.profile_pic_link, gu.repos_number, gu.github_url, s.languages, r.cv_link, r.readme_content, r.linkedin
+    FROM graduates_user gu
+    LEFT JOIN skills s ON gu.id = s.user_id
+    LEFT JOIN readme r ON gu.id = r.user_id
+    WHERE 1 = 1
+  `;
     const queryParams = [];
-
     if (name) {
-      searchQuery += " AND name ILIKE $1";
+      searchQuery += " AND gu.name ILIKE $1";
       queryParams.push(`%${name}%`);
     }
-
     if (skills) {
       const skillsArray = skills.split(",");
       const paramCount = queryParams.length + 1;
-      searchQuery += ` AND id IN (SELECT user_id FROM skills WHERE languages @> $${paramCount})`;
+      searchQuery += ` AND id IN (SELECT user_id FROM skills WHERE s.languages @> $${paramCount})`;
       queryParams.push(skillsArray);
     }
 
