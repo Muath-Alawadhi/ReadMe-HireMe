@@ -134,59 +134,51 @@ async function fetchAndInsertData(res) {
     // still need to add cvLink and linkedin to DB in separate branch
 
     //------------------- end of readme file  ----------------------
-// ----------------------- start of  fetching for graph------------------------------------
-    // initialise counters for created issues, pull requests, and commits in repositories
-let issuesCreated = 0;
-let totalPullRequests = 0;
-let repoCommits = 0;
+// ----------------------- start of  fetching for graph-----------------------------------
+  // initialise an object to store commit counts by date
+ const commitCountsByDate = {};
 
-// fetching repos
-const getRepos = await axios.get(`https://api.github.com/users/${githubUserName}/repos`);
-const repoData = getRepos.data;
+  // fetch repos
+  const getRepos = await axios.get(`https://api.github.com/users/${githubUserName}/repos`, {
+  headers: {
+    Authorization: `token ${githubAccessToken}`,
+  },
+  });
 
-// looping through each repo to fetch issues, pull requests, and commits
-for (const repo of repoData) {
-  // fetching number of issues created by user
-  const getIssues = await axios.get(
-    `https://api.github.com/repos/${githubUserName}/${repo.name}/issues`,
-    {
-      headers: {
-        Authorization: `token ${githubAccessToken}`,
-      },
+ const repoData = getRepos.data;
+
+ // loop through each repo to fetch commits
+   for (const repo of repoData) {
+  const getCommits = await axios.get(`https://api.github.com/repos/${githubUserName}/${repo.name}/commits`, {
+    headers: {
+      Authorization: `token ${githubAccessToken}`,
+    },
+  });
+
+  const commits = getCommits.data;
+
+  // loop through each commit to extract and count by date
+  for (const commit of commits) {
+    const date = new Date(commit.commit.committer.date).toISOString().split('T')[0];
+
+    
+    if (!commitCountsByDate[date]) {
+      commitCountsByDate[date] = 0;
     }
-  );
-  issuesCreated += getIssues.data.length;
 
-  // fetching pull requests
-  const getPullRequests = await axios.get(
-    `https://api.github.com/repos/${githubUserName}/${repo.name}/pulls`,
-    {
-      headers: {
-        Authorization: `token ${githubAccessToken}`,
-      },
-    }
-  );
-  totalPullRequests += getPullRequests.data.length;
+    commitCountsByDate[date]++;
+  }
+ };
 
-  // fetching commits
-  const getCommits = await axios.get(
-    `https://api.github.com/repos/${githubUserName}/${repo.name}/commits`,
-    {
-      headers: {
-        Authorization: `token ${githubAccessToken}`,
-      },
-    }
-  );
-  repoCommits += getCommits.data.length;
-}
-// console logging to see what the terminal prints 
-console.log(`Total Issues Created: ${issuesCreated}`);
-console.log(`Total Pull Requests Created: ${totalPullRequests}`);
-console.log(`Total Repo Commits: ${repoCommits}`);
+ // log the commit counts by date
+  console.log("Commit Counts by Date:", commitCountsByDate);
 
 
 
-    // -----------------Start of Database---------------------------
+
+
+
+ // -----------------Start of Database---------------------------
 
     // Insert data into the Graduates_user table with conflict handling
     const userInsertQuery = {
@@ -208,14 +200,25 @@ console.log(`Total Repo Commits: ${repoCommits}`);
       values: [githubUserName, cvLink, linkedin, readmeContent],
     };
     await client.query(readmeInsertQuery);
-    // SQL query to insert the GitHub stats into the database
-      const insertStats = `
-      INSERT INTO github_stats (user_id, issues_created, pull_requests_created, repo_commits)
-      SELECT id, $1, $2, $3 FROM graduates_user WHERE github_username = $4
+    
+    // insert data into github_stats table
+    const insertStats = `
+     INSERT INTO github_stats (user_id, commit_date, num_commits)
+     SELECT id, $1, $2 FROM graduates_user WHERE github_username = $3
+     ON CONFLICT (user_id, commit_date) DO NOTHING;
      `;
 
-await client.query(insertStats, [issuesCreated, totalPullRequests, repoCommits, githubUserName]);
-     
+   // loop through commitCountsByDate to insert each record
+   for (const [date, numCommits] of Object.entries(commitCountsByDate)) {
+    try {
+    const result = await client.query(insertStats, [date, numCommits, githubUserName]);
+    console.log(`Inserted ${result.rowCount} row(s)`);
+  } catch (error) {
+    console.error(`Failed to insert commit data for date ${date}:`, error);
+  }
+}
+
+
 
     // -----------------end of Database----------------------------
   } catch (error) {
