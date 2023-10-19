@@ -1,31 +1,33 @@
+import React from "react";
 import { Link } from "react-router-dom";
-import "./Signup.css";
-// import { useEffect } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "font-awesome/css/font-awesome.min.css"; 
 
-function Signup() {
-  //signup authentication
-  const handleLoginClick = () => {
-    const clientId = "4b7ee8342a11859ac626";
-    window.location.href = `https://github.com/login/oauth/authorize?client_id=${clientId}`;
-  };
+const handleLoginClick = () => {
+  const clientId = "4b7ee8342a11859ac626";
+  window.location.href = `https://github.com/login/oauth/authorize?client_id=${clientId}`;
+};
 
+const Signup = () => {
   return (
-    <div className="SignupBlock">
-      <div className="Hire-me">
-        <span className="HireColor">Hire </span>
-        <span className="MeColor">Me</span>
-      </div>
-      <p className="click-button-text">Click The Button To Sign Up:</p>
-      <div>
-        <button className="button" onClick={handleLoginClick}>
-          <i className="fa-brands fa-github"></i> Sign Up With GitHub
+    <div className="d-flex justify-content-center align-items-center vh-100">
+      <div className="text-center">
+        <h1 className="display-4 mb-4">
+          <span className="text-danger">Hire </span>
+          <span  className="text-white">Me</span>
+        </h1>
+        <button className="btn btn-dark btn-lg mb-3" onClick={handleLoginClick}>
+          <i className="fa fa-github me-2"></i> Sign Up with GitHub
         </button>
+        <p className="lead text-white">  
+          Already Signed Up? <Link to="/graduates" className="text-danger">Go To Graduates</Link>
+        </p>
       </div>
-      <p className="Already-Signed-Up">
-        Already Signed Up? <Link to="/graduates">Go To Graduates</Link>
-      </p>
     </div>
   );
-}
+};
 
 export default Signup;
+
+
+
