@@ -86,7 +86,7 @@ useEffect(() => {
         <div className="grad-cards">
            <SearchBar onSearchResults={handleSearchResults}  />
            <div className="CardsContainerBlock">
-            {isLoading ? ( // Check loading state
+            {isLoading ? ( 
               <p>Loading data...</p>
             ) : (
               (filteredGraduates || graduates).map((grad) => (
