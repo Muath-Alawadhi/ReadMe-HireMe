@@ -271,25 +271,34 @@ app.get("/api/fetchGradData", async (req, res) => {
 //---------------- end of Endpoint for FrontEnd  ------------------------------------------------
 //----------------------------Search functionality api -------------------------------------------
 
-app.get("/search", async (req, res) => {
-  const { name, skills } = req.query;
-
+app.get("/api/search", async (req, res) => {
   try {
-    const search = `
-      SELECT graduates_user.id, graduates_user.name, skills.languages 
-      FROM graduates_user
-      JOIN skills ON graduates_user.id = skills.user_id
-      WHERE graduates_user.name LIKE $1 OR $2 = ANY(skills.languages);
-    `;
-
-    const values = [`%${name}%`, skills];
-
-    const result = await pool.query(search, values);
-
-    res.json(result.rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Server Error" });
+    const { query } = req.query;
+    const client = await pool.connect();
+    // let searchQuery =
+    //   "SELECT id, github_username, name, profile_pic_link, repos_number, github_url FROM graduates_user WHERE 1 = 1";
+    let searchQuery = `
+    SELECT gu.id, gu.github_username, gu.name, gu.profile_pic_link, gu.repos_number, gu.github_url, s.languages, r.cv_link, r.readme_content, r.linkedin
+    FROM graduates_user gu
+    LEFT JOIN skills s ON gu.id = s.user_id
+    LEFT JOIN readme r ON gu.id = r.user_id
+    WHERE 1 = 1
+  `;
+    const queryParams = [];
+    if (query) {
+      searchQuery +=
+        " AND (gu.name ILIKE $1 OR gu.id IN (SELECT user_id FROM skills WHERE s.languages && $2))";
+      const searchParam = `%${query}%`;
+      const skillsArray = query.split(","); // Assuming that the query can include both name and skills
+      queryParams.push(searchParam, skillsArray);
+    }
+    const searchResult = await client.query(searchQuery, queryParams);
+    const graduates = searchResult.rows;
+    client.release();
+    res.json({ graduates });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error });
   }
 });
 
