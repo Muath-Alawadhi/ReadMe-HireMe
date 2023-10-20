@@ -44,10 +44,15 @@ function Graduates() {
   const [isLoading, setIsLoading] = useState(true); // Add a loading state
   const [contributions, setContributions]= useState([]);
 
-  useEffect( ()=> {
-    const response = axios.get(`http://localhost:8000/github-contributions`);
-    console.log("contribution rsponse:  ${response.data}");
-
+  useEffect(async()=> {
+    try{
+      const response = await axios.get('http://localhost:8000/github-contributions');
+      console.log("contribution response: ", response.data);
+      setContributions(response.data); 
+    }
+    catch (error) {
+      console.error(`error fetching contribution from server: ` + error)
+    }
   }
     
     ,[]);
