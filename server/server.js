@@ -446,7 +446,7 @@ app.get("/api/search", async (req, res) => {
       searchQuery +=
         " AND (gu.name ILIKE $1 OR gu.id IN (SELECT user_id FROM skills WHERE s.languages && $2))";
       const searchParam = `%${query}%`;
-      const skillsArray = query.split(","); // Assuming that the query can include both name and skills
+      const skillsArray = query.split(",");
       queryParams.push(searchParam, skillsArray);
     }
     const searchResult = await client.query(searchQuery, queryParams);

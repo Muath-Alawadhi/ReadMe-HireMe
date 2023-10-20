@@ -1,21 +1,26 @@
 import "./SearchBar.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { InputGroup, FormControl, Button } from "react-bootstrap";
 
 function SearchBar({ onSearchResults, allGraduates }) {
   const [searchQuery, setSearchQuery] = useState("");
 
+  useEffect(() => {
+    if (searchQuery === "") {
+      onSearchResults(allGraduates);
+    }
+  }, [searchQuery, onSearchResults, allGraduates]);
+
   const handleSearch = async (query) => {
     try {
-      const cleanedQuery = query;
-
+      const cleanedQuery = query.toUpperCase();
       const response = await fetch(
         `http://localhost:8000/api/search?query=${cleanedQuery}`
       );
       const responseData = await response.json();
       const filteredData = responseData.graduates;
-      console.log("d", filteredData);
+      console.log("test-1", filteredData);
 
       if (response.ok) {
         onSearchResults(filteredData);
@@ -30,12 +35,6 @@ function SearchBar({ onSearchResults, allGraduates }) {
   const handleInputChange = (e) => {
     const newValue = e.target.value;
     setSearchQuery(newValue);
-
-    if (newValue) {
-      handleSearch(newValue);
-    } else {
-      onSearchResults(allGraduates);
-    }
   };
 
   return (
