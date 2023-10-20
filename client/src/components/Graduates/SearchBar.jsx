@@ -6,7 +6,7 @@ function SearchBar({ onSearchResults}) {
   const [searchQuery, setSearchQuery] = useState('');
   const handleSearch = async () => {
     try {
-     const response = await fetch(`http://localhost:8000/api/search?query=${searchQuery}`);
+     const response = await fetch(`https://readme-hireme.onrender.com/api/search?query=${searchQuery}`);
       const responseData = await response.json();
       const filteredData = responseData.graduates;
       if (response.ok) {
