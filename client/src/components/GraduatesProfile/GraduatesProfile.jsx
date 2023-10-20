@@ -77,7 +77,7 @@ function GraduatesProfile({ grad, onGoBack }) {
                      <MDBCardText>CV</MDBCardText>
                    </MDBCol>
                    <MDBCol sm="9">
-                 <MDBCardText className="text-muted">{grad.readme.cv_link}</MDBCardText>
+                    <MDBCardText className="text-muted">{grad.readme.cv_link}</MDBCardText>
                    </MDBCol>
                  </MDBRow>
                  <hr />
