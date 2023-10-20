@@ -199,6 +199,8 @@ function GraduatesProfile({ grad, onGoBack }) {
                   </MDBRow>
                 </MDBCardBody>
               </MDBCard>
+
+
               <MDBCard className="mb-4 mb-lg-0">
                 <MDBCardBody className="p-0">
                   <MDBListGroup flush className="rounded-3">
@@ -210,12 +212,36 @@ function GraduatesProfile({ grad, onGoBack }) {
                   </MDBListGroup>
                 </MDBCardBody>
               </MDBCard>
+{/* ---------------Github Contributions------------------ */} 
+            <MDBCard className="mb-4 mb-lg-1">
+              <MDBCardBody>
+                <h2>Github Contributions</h2>
+                <p>Github Contributions content</p>
+              </MDBCardBody>
+            </MDBCard>
+{/* ---------------end of Github Contributions------------------ */} 
+
+
             </MDBCol>
           </MDBRow>
         </MDBContainer>
-      </section>
+
+
+{/* </MDBCard> */}
+ 
+</section>
+
     </div>
   );
 }
 
 export default GraduatesProfile;
+
+
+ {/* need to move this card to better position */}
+//               <MDBCard className="mb-4">
+//   <MDBCardBody>
+//     <h2>New Section Title</h2>
+//     <p>This is the content of your new section.</p>
+//   </MDBCardBody>
+// </MDBCard>

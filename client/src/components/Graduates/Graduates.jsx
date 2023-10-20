@@ -96,10 +96,21 @@ useEffect(() => {
     setSelectedGrad(null);
   };
 
+  const renderContributions = () => {
+    return contributions.map((contribution, index) => (
+      <div key={index}>
+        <p>Date: {contribution.created_at}</p>
+        <p>Type: {contribution.type}</p>
+        {/* Render other contribution details as needed */}
+        <hr /> {/* Add a separator between contributions */}
+      </div>
+    ));
+  };
+
   return (
     <div>
       {selectedGrad ? (
-        <GraduatesProfile grad={selectedGrad} onGoBack={handleGoBack} />
+        <GraduatesProfile grad={selectedGrad} onGoBack={handleGoBack} onRenderCo={renderContributions}/>
       ) : (
         <div className="grad-cards">
            <SearchBar onSearchResults={handleSearchResults}  />
@@ -111,15 +122,14 @@ useEffect(() => {
                 <GradCard key={grad.id} grad={grad} onViewMore={handleViewMore} />
               ))
             )}
+           
           </div>
 
+                  
         </div>
       )}
 
-      <div>
-
-        
-      </div>
+      
 
     </div>
   );
