@@ -44,18 +44,20 @@ function Graduates() {
   const [isLoading, setIsLoading] = useState(true); // Add a loading state
   const [contributions, setContributions]= useState([]);
 
-  useEffect(async()=> {
+  useEffect(()=> {
+
+    const fetchData = async () => {
     try{
       const response = await axios.get('http://localhost:8000/github-contributions');
       console.log("contribution response: ", response.data);
       setContributions(response.data); 
     }
     catch (error) {
-      console.error(`error fetching contribution from server: ` + error)
+      console.error(`error fetching contributions from server: ` + error)
     }
-  }
-    
-    ,[]);
+  };
+    fetchData();
+},[]);
 
   const handleSearchResults = (filteredData) => {
     setFilteredGraduates(filteredData);
