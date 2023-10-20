@@ -18,7 +18,7 @@ function GradCard({ grad, onViewMore }) {
           <ListGroup className="list-group-flush">
             <ListGroup.Item>Username: {grad.github_username}</ListGroup.Item>
             <ListGroup.Item>Repo: {grad.repos_number}</ListGroup.Item>
-            <ListGroup.Item>Skills: {grad?.skills || grad.languages}</ListGroup.Item>
+            <ListGroup.Item>Skills: {grad?.skills?.join(", ") || grad.languages.join(", ")}</ListGroup.Item>
           </ListGroup>
           <Card.Body>
             <Link onClick={() => onViewMore(grad)}>View More</Link>
