@@ -302,6 +302,40 @@ app.get("/api/search", async (req, res) => {
   }
 });
 
+//-----------------------------display user's contribution graph------------------------------
+app.get("/github-contributions", async (req, res) => {
+  try {
+    //will have a static variables for test purpose
+    const username = "rahmab1";
+    const token = "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";
+    const apiUrl = `https://api.github.com/users/${username}/events`;
+
+    // fetch(apiUrl, {
+    //   headers: {
+    //     Authorization: `token ${token}`,
+    //   },
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     // need to extract contribution data and render the result
+
+    //     console.log(data);
+    //   });
+
+    const response = await axios.get(apiUrl, {
+      headers: {
+        Authorization: `token ${token}`,
+      },
+    });
+    const data = response.data;
+    res.json(data);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Error fetching contribution data" });
+  }
+});
+
+//---------------------------------------------
 
 //---------------- listen --------------------
 app.listen(port, () => {
