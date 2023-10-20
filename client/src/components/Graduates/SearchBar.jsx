@@ -34,6 +34,11 @@ function SearchBar({ onSearchResults}) {
           aria-describedby="basic-addon2"
           onChange={(e) => setSearchQuery(e.target.value)}
           value={searchQuery}
+          onKeyPress={(e) => {
+            if (e.key === 'Enter') {
+              handleSearch();
+            }
+          }}
         />
           <Button variant="danger" onClick={handleSearch}>
             <i className="fas fa-search"></i>
