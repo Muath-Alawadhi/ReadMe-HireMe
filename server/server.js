@@ -244,10 +244,8 @@ app.get("/api/fetchGradData", async (req, res) => {
 
 app.get("/api/search", async (req, res) => {
   try {
-    const { name, skills } = req.query;
-
+    const { query } = req.query;
     const client = await pool.connect();
-
     // let searchQuery =
     //   "SELECT id, github_username, name, profile_pic_link, repos_number, github_url FROM graduates_user WHERE 1 = 1";
     let searchQuery = `
@@ -258,19 +256,14 @@ app.get("/api/search", async (req, res) => {
     WHERE 1 = 1
   `;
     const queryParams = [];
-    if (name) {
-      searchQuery += " AND gu.name ILIKE $1";
-      queryParams.push(`%${name}%`);
+    if (query) {
+      searchQuery +=
+        " AND (gu.name ILIKE $1 OR gu.id IN (SELECT user_id FROM skills WHERE s.languages && $2))";
+      const searchParam = `%${query}%`;
+      const skillsArray = query.split(","); // Assuming that the query can include both name and skills
+      queryParams.push(searchParam, skillsArray);
     }
-    if (skills) {
-      const skillsArray = skills.split(",");
-      const paramCount = queryParams.length + 1;
-      searchQuery += ` AND id IN (SELECT user_id FROM skills WHERE s.languages @> $${paramCount})`;
-      queryParams.push(skillsArray);
-    }
-
     const searchResult = await client.query(searchQuery, queryParams);
-
     const graduates = searchResult.rows;
     client.release();
     res.json({ graduates });
