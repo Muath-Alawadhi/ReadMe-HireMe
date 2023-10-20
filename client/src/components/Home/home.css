@@ -1,6 +1,6 @@
-/*  {
+ *{
   outline: red 1px dotted;
-} */
+}
 body,
 html {
   margin: 0;
@@ -17,7 +17,7 @@ html {
 
 .left-content {
   text-align: center;
-  margin-top: 22rem;
+  margin-top: 2rem;
 }
 
 .button {
@@ -34,7 +34,7 @@ html {
   align-items: center;
   color: #fff;
   font-size: 3rem;
-  margin-top: -10px;
+  margin-top: 50px;
 }
 
 .icon-html,
@@ -141,7 +141,7 @@ html {
 .footer {
   background-color: #fff;
   text-align: center;
-  margin-top: 22rem;
+  margin-top: 23rem;
   border-radius: 20px;
   display: flex;
   flex-direction: column;
@@ -167,4 +167,3 @@ html {
 .testing {
   margin-top: 100vh;
 } */
-
