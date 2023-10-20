@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect,useState  } from 'react';
 import "./GraduatesProfile.css";
 import {
   MDBCol,
@@ -17,6 +17,37 @@ import {
 
 
 function GraduatesProfile({ grad, onGoBack }) {
+  const [commitData, setCommitData] = useState(null);
+
+  useEffect(() => {
+    fetch('http://localhost:8000/api/fetchGradData')
+      .then((res) => res.json())
+      .then((data) => {
+        const specificGrad = data.graduates.find(g => g.github_username === grad.github_username);
+  
+        // logging to to see  what specificGrad contains
+        console.log('Specific Grad:', specificGrad);
+        // logging to see what type of data it is 
+        console.log( typeof specificGrad); 
+  
+        if (specificGrad && specificGrad.commitsByMonth) {
+          // make commitData from object to array
+          const arrayData = Object.entries(specificGrad.commitsByMonth).map(([month, commits]) => ({ month, commits }));
+          setCommitData(arrayData);
+          arrayData.forEach(item => {
+            console.log(`Date: ${item.month}, Commits: ${item.commits}`);
+          });
+        } else {
+          // logging a message if commitsByMonth does not exist
+          console.log('commitsByMonth does not exist on specificGrad');
+        }
+      })
+      .catch((error) => {
+        console.log('Error fetching data:', error);
+      });
+  }, [grad.github_username]);
+  
+  
   return (
     <div>
       <section>
