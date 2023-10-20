@@ -116,7 +116,7 @@ function GraduatesProfile({ grad, onGoBack }) {
                         style={{ color: "#333333" }}
                       />
                       <MDBCardText>
-                        {grad.readme?.cv_link || grad.cv_link === "CV link not found" ? (
+                        {grad.readme?.cv_link  === "CV link not found" ? (
                           <MDBCardText className="text-muted">
                             CV's so elusive, it hides even from the graduate!
                           </MDBCardText>
@@ -141,7 +141,7 @@ function GraduatesProfile({ grad, onGoBack }) {
                       />
 
                       <MDBCardText>
-                        {grad.readme?.linkedin || grad.linkedin === "LinkedIn link not found" ? (
+                        {grad.readme?.linkedin === "LinkedIn link not found" ? (
                           <MDBCardText className="text-muted">
                             link's on holiday, even from its account holder!
                           </MDBCardText>
