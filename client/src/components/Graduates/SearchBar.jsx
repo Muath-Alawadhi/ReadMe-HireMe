@@ -1,5 +1,5 @@
 import "./SearchBar.css";
-import React, { useState ,useEffect } from 'react';
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { InputGroup, FormControl , Button  } from 'react-bootstrap';
 
@@ -23,31 +23,6 @@ function SearchBar({ onSearchResults}) {
       console.error("An error occurred:", err);
     }
   };
-
-
-  useEffect(() => {
-    // Add an event listener to detect the 'keydown' event on the search input
-    const handleKeyDown = (event) => {
-      if (event.key === 'Backspace') {
-        // Check if the search input is empty
-        if (searchQuery === '') {
-          // Trigger the search function to update with an empty query
-          handleSearch();
-        }
-      }
-    };
-
-    // Attach the event listener
-    document.addEventListener('keydown', handleKeyDown);
-
-    // Clean up the event listener when the component unmounts
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [searchQuery]);
-
-
-
   
   return (
     <div className="container mt-4">
