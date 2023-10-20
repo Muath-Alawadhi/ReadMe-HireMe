@@ -18,9 +18,6 @@ function RouterComponent() {
     color: "rgb(52, 71, 103)",
   };
 
-  const linkHoverStyle = {
-  color: "#000000",  
-};
   
   const iconStyle = {
     marginRight: "5px",
@@ -54,13 +51,13 @@ function RouterComponent() {
             <div className="collapse navbar-collapse" id="navbarNav">
               <ul className="navbar-nav ml-auto">
                 <li className="nav-item">
-                  <Link className="nav-link" to="/Home" style={linkStyle}>
-                    <i className="fa fa-home" style={iconStyle}></i> Home
+                  <Link className="nav-link" to="/Home" id="home">
+                    <i className="fa fa-home" style={iconStyle}></i> 
+                    Home
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/graduates" style={linkStyle} onMouseEnter={() => setLinkStyle(linkHoverStyle)}
-  onMouseLeave={() => setLinkStyle(linkStyle)}>
+                  <Link className="nav-link" to="/graduates" id="graduate" >
                     <i className="fa fa-graduation-cap" style={iconStyle}></i>{" "}
                     Graduates
                   </Link>
