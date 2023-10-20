@@ -294,7 +294,7 @@ app.get("/search", async (req, res) => {
 });
 
 //-----------------------------display user's contribution graph------------------------------
-app.get("/contribution", async (req, res) => {
+app.get("/github-contributions", async (req, res) => {
   try {
     //will have a static variables for test purpose
     const username = "rahmab1";
