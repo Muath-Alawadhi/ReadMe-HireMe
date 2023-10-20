@@ -36,11 +36,12 @@ function GradCard({ grad, onViewMore }) {
 
 function Graduates() {
 
-    const [graduates, setGraduates] = useState([]);
-    const [filteredGraduates, setFilteredGraduates] = useState(null);
-
+  const [graduates, setGraduates] = useState([]);
+  const [filteredGraduates, setFilteredGraduates] = useState(null);
   const [selectedGrad, setSelectedGrad] = useState(null);
   const [isLoading, setIsLoading] = useState(true); // Add a loading state
+  const [contributions, setContributions]= useState([]);
+
 
   const handleSearchResults = (filteredData) => {
     setFilteredGraduates(filteredData);
