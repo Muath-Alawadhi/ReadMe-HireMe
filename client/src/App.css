@@ -1,12 +1,12 @@
 button.btn-dark {
-    padding: 2px 10px;
-    background-color: rgb(52, 71, 103);
-  }
-  button.btn-secondary {
-      background-color: rgb(52, 71, 103);
-    }
-    
-    .container2{
-      margin-top: 20rem;
-      width: 20rem;
-    }
+  padding: 2px 10px;
+  background-color: rgb(52, 71, 103);
+}
+button.btn-secondary {
+  background-color: rgb(52, 71, 103);
+}
+
+.container2 {
+  margin-top: 20rem;
+  width: 20rem;
+}
