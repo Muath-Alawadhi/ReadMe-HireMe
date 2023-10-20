@@ -7,7 +7,11 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import SearchBar from "./SearchBar";
 import { Link } from "react-router-dom";
 import GraduatesProfile from '../GraduatesProfile/GraduatesProfile';
-
+import {
+ 
+  MDBBtn,
+ 
+} from "mdb-react-ui-kit";
 
 
 function GradCard({ grad, onViewMore }) {
@@ -25,7 +29,10 @@ function GradCard({ grad, onViewMore }) {
               <ListGroup.Item>Skills: {grad?.skills || grad.languages} </ListGroup.Item>
             </ListGroup>
             <Card.Body>
-              <Link onClick={() => onViewMore(grad)}>View More</Link>
+              {/* <Link onClick={() => onViewMore(grad)}>View More</Link> */}
+             <MDBBtn onClick={() => onViewMore(grad)} outline className="ms-1  backButton">
+                 View More
+              </MDBBtn>
             </Card.Body>
           </Card>
     </div>
