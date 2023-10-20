@@ -18,6 +18,9 @@ function RouterComponent() {
     color: "rgb(52, 71, 103)",
   };
 
+  const linkHoverStyle = {
+  color: "#000000",  
+};
   
   const iconStyle = {
     marginRight: "5px",
@@ -56,7 +59,8 @@ function RouterComponent() {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/graduates" style={linkStyle}>
+                  <Link className="nav-link" to="/graduates" style={linkStyle} onMouseEnter={() => setLinkStyle(linkHoverStyle)}
+  onMouseLeave={() => setLinkStyle(linkStyle)}>
                     <i className="fa fa-graduation-cap" style={iconStyle}></i>{" "}
                     Graduates
                   </Link>
