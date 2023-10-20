@@ -293,6 +293,27 @@ app.get("/search", async (req, res) => {
   }
 });
 
+//-----------------------------display user's contribution graph------------------------------
+//will have a static variables for test purpose
+const username = "rahmab1";
+const token = "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";
+const apiUrl = `https://api.github.com/users/${username}/events`;
+
+fetch(apiUrl, {
+  headers: {
+    Authorization: `token ${token}`,
+  },
+})
+  .then((response) => response.json())
+  .then((data) => {
+    // need to extract contribution data and render the result
+
+    console.log(data);
+  })
+  .catch((error) => {
+    console.error("Error fetching data: " + error);
+  });
+//---------------------------------------------
 
 //---------------- listen --------------------
 app.listen(port, () => {
