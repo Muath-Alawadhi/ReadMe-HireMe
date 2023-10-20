@@ -278,7 +278,7 @@ app.get("/api/search", async (req, res) => {
     // let searchQuery =
     //   "SELECT id, github_username, name, profile_pic_link, repos_number, github_url FROM graduates_user WHERE 1 = 1";
     let searchQuery = `
-    SELECT gu.id, gu.github_username, gu.name, gu.profile_pic_link, gu.repos_number, gu.github_url, s.languages, r.cv_link, r.readme_content, r.linkedin
+    SELECT gu.id, gu.github_username, gu.name, gu.profile_pic_link, gu.repos_number, gu.followers, gu.following, gu.github_url, s.languages, r.cv_link, r.readme_content, r.linkedin
     FROM graduates_user gu
     LEFT JOIN skills s ON gu.id = s.user_id
     LEFT JOIN readme r ON gu.id = r.user_id

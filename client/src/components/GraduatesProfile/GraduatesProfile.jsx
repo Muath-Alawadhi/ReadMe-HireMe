@@ -14,6 +14,8 @@ import {
   MDBListGroupItem,
 } from "mdb-react-ui-kit";
 
+
+
 function GraduatesProfile({ grad, onGoBack }) {
   return (
     <div>
@@ -30,9 +32,6 @@ function GraduatesProfile({ grad, onGoBack }) {
                     style={{ width: "150px" }}
                     fluid
                   />
-                  {/* <p className="text-muted mb-1">Full Stack Developer</p> */}
-                  {/* <MDBIcon fab icon="github fa-lg" style={{ color: '#333333' }} /> */}
-                  {/* <p className="text-muted mb-4">Bay Area, San Francisco, CA</p> */}
                   <div>
                     <MDBRow className="d-flex justify-content-center mb-2">
                       <MDBCol sm="3">
@@ -65,7 +64,7 @@ function GraduatesProfile({ grad, onGoBack }) {
                       className="ms-1 custom-button"
                       onClick={() =>
                         window.open(
-                          grad.readme.linkedin + "overlay/contact-info/",
+                          grad.readme?.linkedin || grad.linkedin + "overlay/contact-info/",
                           "_blank"
                         )
                       }
@@ -86,14 +85,14 @@ function GraduatesProfile({ grad, onGoBack }) {
                         style={{ color: "#333333" }}
                       />
                       <MDBCardText>
-                        {grad.readme.cv_link === "CV link not found" ? (
+                        {grad.readme?.cv_link || grad.cv_link === "CV link not found" ? (
                           <MDBCardText className="text-muted">
                             CV's so elusive, it hides even from the graduate!
                           </MDBCardText>
                         ) : (
                           <MDBCardText className="text-muted">
                             <a
-                              href={grad.readme.cv_link}
+                              href={grad.readme?.cv_link || grad.cv_link}
                               target="_blank"
                               rel="noopener noreferrer"
                             >
@@ -111,14 +110,14 @@ function GraduatesProfile({ grad, onGoBack }) {
                       />
 
                       <MDBCardText>
-                        {grad.readme.linkedin === "LinkedIn link not found" ? (
+                        {grad.readme?.linkedin || grad.linkedin === "LinkedIn link not found" ? (
                           <MDBCardText className="text-muted">
                             link's on holiday, even from its account holder!
                           </MDBCardText>
                         ) : (
                           <MDBCardText className="text-muted">
                             <a
-                              href={grad.readme.linkedin}
+                              href={grad.readme?.linkedin || grad.linkedin}
                               target="_blank"
                               rel="noopener noreferrer"
                             >
@@ -193,7 +192,7 @@ function GraduatesProfile({ grad, onGoBack }) {
                     </MDBCol>
                     <MDBCol sm="9">
                       <MDBCardText className="text-muted">
-                        {grad.skills.join(" ,")}
+                        {grad?.skills || grad.languages}
                       </MDBCardText>
                     </MDBCol>
                   </MDBRow>
@@ -204,7 +203,7 @@ function GraduatesProfile({ grad, onGoBack }) {
                   <MDBListGroup flush className="rounded-3">
                     <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
                       <MDBCardText>
-                        ReadMe : {grad.readme.readme_content}
+                        ReadMe : {grad.readme?.readme_content || grad.readme_content}
                       </MDBCardText>
                     </MDBListGroupItem>
                   </MDBListGroup>
