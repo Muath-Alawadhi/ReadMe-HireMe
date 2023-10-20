@@ -1,24 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import "./Graduates.css";
-import Card from 'react-bootstrap/Card';
-import ListGroup from 'react-bootstrap/ListGroup';
+import Card from "react-bootstrap/Card";
+import ListGroup from "react-bootstrap/ListGroup";
 import SearchBar from "./SearchBar";
 import { Link } from "react-router-dom";
-import GraduatesProfile from '../GraduatesProfile/GraduatesProfile';
+import GraduatesProfile from "../GraduatesProfile/GraduatesProfile";
 
 function GradCard({ grad, onViewMore }) {
   return (
     <div>
       <div>
-        <Card style={{ width: '17rem' }} key={grad.id}>
-          <Card.Img variant="top" src={grad.profile_pic_link} alt={grad.name} className="cards-img" />
+        <Card style={{ width: "17rem" }} key={grad.id}>
+          <Card.Img
+            variant="top"
+            src={grad.profile_pic_link}
+            alt={grad.name}
+            className="cards-img"
+          />
           <Card.Body>
             <Card.Title>{grad.name}</Card.Title>
           </Card.Body>
           <ListGroup className="list-group-flush">
             <ListGroup.Item>Username: {grad.github_username}</ListGroup.Item>
             <ListGroup.Item>Repo: {grad.repos_number}</ListGroup.Item>
-            <ListGroup.Item>Skills: {grad?.skills?.join(", ") || grad.languages.join(", ")}</ListGroup.Item>
+            <ListGroup.Item>
+              Skills: {grad?.skills || grad.languages}
+            </ListGroup.Item>
           </ListGroup>
           <Card.Body>
             <Link onClick={() => onViewMore(grad)}>View More</Link>
@@ -73,13 +80,15 @@ function Graduates() {
           <div className="CardsContainerBlock">
             {isLoading ? (
               <p>Loading data...</p>
+            ) : (filteredGraduates || graduates).length === 0 ? (
+              <p className="results-display">No results to found.</p>
             ) : (
-              ((filteredGraduates || graduates).length === 0 ? (
-                <p className='results-display'>No results to display.</p>
-              ) : (
-                (filteredGraduates || graduates).map((grad) => (
-                  <GradCard key={grad.id} grad={grad} onViewMore={handleViewMore} />
-                ))
+              (filteredGraduates || graduates).map((grad) => (
+                <GradCard
+                  key={grad.id}
+                  grad={grad}
+                  onViewMore={handleViewMore}
+                />
               ))
             )}
           </div>

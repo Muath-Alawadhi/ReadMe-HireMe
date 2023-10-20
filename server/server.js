@@ -460,35 +460,7 @@ app.get("/api/search", async (req, res) => {
 });
 //---------------------------------End of search Functionality-------------------------------
 
-app.delete("/api/deleteGradData/:id", async (req, res) => {
-  const userId = req.params.id;
-  const client = await pool.connect();
 
-  try {
-    const deleteReadmeQuery = {
-      text: "DELETE FROM readme WHERE user_id = $1",
-      values: [userId],
-    };
-    await client.query(deleteReadmeQuery);
-
-    const deleteSkillsQuery = {
-      text: "DELETE FROM skills WHERE user_id = $1",
-      values: [userId],
-    };
-    await client.query(deleteSkillsQuery);
-
-    const deleteUserQuery = {
-      text: "DELETE FROM graduates_user WHERE id = $1",
-      values: [userId],
-    };
-    await client.query(deleteUserQuery);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal server error" });
-  } finally {
-    client.release();
-  }
-});
 
 //---------------- listen --------------------
 app.listen(port, () => {
