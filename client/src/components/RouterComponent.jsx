@@ -62,7 +62,11 @@ function RouterComponent() {
                 </li>
                 <li className="nav-item">
                   <Link className="nav-link" to="/signup" style={linkStyle}>
-                    <i className="fa fa-user-plus" style={iconStyle}></i> Signup
+                    <button type="button" class="btn btn btn-dark">
+                      <i className="fa fa-user-plus"></i>
+                      
+                      Signup
+                    </button>
                   </Link>
                 </li>
               </ul>
