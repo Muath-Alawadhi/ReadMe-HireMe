@@ -14,14 +14,8 @@ button.btn-secondary {
   color: #fff;
   background: linear-gradient(rgb(52, 71, 103), rgb(11, 75, 158));
 }
-/* #Signup {
-  color: rgb(52, 71, 103);
-} */
+
 
 #home:hover , #graduate:hover {
-  /* background-color: #eee; */
-  /* Change the background color when hovered */
   color: #000000;
-
-  /* Change the text color when hovered */
 }
