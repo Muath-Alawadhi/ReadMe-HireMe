@@ -13,12 +13,15 @@ import {
   MDBListGroup,
   MDBListGroupItem,
 } from "mdb-react-ui-kit";
+import CommitGraph from "./d3.jsx";
+
+
 
 function GraduatesProfile({ grad, onGoBack }) {
   const [commitData, setCommitData] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/fetchGradData")
+    fetch('https://readme-hireme.onrender.com/api/fetchGradData')
       .then((res) => res.json())
       .then((data) => {
         const specificGrad = data.graduates.find(
@@ -244,6 +247,7 @@ function GraduatesProfile({ grad, onGoBack }) {
                         {grad.readme?.readme_content || grad.readme_content}
                       </MDBCardText>
                     </MDBListGroupItem>
+                    {commitData && <CommitGraph commitData={commitData} />}
                   </MDBListGroup>
                 </MDBCardBody>
               </MDBCard>

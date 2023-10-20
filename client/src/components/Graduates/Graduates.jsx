@@ -49,7 +49,7 @@ function Graduates() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/api/fetchGradData`);
+        const response = await fetch(`https://readme-hireme.onrender.com/api/fetchGradData`);
         const responseData = await response.json();
         const data = responseData.graduates;
         console.log("Data from API:", data);
