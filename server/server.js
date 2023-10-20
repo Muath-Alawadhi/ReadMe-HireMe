@@ -151,52 +151,56 @@ async function fetchAndInsertData(res) {
     }
 
     //------------------- end of readme file  ----------------------
-// ----------------------- start of  fetching for graph-----------------------------------
-  /* initialise an object to store commit counts by date. this is counting the amount of 
+    // ----------------------- start of  fetching for graph-----------------------------------
+    /* initialise an object to store commit counts by date. this is counting the amount of 
   committs are user makes each day */
- 
-  const commitCountsByDate = {};
 
-  // fetch repos
-  const getRepos = await axios.get(`https://api.github.com/users/${githubUserName}/repos`, {
-  headers: {
-    Authorization: `token ${githubAccessToken}`,
-  },
-  });
+    const commitCountsByDate = {};
 
- const repoData = getRepos.data;
+    // fetch repos
+    const getRepos = await axios.get(
+      `https://api.github.com/users/${githubUserName}/repos`,
+      {
+        headers: {
+          Authorization: `token ${githubAccessToken}`,
+        },
+      }
+    );
 
- // loop through each repo to fetch the  commits
-   for (const repo of repoData) {
-  const getCommits = await axios.get(`https://api.github.com/repos/${githubUserName}/${repo.name}/commits`, {
-    headers: {
-      Authorization: `token ${githubAccessToken}`,
-    },
-  });
+    const repoData = getRepos.data;
 
-  const commits = getCommits.data;
+    // loop through each repo to fetch the  commits
+    for (const repo of repoData) {
+      const getCommits = await axios.get(
+        `https://api.github.com/repos/${githubUserName}/${repo.name}/commits`,
+        {
+          headers: {
+            Authorization: `token ${githubAccessToken}`,
+          },
+        }
+      );
 
-  // loop through each commit to count by date
-  for (const commit of commits) {
-    const date = new Date(commit.commit.committer.date).toISOString().split('T')[0];
-    if (!commitCountsByDate[date]) {
-      commitCountsByDate[date] = 0;
+      const commits = getCommits.data;
+
+      // loop through each commit to count by date
+      for (const commit of commits) {
+        const date = new Date(commit.commit.committer.date)
+          .toISOString()
+          .split("T")[0];
+        if (!commitCountsByDate[date]) {
+          commitCountsByDate[date] = 0;
+        }
+
+        commitCountsByDate[date]++;
+      }
     }
 
-    commitCountsByDate[date]++;
-  }
- };
-
- // log the commit counts by date to see what the terminal is printing 
-  console.log("Commit Counts by Date:", commitCountsByDate);
-
-
-
-
+    // log the commit counts by date to see what the terminal is printing
+    console.log("Commit Counts by Date:", commitCountsByDate);
 
     //------------------- end of readme file  ---------------------
 
- // -----------------Start of Database---------------------------
+    // -----------------Start of Database---------------------------
 
     // Insert data into the Graduates_user table with conflict handling
     const userInsertQuery = {
@@ -226,7 +230,7 @@ async function fetchAndInsertData(res) {
       values: [githubUserName, cvLink, linkedin, readmeContent],
     };
     await client.query(readmeInsertQuery);
-    
+
     // insert data into github_stats table
     const insertStats = `
      INSERT INTO github_stats (user_id, commit_date, num_commits)
@@ -234,18 +238,20 @@ async function fetchAndInsertData(res) {
      ON CONFLICT (user_id, commit_date) DO NOTHING;
      `;
 
-   // loop through commitCountsByDate to insert each record
-   for (const [date, numCommits] of Object.entries(commitCountsByDate)) {
-    try {
-    const result = await client.query(insertStats, [date, numCommits, githubUserName]);
-    // shows us if the data is being inserted 
-    console.log(`Inserted ${result.rowCount} row(s)`);
-  } catch (error) {
-    console.error(`Failed to insert commit data for date ${date}:`, error);
-  }
-}
-
-
+    // loop through commitCountsByDate to insert each record
+    for (const [date, numCommits] of Object.entries(commitCountsByDate)) {
+      try {
+        const result = await client.query(insertStats, [
+          date,
+          numCommits,
+          githubUserName,
+        ]);
+        // shows us if the data is being inserted
+        console.log(`Inserted ${result.rowCount} row(s)`);
+      } catch (error) {
+        console.error(`Failed to insert commit data for date ${date}:`, error);
+      }
+    }
 
     // -----------------end of Database----------------------------
   } catch (error) {
@@ -304,12 +310,12 @@ app.get("/api/fetchGradData", async (req, res) => {
     const skillsQuery = "SELECT user_id, languages FROM skills;";
     const skillsData = await client.query(skillsQuery);
     const skills = skillsData.rows;
-    
+
     // fetch data from github_stats
-    const githubStatsQuery = 'SELECT user_id, commit_date, num_commits FROM github_stats;';
+    const githubStatsQuery =
+      "SELECT user_id, commit_date, num_commits FROM github_stats;";
     const githubStatsData = await client.query(githubStatsQuery);
     const githubStats = githubStatsData.rows;
-   
 
     // merge all the data using user_id
     for (const grad of grads) {
@@ -319,69 +325,94 @@ app.get("/api/fetchGradData", async (req, res) => {
       );
       if (matchingReadme) {
         grad.readme = matchingReadme;
-      
       }
-    
-     // add skills info
-      const matchingSkills = skills.filter(skill => skill.user_id === grad.id);
-      grad.skills = matchingSkills.map(skill => skill.languages).flat();
-    
+
+      // add skills info
+      const matchingSkills = skills.filter(
+        (skill) => skill.user_id === grad.id
+      );
+      grad.skills = matchingSkills.map((skill) => skill.languages).flat();
+
       // add github_stats info
       // this matches  gitHub stats with  grad.id.
-      const matchingGithubStats = githubStats.filter(stat => stat.user_id === grad.id);
+      const matchingGithubStats = githubStats.filter(
+        (stat) => stat.user_id === grad.id
+      );
 
       // creating an empty object to hold commit counts by month and year
       const commitsByMonth = {};
 
-     // loop through the current id that matches the current graduate
-     for (const stat of matchingGithubStats) {
-  
-     
-      const date = new Date(stat.commit_date);
-      const year = date.getFullYear();
-     if (year >= 2022 && year <= 2023) {
-    
-       const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-       const monthName = monthNames[date.getMonth()];
-       const shortYear = year.toString().substr(-2);
-       // combining month and year into a single string (Jan-22)
-       const monthYear = `${monthName}-${shortYear}`;
-         if (!commitsByMonth[monthYear]) {
-           commitsByMonth[monthYear] = 0;
+      // loop through the current id that matches the current graduate
+      for (const stat of matchingGithubStats) {
+        const date = new Date(stat.commit_date);
+        const year = date.getFullYear();
+        if (year >= 2022 && year <= 2023) {
+          const monthNames = [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
+          ];
+          const monthName = monthNames[date.getMonth()];
+          const shortYear = year.toString().substr(-2);
+          // combining month and year into a single string (Jan-22)
+          const monthYear = `${monthName}-${shortYear}`;
+          if (!commitsByMonth[monthYear]) {
+            commitsByMonth[monthYear] = 0;
           }
-      commitsByMonth[monthYear] += stat.num_commits;}
-   }
+          commitsByMonth[monthYear] += stat.num_commits;
+        }
+      }
 
-     // sorting the commits by month-year
-      const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-      const sortedCommitsByMonth = Object.keys(commitsByMonth).sort((a, b) => {
-       /* splits the string by the (-) returns [jan,22] this is needed to compare different strings */
-        const [aMonth, aYear] = a.split('-'); 
-        const [bMonth, bYear] = b.split('-');
-        
-        /* this is used to find  the index of a specific month name 
+      // sorting the commits by month-year
+      const monthNames = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
+      const sortedCommitsByMonth = Object.keys(commitsByMonth)
+        .sort((a, b) => {
+          /* splits the string by the (-) returns [jan,22] this is needed to compare different strings */
+          const [aMonth, aYear] = a.split("-");
+          const [bMonth, bYear] = b.split("-");
+
+          /* this is used to find  the index of a specific month name 
         in the monthNames array. This is then indexed is used to represent the position of the month in the calendar year.*/
-        const aMonthIndex = monthNames.indexOf(aMonth);
-        const bMonthIndex = monthNames.indexOf(bMonth);
-        let compare;
-        if (aYear !== bYear) {
-          compare = aYear - bYear;
-          } else
-           {
-             compare = aMonthIndex - bMonthIndex;
-       }
-      })
-      .reduce((acc, key) => {
-        acc[key] = commitsByMonth[key];
-        return acc;
-      }, {});
+          const aMonthIndex = monthNames.indexOf(aMonth);
+          const bMonthIndex = monthNames.indexOf(bMonth);
+          let compare;
+          if (aYear !== bYear) {
+            compare = aYear - bYear;
+          } else {
+            compare = aMonthIndex - bMonthIndex;
+          }
+        })
+        .reduce((acc, key) => {
+          acc[key] = commitsByMonth[key];
+          return acc;
+        }, {});
 
       grad.commitsByMonth = sortedCommitsByMonth;
 
       // add skills info
-      const matchedSkills = skills.filter(
-        (skill) => skill.user_id === grad.id
-      );
+      const matchedSkills = skills.filter((skill) => skill.user_id === grad.id);
       grad.skills = matchedSkills.map((skill) => skill.languages).flat();
     }
 
@@ -415,7 +446,7 @@ app.get("/api/search", async (req, res) => {
       searchQuery +=
         " AND (gu.name ILIKE $1 OR gu.id IN (SELECT user_id FROM skills WHERE s.languages && $2))";
       const searchParam = `%${query}%`;
-      const skillsArray = query.split(","); // Assuming that the query can include both name and skills
+      const skillsArray = query.split(",");
       queryParams.push(searchParam, skillsArray);
     }
     const searchResult = await client.query(searchQuery, queryParams);
@@ -428,6 +459,7 @@ app.get("/api/search", async (req, res) => {
   }
 });
 //---------------------------------End of search Functionality-------------------------------
+
 
 
 //---------------- listen --------------------
