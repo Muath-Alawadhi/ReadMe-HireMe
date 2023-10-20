@@ -298,7 +298,7 @@ app.get("/github-contributions", async (req, res) => {
   try {
     //will have a static variables for test purpose
     const username = "rahmab1";
-    const token = "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";
+    const token = "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";
     const apiUrl = `https://api.github.com/users/${username}/events`;
 
     // fetch(apiUrl, {

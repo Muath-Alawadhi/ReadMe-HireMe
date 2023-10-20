@@ -9,7 +9,8 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import SearchBar from "./SearchBar";
 import { Link } from "react-router-dom";
 import GraduatesProfile from '../GraduatesProfile/GraduatesProfile';
-const axios = require('axios'); 
+import axios from 'axios';
+
 
 
 function GradCard({ grad, onViewMore }) {
@@ -72,7 +73,7 @@ function Graduates() {
         const response = await fetch(`http://localhost:8000/api/fetchGradData` );
          const responseData = await response.json();
         const data = responseData.graduates; // Access the 'graduates' key as the response from api is--> res.json({ graduates: grads });
-        console.log("Data from API:", data);
+        // console.log("Data from API:", data);
         setGraduates(data);
         setIsLoading(false); 
       } catch (error) {
@@ -83,7 +84,7 @@ function Graduates() {
   },[]);
 
 useEffect(() => {
-  console.log(graduates);
+  // console.log(graduates);
 }, [graduates]);
 
 
@@ -114,6 +115,12 @@ useEffect(() => {
 
         </div>
       )}
+
+      <div>
+
+        
+      </div>
+
     </div>
   );
 }
