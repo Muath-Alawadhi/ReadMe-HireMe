@@ -18,6 +18,7 @@ function RouterComponent() {
     color: "rgb(52, 71, 103)",
   };
 
+  
   const iconStyle = {
     marginRight: "5px",
   };
@@ -61,9 +62,9 @@ function RouterComponent() {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/signup" id="Signup">
-                    <i className="fa fa-user-plus"></i>
-                    Signup
+                  <Link className="nav-link" to="/signup" id="Signup" >
+                    <i className="fa fa-user-plus" style={iconStyle}></i>
+                     Signup
                   </Link>
                 </li>
               </ul>

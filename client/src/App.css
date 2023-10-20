@@ -11,3 +11,10 @@ button.btn-secondary {
 #Signup {
   color: rgb(52, 71, 103);
 }
+
+.nav-link:hover {
+  /* background-color: #eee; */
+  /* Change the background color when hovered */
+  color: #c8ff00;
+  /* Change the text color when hovered */
+}
