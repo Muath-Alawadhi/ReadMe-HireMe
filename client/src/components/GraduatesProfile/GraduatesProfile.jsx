@@ -14,7 +14,7 @@ import {
   MDBListGroupItem,
 } from "mdb-react-ui-kit";
 
-function GraduatesProfile({ grad, onGoBack }) {
+function GraduatesProfile({ grad, onGoBack , onRenderCo }) {
   return (
     <div>
       <section>
@@ -213,10 +213,15 @@ function GraduatesProfile({ grad, onGoBack }) {
                 </MDBCardBody>
               </MDBCard>
 {/* ---------------Github Contributions------------------ */} 
-            <MDBCard className="mb-4 mb-lg-1">
+            <MDBCard className="mt-5 mb-4 mb-lg-1">
               <MDBCardBody>
                 <h2>Github Contributions</h2>
-                <p>Github Contributions content</p>
+                <div className="calendar">
+                        {onRenderCo()}
+                      </div>
+
+
+                {/* <p>{onRenderCo()}</p> */}
               </MDBCardBody>
             </MDBCard>
 {/* ---------------end of Github Contributions------------------ */} 

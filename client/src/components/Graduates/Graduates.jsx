@@ -96,16 +96,38 @@ useEffect(() => {
     setSelectedGrad(null);
   };
 
-  const renderContributions = () => {
-    return contributions.map((contribution, index) => (
-      <div key={index}>
-        <p>Date: {contribution.created_at}</p>
-        <p>Type: {contribution.type}</p>
-        {/* Render other contribution details as needed */}
-        <hr /> {/* Add a separator between contributions */}
+const renderContributions = () => {
+  
+    const calendar = [];
+    // Assuming contributions contain data with a "created_at" field
+    contributions.forEach(contribution => {
+      const date = new Date(contribution.created_at).toLocaleDateString();
+      if (!calendar[date]) {
+        calendar[date] = 0;
+      }
+      calendar[date]++;
+    });
+console.log(contributions[0].created_at);
+
+    const today = new Date().toLocaleDateString();
+
+    return Object.keys(calendar).map((date, index) => (
+      <div key={index} className={date === today ? "cell today" : "cell"}>
+        <div className="dot" style={{ height: `${calendar[date] * 20}px` }}></div>
       </div>
     ));
   };
+
+    // return contributions.map((contribution, index) => (
+    //   <div key={index}>
+    //     <p>Date: {contribution.created_at}</p>
+    //     <p>Type: {contribution.type}</p>
+    //     {/* Render other contribution details as needed */}
+    //     <hr /> {/* Add a separator between contributions */}
+
+    //   </div>
+    // ));
+  // };
 
   return (
     <div>
