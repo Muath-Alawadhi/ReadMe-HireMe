@@ -1,5 +1,7 @@
 // For installing the last version of react-router-dom
 // npm install react-router-dom@latest
+// npm install axios
+
 import React, { useState , useEffect } from 'react';
 import "./Graduates.css";
 import Card from 'react-bootstrap/Card';
@@ -7,7 +9,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import SearchBar from "./SearchBar";
 import { Link } from "react-router-dom";
 import GraduatesProfile from '../GraduatesProfile/GraduatesProfile';
-
+const axios = require('axios'); 
 
 
 function GradCard({ grad, onViewMore }) {
@@ -42,6 +44,13 @@ function Graduates() {
   const [isLoading, setIsLoading] = useState(true); // Add a loading state
   const [contributions, setContributions]= useState([]);
 
+  useEffect( ()=> {
+    const response = axios.get(`http://localhost:8000/github-contributions`);
+    console.log("contribution rsponse:  ${response.data}");
+
+  }
+    
+    ,[]);
 
   const handleSearchResults = (filteredData) => {
     setFilteredGraduates(filteredData);
