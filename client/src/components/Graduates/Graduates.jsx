@@ -64,9 +64,6 @@ function Graduates() {
     setFilteredGraduates(filteredData);
   };
 
-
-
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -96,38 +93,43 @@ useEffect(() => {
     setSelectedGrad(null);
   };
 
-const renderContributions = () => {
-  
-    const calendar = [];
-    // Assuming contributions contain data with a "created_at" field
-    contributions.forEach(contribution => {
-      const date = new Date(contribution.created_at).toLocaleDateString();
-      if (!calendar[date]) {
-        calendar[date] = 0;
-      }
-      calendar[date]++;
-    });
-console.log(contributions[0].created_at);
+const renderContributions = () =>{
 
-    const today = new Date().toLocaleDateString();
 
-    return Object.keys(calendar).map((date, index) => (
-      <div key={index} className={date === today ? "cell today" : "cell"}>
-        <div className="dot" style={{ height: `${calendar[date] * 20}px` }}></div>
+ const contributionsByDate = {};
+
+  // Process contributions and calculate contributions for each date
+  contributions.forEach((contribution) => {
+    const date = new Date(contribution.created_at).toLocaleDateString();
+    if (!contributionsByDate[date]) {
+      contributionsByDate[date] = 0;
+    }
+    contributionsByDate[date]++;
+  });
+
+  // Create an array of date strings for the days in the calendar
+  const startDate = new Date('2023-09-01'); // Replace with the desired start date
+  const endDate = new Date('2023-10-20');   // Replace with the desired end date
+  const dateArray = [];
+  let currentDate = new Date(startDate);
+
+  while (currentDate <= endDate) {
+    dateArray.push(currentDate.toLocaleDateString());
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+
+  // Render the calendar grid and dots based on the contributions
+  return dateArray.map((date, index) => (
+    <div key={index} className="calendar-day">
+      <div className="calendar-date">{date}</div>
+      <div className="dot-container">
+        {contributionsByDate[date] && Array.from({ length: contributionsByDate[date] }).map((_, i) => (
+          <div key={i} className="dot"></div>
+        ))}
       </div>
-    ));
-  };
-
-    // return contributions.map((contribution, index) => (
-    //   <div key={index}>
-    //     <p>Date: {contribution.created_at}</p>
-    //     <p>Type: {contribution.type}</p>
-    //     {/* Render other contribution details as needed */}
-    //     <hr /> {/* Add a separator between contributions */}
-
-    //   </div>
-    // ));
-  // };
+    </div>
+  ));
+};
 
   return (
     <div>
@@ -146,7 +148,7 @@ console.log(contributions[0].created_at);
             )}
            
           </div>
-
+         
                   
         </div>
       )}

@@ -40,3 +40,40 @@ a:link {
   width: 110px;
   height: 40px;
 }
+
+/* add calender style here  */
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-gap: 4px;
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.calendar-day {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e4e4e4;
+  padding: 8px;
+  background-color: #ffffff;
+ }
+
+.calendar-date {
+  font-weight: bold;
+  font-size: 0.7rem;
+  margin-bottom: 4px;
+}
+
+.dot-container {
+  display: flex;
+  justify-content: center;
+}
+
+.dot {
+  width: 4px;
+  height: 4px;
+  background-color: #2e8b57;
+  border-radius: 50%;
+  margin: 0.5px;
+}
