@@ -33,7 +33,7 @@ const Signup = () => {
             </button>
             <p className="lead">
               Already Signed Up?
-              <Link to="/graduates" className="Graduates">
+              <Link to="/graduates" className="Graduates" id="go-to-grad-text">
                 Go To Graduates
               </Link>
             </p>
