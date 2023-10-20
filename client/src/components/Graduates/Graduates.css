@@ -7,13 +7,9 @@
 .cardsBlock{
  width: 6px;
 }
-
-.cards-img{
-
-}
-.grad-name{
-
-}
-.GraduatesBlock{
-
+.results-display{
+    color:rgb(52, 71, 103);
+    font-weight: bold;
+    font-size: 30px;
+    width: 30rem;
 }
