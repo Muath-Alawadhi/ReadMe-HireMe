@@ -170,33 +170,3 @@ html {
   margin-top: 100vh;
 } */
 
-.animate-message {
-  font-weight: bold;
-  display: inline-block;
-  white-space: nowrap;
-  overflow: hidden;
-  width: calc(52rem - 10rem);
-  /* animation: moveText 15s linear infinite; */
-  /* animation-delay: 2s; */
-  color: rgb(52, 71, 103);
-}
-
-@keyframes moveText {
-  0% {
-    transform: translateX(110%);
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  80% {
-    opacity: 0;
-  }
-  90% {
-    opacity: -1;
-  }
-  100% {
-    transform: translateX(-110%);
-    opacity: 0;
-  }
-}

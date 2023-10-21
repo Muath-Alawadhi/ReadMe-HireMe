@@ -32,12 +32,6 @@ function Home() {
                 graduates!
               </a>
             </h1>
-            <p className="message">
-              <span className="animate-message">
-                Finally! graduation day is approaching soon.Congratulations to
-                the graduates!
-              </span>
-            </p>
             <div className="icons">
               <i className="icon-html fab fa-html5"></i>
               <i className="icon-css fab fa-css3"></i>
