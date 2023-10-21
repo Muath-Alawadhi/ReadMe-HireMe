@@ -1,10 +1,6 @@
 .SearchBlock{
-    /* display: grid; */
-    grid-template-columns: 1fr 1fr 1fr;
-    /* text-align: center; */
     font-size: 3rem;
-    /* height: 20px; */
-    padding-top: 9px;
+    padding-top: 2rem;
     margin-top: 6rem;
 
 

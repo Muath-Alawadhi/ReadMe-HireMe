@@ -19,3 +19,10 @@ button.btn-secondary {
 #home:hover , #graduate:hover {
   color: #000000;
 }
+
+
+
+.main-container {
+  height: 100vh;
+  overflow-y: auto;
+}

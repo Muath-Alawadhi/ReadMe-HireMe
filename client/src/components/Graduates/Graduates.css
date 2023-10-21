@@ -1,44 +1,51 @@
-.CardsContainerBlock{
+.CardsContainerBlock {
+  padding-top: 40px;
+  margin-bottom: 2rem;
+
+  grid-gap: 60px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.cardsBlock {
+  width: 6px;
+  
+}
+
+.cards-img {
+    
+  max-width: 100%; 
+  max-height: 100%; 
+  object-fit: cover; 
+}
+
+.View-More{
+    width: 7rem;
+    height: 2.5rem;
+    margin-left: 60px;
+    
+}
+@media screen and (max-width: 1130px) {
+  .CardsContainerBlock {
     padding-top: 40px;
-    grid-gap:30px;
+    grid-gap: 30px;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-}
-.cardsBlock{
- width: 6px;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 }
 
-.cards-img{
+@media screen and (max-width: 900px) {
+  .CardsContainerBlock {
+    padding-top: 40px;
+    grid-gap: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
 }
-.grad-name{
-
-}
-.GraduatesBlock{
-
-}
-
-@media  screen and (max-width: 1130px) {
-    .CardsContainerBlock{
-        padding-top: 40px;
-        grid-gap:30px;
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-    }
-}
-
-@media  screen and (max-width: 900px) {
-    .CardsContainerBlock{
-        padding-top: 40px;
-        grid-gap:30px;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-    }
-}
-@media  screen and (max-width: 500px) {
-    .CardsContainerBlock{
-        padding-top: 40px;
-        grid-gap:30px;
-        display: grid;
-        grid-template-columns: 1fr;
-    }
+@media screen and (max-width: 500px) {
+  .CardsContainerBlock {
+    padding-top: 40px;
+    grid-gap: 30px;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
 }
