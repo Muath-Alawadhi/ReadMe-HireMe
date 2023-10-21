@@ -19,3 +19,7 @@ button.btn-secondary {
 #home:hover , #graduate:hover {
   color: #000000;
 }
+
+.profiles{
+  margin-top: 7vh;
+}

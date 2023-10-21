@@ -3,9 +3,10 @@
     grid-template-columns: 1fr 1fr 1fr;
     /* text-align: center; */
     font-size: 3rem;
-    height: 13vh;
+    height: 9vh;
     padding-top: 9px;
-    margin-top: 10rem;
+    margin-top: 1rem;
+    outline: 1px dotted red;
 
 
 }
