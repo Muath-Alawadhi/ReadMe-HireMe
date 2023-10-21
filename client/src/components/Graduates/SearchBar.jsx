@@ -16,7 +16,7 @@ function SearchBar({ onSearchResults, allGraduates }) {
     try {
       const cleanedQuery = query.toUpperCase();
       const response = await fetch(
-        `http://localhost:8000/api/search?query=${cleanedQuery}`
+        `https://readme-hireme.onrender.com/api/search?query=${cleanedQuery}`
       );
       const responseData = await response.json();
       const filteredData = responseData.graduates;
@@ -43,8 +43,7 @@ function SearchBar({ onSearchResults, allGraduates }) {
       <InputGroup className="mb-3">
         <FormControl
           placeholder="Search by name or skill..."
-          aria-label="Search"
-          aria-describedby="basic-addon2"
+          aria-label="Search"NPM          aria-describedby="basic-addon2"
           onChange={handleInputChange}
           value={searchQuery}
         />
