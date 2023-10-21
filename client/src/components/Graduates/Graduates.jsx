@@ -5,7 +5,6 @@ import "./Graduates.css";
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import SearchBar from "./SearchBar";
-import { Link } from "react-router-dom";
 import GraduatesProfile from '../GraduatesProfile/GraduatesProfile';
 import {
  
@@ -16,8 +15,7 @@ import {
 
 function GradCard({ grad, onViewMore }) {
   return (
-    <div>
-       <div>
+
        <Card style={{ width: '17rem' }} key={grad.id}>
              <Card.Img variant="top" src={grad.profile_pic_link} alt={grad.name} className="cards-img" />
              <Card.Body>
@@ -29,14 +27,11 @@ function GradCard({ grad, onViewMore }) {
               <ListGroup.Item>Skills: {grad?.skills || grad.languages} </ListGroup.Item>
             </ListGroup>
             <Card.Body>
-              {/* <Link onClick={() => onViewMore(grad)}>View More</Link> */}
              <MDBBtn onClick={() => onViewMore(grad)} outline className="ms-1  backButton">
                  View More
               </MDBBtn>
             </Card.Body>
           </Card>
-    </div>
-    </div>
   );
 }
 

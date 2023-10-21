@@ -27,7 +27,7 @@ function Home() {
           <div className="button-content">
             <h1 className="place">
               The right place to find{" "}
-              <span style={{ color: "black" }}>skilled</span>{" "}
+              <span style={{ color: "#d12f2f" }}>skilled</span>{" "}
               <a className="graduates" href="../Graduates/Graduates.jsx">
                 graduates!
               </a>

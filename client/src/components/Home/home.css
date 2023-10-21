@@ -58,7 +58,8 @@ html {
 .place {
   margin: 20px;
   padding: 10px;
-  color: #d12f2f;
+  /* color: #d12f2f; */
+  color: rgb(52, 71, 103);
   font-weight: bold;
   font-size: 30px;
   border-bottom: 2px black solid;
@@ -153,7 +154,8 @@ html {
   margin: auto;
 }
 .graduates {
-  color: #d12f2f;
+  /* color: #d12f2f; */
+  color: rgb(52, 71, 103);
 }
 
 /* .home {
@@ -174,8 +176,9 @@ html {
   white-space: nowrap;
   overflow: hidden;
   width: calc(52rem - 10rem);
-  animation: moveText 15s linear infinite;
-  animation-delay: 2s;
+  /* animation: moveText 15s linear infinite; */
+  /* animation-delay: 2s; */
+  color: rgb(52, 71, 103);
 }
 
 @keyframes moveText {

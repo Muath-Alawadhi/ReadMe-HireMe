@@ -19,7 +19,7 @@ import {
 function GraduatesProfile({ grad, onGoBack }) {
   return (
     <div>
-      <section>
+      <section className="graduatesProfileBlock">
         <MDBContainer className="py-5">
           <MDBRow>
             <MDBCol lg="4">
