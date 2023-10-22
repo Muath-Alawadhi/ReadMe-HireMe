@@ -25,7 +25,7 @@ function RouterComponent() {
 
   return (
     <Router>
-      <div className="main-container">
+      <div>
         <nav
           style={customNavbarStyle}
           className="navbar navbar-expand-lg fixed-top"
