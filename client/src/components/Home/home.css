@@ -1,4 +1,4 @@
-/*  {
+ /* *{
   outline: red 1px dotted;
 } */
 body,
@@ -17,7 +17,7 @@ html {
 
 .left-content {
   text-align: center;
-  margin-top: 22rem;
+  margin-top: 2rem;
 }
 
 .button {
@@ -34,7 +34,9 @@ html {
   align-items: center;
   color: #fff;
   font-size: 3rem;
-  margin-top: -10px;
+  margin-top: 30px;
+  margin-bottom: 100px;
+
 }
 
 .icon-html,
@@ -56,7 +58,7 @@ html {
 }
 
 .place {
-  margin: 20px;
+  margin: 10px;
   padding: 10px;
   /* color: #d12f2f; */
   color: rgb(52, 71, 103);
@@ -78,7 +80,7 @@ html {
 
 .logo {
   position: fixed;
-  bottom: 1rem;
+  bottom: 1.5rem;
   left: 10rem;
   height: 4rem;
   width: 12rem;
@@ -142,7 +144,7 @@ html {
 .footer {
   background-color: #fff;
   text-align: center;
-  margin-top: 22rem;
+  margin-top: 24rem;
   border-radius: 20px;
   display: flex;
   flex-direction: column;

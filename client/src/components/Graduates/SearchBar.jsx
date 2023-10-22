@@ -1,23 +1,42 @@
 import "./SearchBar.css";
-import React, { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { InputGroup, FormControl , Button  } from 'react-bootstrap';
-function SearchBar({ onSearchResults}) {
-  const [searchQuery, setSearchQuery] = useState('');
-  const handleSearch = async () => {
+import React, { useState, useEffect } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { InputGroup, FormControl, Button } from "react-bootstrap";
+
+function SearchBar({ onSearchResults, allGraduates }) {
+  const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
+    if (searchQuery === "") {
+      onSearchResults(allGraduates);
+    }
+  }, [searchQuery, onSearchResults, allGraduates]);
+
+  const handleSearch = async (query) => {
     try {
-     const response = await fetch(`http://localhost:8000/api/search?query=${searchQuery}`);
+      const cleanedQuery = query.toUpperCase();
+      const response = await fetch(
+        `https://readme-hireme.onrender.com/api/search?query=${cleanedQuery}`
+      );
       const responseData = await response.json();
       const filteredData = responseData.graduates;
+      console.log("test-1", filteredData);
+
       if (response.ok) {
         onSearchResults(filteredData);
       } else {
-        console.error("Failed to fetch filteredData:",filteredData);
+        console.error("Failed to fetch filteredData:", filteredData);
       }
     } catch (err) {
       console.error("An error occurred:", err);
     }
   };
+
+  const handleInputChange = (e) => {
+    const newValue = e.target.value;
+    setSearchQuery(newValue);
+  };
+
   return (
     <div className="SearchBlock" >
       <h2 className="search-title">Search a graduate</h2>
@@ -30,17 +49,13 @@ function SearchBar({ onSearchResults}) {
           }
         }
           value={searchQuery}
-          onKeyPress={(e) => {
-            if (e.key === 'Enter') {
-              handleSearch();
-            }
-          }}
         />
-          <Button variant="danger" onClick={handleSearch}>
-            <i className="fas fa-search"></i>
-          </Button>
+        <Button variant="danger" onClick={() => handleSearch(searchQuery)}>
+          <i className="fas fa-search"></i>
+        </Button>
       </InputGroup>
     </div>
   );
 }
+
 export default SearchBar;
