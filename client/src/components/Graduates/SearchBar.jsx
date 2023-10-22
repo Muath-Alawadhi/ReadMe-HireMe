@@ -38,16 +38,14 @@ function SearchBar({ onSearchResults, allGraduates }) {
   };
 
   return (
-    <div className="SearchBlock" >
-      <h2 className="search-title">Search a graduate</h2>
+    <div className="container mt-4">
+      <h1>Search a graduate</h1>
       <InputGroup className="mb-3">
         <FormControl
-          placeholder="Search a graduate by name or skill..."
+          placeholder="Search by name or skill..."
           aria-label="Search"
           aria-describedby="basic-addon2"
-          onChange={(e) => {setSearchQuery(e.target.value)
-          }
-        }
+          onChange={handleInputChange}
           value={searchQuery}
         />
         <Button variant="danger" onClick={() => handleSearch(searchQuery)}>
