@@ -1,12 +1,15 @@
 .SearchBlock{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    text-align: center;
-    font-size: 25px;
-    height: 13vh;
-    padding-top: 9px;
+    font-size: 3rem;
+    padding-top: 2rem;
+    margin-top: 6rem;
 
 
+}
+
+.search-title{
+    font-size: 1.5rem;
+    /* color: rgb(52, 71, 103); */
+    color: rgb(212, 212, 212);
 }
 
 input{

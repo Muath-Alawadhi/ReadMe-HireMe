@@ -18,13 +18,14 @@ function RouterComponent() {
     color: "rgb(52, 71, 103)",
   };
 
+  
   const iconStyle = {
     marginRight: "5px",
   };
 
   return (
     <Router>
-      <div>
+      <div className="main-container">
         <nav
           style={customNavbarStyle}
           className="navbar navbar-expand-lg fixed-top"
@@ -50,19 +51,21 @@ function RouterComponent() {
             <div className="collapse navbar-collapse" id="navbarNav">
               <ul className="navbar-nav ml-auto">
                 <li className="nav-item">
-                  <Link className="nav-link" to="/Home" style={linkStyle}>
-                    <i className="fa fa-home" style={iconStyle}></i> Home
+                  <Link className="nav-link" to="/Home" id="home">
+                    <i className="fa fa-home" style={iconStyle}></i> 
+                    Home
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/graduates" style={linkStyle}>
+                  <Link className="nav-link" to="/graduates" id="graduate" >
                     <i className="fa fa-graduation-cap" style={iconStyle}></i>{" "}
                     Graduates
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/signup" style={linkStyle}>
-                    <i className="fa fa-user-plus" style={iconStyle}></i> Signup
+                  <Link className="nav-link" to="/signup" id="Signup" >
+                    <i className="fa fa-user-plus" style={iconStyle}></i>
+                     Signup
                   </Link>
                 </li>
               </ul>

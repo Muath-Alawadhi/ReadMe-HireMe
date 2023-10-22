@@ -60,7 +60,8 @@ html {
 .place {
   margin: 10px;
   padding: 10px;
-  color: #d12f2f;
+  /* color: #d12f2f; */
+  color: rgb(52, 71, 103);
   font-weight: bold;
   font-size: 30px;
   border-bottom: 2px black solid;
@@ -155,7 +156,8 @@ html {
   margin: auto;
 }
 .graduates {
-  color: #d12f2f;
+  /* color: #d12f2f; */
+  color: rgb(52, 71, 103);
 }
 
 /* .home {
@@ -169,3 +171,4 @@ html {
 .testing {
   margin-top: 100vh;
 } */
+

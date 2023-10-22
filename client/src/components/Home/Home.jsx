@@ -27,14 +27,11 @@ function Home() {
           <div className="button-content">
             <h1 className="place">
               The right place to find{" "}
-              <span style={{ color: "black" }}>skilled</span>{" "}
+              <span style={{ color: "#d12f2f" }}>skilled</span>{" "}
               <a className="graduates" href="../Graduates/Graduates.jsx">
                 graduates!
               </a>
             </h1>
-            <p className="message">
-            
-            </p>
             <div className="icons">
               <i className="icon-html fab fa-html5"></i>
               <i className="icon-css fab fa-css3"></i>

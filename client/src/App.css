@@ -1,0 +1,30 @@
+button.btn-secondary {
+  background: linear-gradient(rgb(52, 71, 103), rgb(11, 75, 158));
+}
+
+#home , #Signup , #graduate {
+  color: rgb(52, 71, 103);
+}
+
+
+#Signup:hover {
+  padding-right: 4px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  color: #fff;
+  background: linear-gradient(rgb(52, 71, 103), rgb(11, 75, 158));
+}
+
+
+#home:hover , #graduate:hover {
+  color: #000000;
+}
+
+
+
+.main-container {
+  height: 100vh;
+  overflow-y: auto;
+}
+
+

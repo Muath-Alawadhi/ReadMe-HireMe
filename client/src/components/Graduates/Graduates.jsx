@@ -1,5 +1,10 @@
+// For installing the last version of react-router-dom
+// npm install react-router-dom@latest
+import React, { useState, useEffect } from "react";
 import React, { useState, useEffect } from "react";
 import "./Graduates.css";
+import Card from "react-bootstrap/Card";
+import ListGroup from "react-bootstrap/ListGroup";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
 import SearchBar from "./SearchBar";
