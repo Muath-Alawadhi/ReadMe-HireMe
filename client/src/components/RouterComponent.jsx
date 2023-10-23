@@ -33,9 +33,9 @@ function RouterComponent() {
           <div className="container">
             <Link className="navbar-brand" to="/Home" style={linkStyle}>
               <span style={{ color: "#d12f2f", fontWeight: "bold" }}>
-                ReadMe
+               Hire
               </span>
-              <span style={{ fontWeight: "bold" }}>-HireMe</span>
+              <span style={{ fontWeight: "bold" }}>Me</span>
             </Link>
             <button
               className="navbar-toggler"
