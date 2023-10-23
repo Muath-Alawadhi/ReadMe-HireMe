@@ -26,7 +26,7 @@ function CommitGraph({ commitData }) {
             .style("background-color", "white")
             .style("border", "1px solid black");  // Add a border
      //   sets up dimensions for the bar
-        const bars= svg.selectAll("rect")
+        svg.selectAll("rect")
             .data(commitData)
             .enter()
             .append("rect")
