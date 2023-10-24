@@ -12,7 +12,7 @@ function GitHubCallback() {
 
     if (code) {
       // Send the code to the backend to exchange it for an access token
-      fetch("https://cyf-glasgow-06-final-project-team-4.netlify.app/access-code", {
+      fetch("https://readme-hireme.onrender.com/access-code", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -36,12 +36,10 @@ function GitHubCallback() {
 
   const alertStyle = {
     fontSize: "30px",
-
   };
   const prograssStyle = {
     fontSize: "30px",
-    height:"35px",
-
+    height: "35px",
   };
 
   return (
