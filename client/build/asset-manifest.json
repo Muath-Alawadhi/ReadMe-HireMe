@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.60bf4611.css",
-    "main.js": "/static/js/main.7c4b5b66.js",
+    "main.js": "/static/js/main.5de952e9.js",
     "static/media/fontawesome-webfont.svg?v=4.7.0": "/static/media/fontawesome-webfont.c1e38fd9e0e74ba58f7a.svg",
     "static/media/background.jpg": "/static/media/background.acbdd39eb1a01c6b6e0b.jpg",
     "static/media/fontawesome-webfont.eot": "/static/media/fontawesome-webfont.8b43027f47b20503057d.eot",
@@ -11,10 +11,10 @@
     "static/media/cyf_brand.png": "/static/media/cyf_brand.a79342f2f7bf2dee2c68.png",
     "index.html": "/index.html",
     "main.60bf4611.css.map": "/static/css/main.60bf4611.css.map",
-    "main.7c4b5b66.js.map": "/static/js/main.7c4b5b66.js.map"
+    "main.5de952e9.js.map": "/static/js/main.5de952e9.js.map"
   },
   "entrypoints": [
     "static/css/main.60bf4611.css",
-    "static/js/main.7c4b5b66.js"
+    "static/js/main.5de952e9.js"
   ]
 }
