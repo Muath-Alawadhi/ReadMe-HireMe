@@ -12,7 +12,7 @@ function GitHubCallback() {
 
     if (code) {
       // Send the code to the backend to exchange it for an access token
-      fetch("http://localhost:8000/access-code", {
+      fetch("https://cyf-glasgow-06-final-project-team-4.netlify.app/access-code", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
