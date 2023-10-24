@@ -28,11 +28,7 @@ function GradCard({ grad, onViewMore }) {
         </ListGroup.Item>
       </ListGroup>
       <Card.Body>
-        <MDBBtn
-          onClick={() => onViewMore(grad)}
-          outline
-          className="View-More"
-        >
+        <MDBBtn onClick={() => onViewMore(grad)} outline className="View-More">
           View More
         </MDBBtn>
       </Card.Body>
@@ -54,7 +50,9 @@ function Graduates() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/api/fetchGradData`);
+        const response = await fetch(
+          `https://readme-hireme.onrender.com/api/fetchGradData`
+        );
         const responseData = await response.json();
         const data = responseData.graduates; // Access the 'graduates' key as the response from api is--> res.json({ graduates: grads });
         console.log("Data from API:", data);
