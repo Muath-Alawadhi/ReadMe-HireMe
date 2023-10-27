@@ -2,10 +2,11 @@ button.btn-secondary {
   background: linear-gradient(rgb(52, 71, 103), rgb(11, 75, 158));
 }
 
-#home , #Signup , #graduate {
+#home,
+#Signup,
+#graduate {
   color: rgb(52, 71, 103);
 }
-
 
 #Signup:hover {
   padding-right: 4px;
@@ -15,14 +16,29 @@ button.btn-secondary {
   background: linear-gradient(rgb(52, 71, 103), rgb(11, 75, 158));
 }
 
-
-#home:hover , #graduate:hover {
+#home:hover,
+#graduate:hover {
   color: #000000;
 }
-
-
 
 .main-container {
   height: 100vh;
   overflow-y: auto;
 }
+
+/* Default styles for larger screens */
+.customNavbarStyle {
+  background-color: rgba(255, 255, 255, 0.8);
+  margin: 20px 7rem 0px 7rem;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.linkStyle {
+  color: rgb(52, 71, 103);
+}
+
+.iconStyle {
+  margin-right: 5px;
+}
+
