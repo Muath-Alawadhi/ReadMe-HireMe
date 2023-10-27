@@ -1,16 +1,27 @@
 import "./SearchBar.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { InputGroup, FormControl, Button } from "react-bootstrap";
-function SearchBar({ onSearchResults }) {
+
+function SearchBar({ onSearchResults, allGraduates }) {
   const [searchQuery, setSearchQuery] = useState("");
-  const handleSearch = async () => {
+
+  useEffect(() => {
+    if (searchQuery === "") {
+      onSearchResults(allGraduates);
+    }
+  }, [searchQuery, onSearchResults, allGraduates]);
+
+  const handleSearch = async (query) => {
     try {
+      const cleanedQuery = query.toUpperCase();
       const response = await fetch(
-        `https://readme-hireme.onrender.com/api/search?query=${searchQuery}`
+        `https://readme-hireme.onrender.com/api/search?query=${cleanedQuery}`
       );
       const responseData = await response.json();
       const filteredData = responseData.graduates;
+      console.log("test-1", filteredData);
+
       if (response.ok) {
         onSearchResults(filteredData);
       } else {
@@ -20,6 +31,7 @@ function SearchBar({ onSearchResults }) {
       console.error("An error occurred:", err);
     }
   };
+
   return (
     <div className="SearchBlock">
       <h2 className="search-title">Search a graduate</h2>
@@ -32,17 +44,13 @@ function SearchBar({ onSearchResults }) {
             setSearchQuery(e.target.value);
           }}
           value={searchQuery}
-          onKeyPress={(e) => {
-            if (e.key === "Enter") {
-              handleSearch();
-            }
-          }}
         />
-        <Button variant="danger" onClick={handleSearch}>
+        <Button variant="danger" onClick={() => handleSearch(searchQuery)}>
           <i className="fas fa-search"></i>
         </Button>
       </InputGroup>
     </div>
   );
 }
+
 export default SearchBar;
