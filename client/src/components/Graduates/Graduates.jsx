@@ -24,7 +24,7 @@ function GradCard({ grad, onViewMore }) {
         <ListGroup.Item>Username: {grad.github_username}</ListGroup.Item>
         <ListGroup.Item>Repo: {grad.repos_number}</ListGroup.Item>
         <ListGroup.Item>
-          Skills: {grad?.skills || grad.languages}
+          Skills: {grad?.skills?.join(" ,") || grad?.languages?.join(" ,")}
         </ListGroup.Item>
       </ListGroup>
       <Card.Body>
