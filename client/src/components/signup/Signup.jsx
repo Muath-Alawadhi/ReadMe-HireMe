@@ -14,7 +14,8 @@ const Signup = () => {
       <div className="text-center">
         <div className="container2"></div>
         <div
-          className=" d-flex align-items-center justify-content-center " id="card"
+          className=" d-flex align-items-center justify-content-center "
+          id="card"
         >
           <div
             className="d-flex flex-column align-items-center"
