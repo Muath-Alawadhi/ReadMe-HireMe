@@ -1,13 +1,20 @@
 {
   "files": {
-    "main.css": "/static/css/main.e6c13ad2.css",
-    "main.js": "/static/js/main.713c21de.js",
+    "main.css": "/static/css/main.ca03bde6.css",
+    "main.js": "/static/js/main.33862063.js",
+    "static/media/fontawesome-webfont.svg?v=4.7.0": "/static/media/fontawesome-webfont.c1e38fd9e0e74ba58f7a.svg",
+    "static/media/background.jpg": "/static/media/background.acbdd39eb1a01c6b6e0b.jpg",
+    "static/media/fontawesome-webfont.eot": "/static/media/fontawesome-webfont.8b43027f47b20503057d.eot",
+    "static/media/fontawesome-webfont.ttf?v=4.7.0": "/static/media/fontawesome-webfont.1e59d2330b4c6deb84b3.ttf",
+    "static/media/fontawesome-webfont.woff?v=4.7.0": "/static/media/fontawesome-webfont.f691f37e57f04c152e23.woff",
+    "static/media/fontawesome-webfont.woff2?v=4.7.0": "/static/media/fontawesome-webfont.20fd1704ea223900efa9.woff2",
+    "static/media/cyf_brand.png": "/static/media/cyf_brand.a79342f2f7bf2dee2c68.png",
     "index.html": "/index.html",
-    "main.e6c13ad2.css.map": "/static/css/main.e6c13ad2.css.map",
-    "main.713c21de.js.map": "/static/js/main.713c21de.js.map"
+    "main.ca03bde6.css.map": "/static/css/main.ca03bde6.css.map",
+    "main.33862063.js.map": "/static/js/main.33862063.js.map"
   },
   "entrypoints": [
-    "static/css/main.e6c13ad2.css",
-    "static/js/main.713c21de.js"
+    "static/css/main.ca03bde6.css",
+    "static/js/main.33862063.js"
   ]
 }
