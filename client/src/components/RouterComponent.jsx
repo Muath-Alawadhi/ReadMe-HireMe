@@ -38,7 +38,7 @@ function RouterComponent() {
                   fontSize: "1.5rem",
                 }}
               >
-                Hire.....
+                Hire
               </span>
               <span style={{ fontWeight: "bold", fontSize: "1.5rem" }}>Me</span>
             </Link>
