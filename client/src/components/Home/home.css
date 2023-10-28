@@ -45,7 +45,7 @@ html {
 .icon-react,
 .icon-node,
 .icon-psql {
-  margin: 0px 30px 30px 40px;
+  margin: 5px 30px 30px 40px;
 }
 .icons {
   display: flex;
@@ -144,12 +144,17 @@ html {
 .footer {
   background-color: #fff;
   text-align: center;
-  margin-top: 24rem;
-  border-radius: 20px;
+  margin-top: 22rem;
+  border-radius: 20px 20px 0px 0px;
   display: flex;
   flex-direction: column;
   align-items: center;
   box-shadow: inset 0px 105px 128px -88px rgba(0, 0, 0, 0.3);
+}
+.pasl{
+  width: 57px;
+  margin-bottom: 16px;
+  margin-right: 100px;
 }
 
 .button-content {
