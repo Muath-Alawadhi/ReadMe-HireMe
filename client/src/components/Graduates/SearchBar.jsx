@@ -16,7 +16,7 @@ function SearchBar({ onSearchResults, allGraduates }) {
     try {
       const cleanedQuery = query.toUpperCase();
       const response = await fetch(
-        `https://readme-hireme.onrender.com/api/search?query=${cleanedQuery}`
+        `http://localhost:9000/api/search?query=${cleanedQuery}`
       );
       const responseData = await response.json();
       const filteredData = responseData.graduates;

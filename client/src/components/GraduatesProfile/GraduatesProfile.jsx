@@ -19,7 +19,7 @@ function GraduatesProfile({ grad, onGoBack }) {
   const [commitData, setCommitData] = useState(null);
 
   useEffect(() => {
-    fetch("https://readme-hireme.onrender.com/api/fetchGradData")
+    fetch("http://localhost:9000/api/fetchGradData")
       .then((res) => res.json())
       .then((data) => {
         const specificGrad = data.graduates.find(
@@ -244,8 +244,8 @@ function GraduatesProfile({ grad, onGoBack }) {
                         ReadMe :{" "}
                         {grad.readme?.readme_content || grad.readme_content}
                       </MDBCardText>
-                    </MDBListGroupItem >
-                    {commitData && <CommitGraph commitData={commitData}  />}
+                    </MDBListGroupItem>
+                    {commitData && <CommitGraph commitData={commitData} />}
                   </MDBListGroup>
                 </MDBCardBody>
               </MDBCard>
