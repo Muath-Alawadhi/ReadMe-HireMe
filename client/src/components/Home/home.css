@@ -1,4 +1,4 @@
- /* *{
+/* *{
   outline: red 1px dotted;
 } */
 body,
@@ -35,8 +35,7 @@ html {
   color: #fff;
   font-size: 3rem;
   margin-top: 30px;
-  margin-bottom: 100px;
-
+  margin-bottom: 50px;
 }
 
 .icon-html,
@@ -45,7 +44,7 @@ html {
 .icon-react,
 .icon-node,
 .icon-psql {
-  margin: 5px 30px 30px 40px;
+  margin: 5px 30px 0px 40px;
 }
 .icons {
   display: flex;
@@ -60,15 +59,10 @@ html {
 .place {
   margin: 10px;
   padding: 10px;
-  /* color: #d12f2f; */
   color: rgb(52, 71, 103);
   font-weight: bold;
   font-size: 30px;
   border-bottom: 2px black solid;
-
-  /* border: 1px solid rgba(255, 255, 255, 0.3); */
-  /* border-radius: 10px; */
-  /* backdrop-filter: blur(2px) brightness(1.2); Adjust the blur and brightness values as needed */
 }
 
 .icon-text {
@@ -79,9 +73,9 @@ html {
 }
 
 .logo {
-  position: fixed;
-  bottom: 1.5rem;
-  left: 10rem;
+  position: absolute;
+  bottom: 1rem;
+  left: 4rem;
   height: 4rem;
   width: 12rem;
   z-index: 999;
@@ -144,14 +138,15 @@ html {
 .footer {
   background-color: #fff;
   text-align: center;
-  margin-top: 22rem;
+  margin-top: 25.8rem;
   border-radius: 20px 20px 0px 0px;
   display: flex;
   flex-direction: column;
   align-items: center;
   box-shadow: inset 0px 105px 128px -88px rgba(0, 0, 0, 0.3);
+  position: relative;
 }
-.pasl{
+.pasl {
   width: 57px;
   margin-bottom: 16px;
   margin-right: 100px;
@@ -164,16 +159,3 @@ html {
   /* color: #d12f2f; */
   color: rgb(52, 71, 103);
 }
-
-/* .home {
-  background: url("./11118324.jpg") no-repeat center center fixed;
-  background-size: cover;
-  /* background: url("./Hero\ 8.png") center/cover no-repeat; */
-/* backdrop-filter: blur(2.5px);  
-
-}
-
-.testing {
-  margin-top: 100vh;
-} */
-

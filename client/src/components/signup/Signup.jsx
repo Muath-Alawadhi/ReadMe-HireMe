@@ -10,7 +10,7 @@ const handleLoginClick = () => {
 
 const Signup = () => {
   return (
-    <div className="container d-flex justify-content-center align-items-center vh-100">
+    <div className="container d-flex justify-content-center align-items-center " id="container1">
       <div className="text-center">
         <div className="container2"></div>
         <div

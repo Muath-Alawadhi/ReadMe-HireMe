@@ -19,7 +19,6 @@ function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <img src={logo} alt="CYF" className="logo" />
         </a>
       </div>
       <footer className="footer">
@@ -41,7 +40,6 @@ function Home() {
               <img
                 src="https://cdn.icon-icons.com/icons2/2699/PNG/512/postgresql_src_logo_icon_170834.png"
                 alt=""
-                
                 className="pasl"
               />
             </div>
