@@ -14,12 +14,6 @@ function Home() {
     <>
       <div className="home-container">
         <div className="left-content"></div>
-        <a
-          href="https://www.codeyourfuture.io/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-        </a>
       </div>
       <footer className="footer">
         <div className="container">
@@ -44,7 +38,13 @@ function Home() {
               />
             </div>
             <span className="border-line"></span>
-            <img src={logo} alt="CYF" className="logo" />
+            <a
+              href="https://codeyourfuture.io/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img src={logo} alt="CYF" className="logo" />
+            </a>
           </div>
         </div>
       </footer>
