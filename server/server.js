@@ -1,10 +1,3 @@
-//To Do:
-//we still need skills from repos path
-//sometimes when trying to test code , we are having issues with DB connection
-//so, we just need comment out all DB code in order to test other parts, then uncomment them
-//or we can wait for some time till the DB connection is back to normal
-//
-
 const axios = require("axios"); //library to fetch from Github api
 const express = require("express");
 const app = express();
@@ -13,7 +6,7 @@ const cors = require("cors"); //Middleware: to handle CORS-related headers and b
 const bodyParser = require("body-parser"); //Middleware: To handle incoming HTTP requests
 require("dotenv").config();
 
-const port = parseInt(process.env.PORT ?? "8000", 10);
+const port = parseInt(process.env.PORT ?? "9000", 10);
 app.use(bodyParser.json());
 app.use(cors());
 
@@ -57,7 +50,7 @@ app.get("/", (req, res) => {
 });
 
 //----------------- fetch Grad data ------------------
-async function fetchAndInsertData(res) {
+async function fetchAndInsertData() {
   const client = await pool.connect();
   try {
     //--(1)--giving username fetch --> name , repos number , profile_pic_url ---
@@ -78,6 +71,7 @@ async function fetchAndInsertData(res) {
     const following = userData.following || 0;
 
     // ---------------------repo.languages--------------------------
+
     const reposResponse = await axios.get(userData.repos_url, {
       // Using the repos_url to fetch repositories first ^ ^
       headers: {
@@ -138,13 +132,13 @@ async function fetchAndInsertData(res) {
 
         // Remove CV and LinkedIn links from the readme content
         readmeContent = readmeContent
-          .replace(cvRegex, "")
-          .replace(linkedinRegex, "")
           .replace(
             /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi,
-            ""
-          ) // Remove any remaining URLs
-          .replace(/[[\]{}()]/g, ""); // Remove square brackets, curly braces, and parentheses
+            "" // Remove any URLs
+          )
+          .replace(/[^\x00-\x7F]/g, "") // Remove non-ASCII characters
+          .replace(/[^a-zA-Z0-9\s]/g, "") // Remove special characters
+          .trim(); // Trim leading and trailing white spaces
       }
     } catch (error) {
       console.error(error);
@@ -169,36 +163,48 @@ async function fetchAndInsertData(res) {
 
     const repoData = getRepos.data;
 
-    // loop through each repo to fetch the  commits
+    // loop through each repo to fetch the commits
     for (const repo of repoData) {
-      const getCommits = await axios.get(
-        `https://api.github.com/repos/${githubUserName}/${repo.name}/commits`,
-        {
-          headers: {
-            Authorization: `token ${githubAccessToken}`,
-          },
+      try {
+        const getCommits = await axios.get(
+          `https://api.github.com/repos/${githubUserName}/${repo.name}/commits`,
+          {
+            headers: {
+              Authorization: `token ${githubAccessToken}`,
+            },
+          }
+        );
+
+        const commits = getCommits.data;
+
+        // Check if there are commits in this repository
+        if (commits && Array.isArray(commits)) {
+          // loop through each commit to count by date
+          for (const commit of commits) {
+            const date = new Date(commit.commit.committer.date)
+              .toISOString()
+              .split("T")[0];
+            if (!commitCountsByDate[date]) {
+              commitCountsByDate[date] = 0;
+            }
+
+            commitCountsByDate[date]++;
+          }
+        } else {
+          console.log(`No commits found in repository: ${repo.name}`);
         }
-      );
-
-      const commits = getCommits.data;
-
-      // loop through each commit to count by date
-      for (const commit of commits) {
-        const date = new Date(commit.commit.committer.date)
-          .toISOString()
-          .split("T")[0];
-        if (!commitCountsByDate[date]) {
-          commitCountsByDate[date] = 0;
-        }
-
-        commitCountsByDate[date]++;
+      } catch (error) {
+        console.error(
+          `Error fetching commits for repository ${repo.name}:`,
+          error
+        );
       }
     }
 
     // log the commit counts by date to see what the terminal is printing
-    console.log("Commit Counts by Date:", commitCountsByDate);
+    // console.log("Commit Counts by Date:", commitCountsByDate);
 
-    //------------------- end of readme file  ---------------------
+    //------------------- end of fetching for graph  ---------------------
 
     // -----------------Start of Database---------------------------
 
@@ -273,23 +279,6 @@ app.get("/fetchGradData", async (req, res) => {
 //-------------------------------------------------------------------------------------------
 
 //------------------ Endpoint for FrontEnd --------------------------------------------------------
-/* having all the related data made into single object for each graduate makes 
-it easier to display the info on the front-end. it will make  an array of graduate object from the API, and each object ( uses the id )will contain 
-all the information you need to display: this is what it will look like 
-{
-  id: 1,
-  github_username: "nfarah22",
-  name: "Name Not Available",
-  profile_pic_link: "https://avatars.githubusercontent.com/u/61600465?v=4",
-  skills: ["JavaScript", "HTML"],
-  readme: {
-    user_id: 1,
-    cv_link: "CV link not found",
-    linkedin: "LinkedIn link not found",
-    readme_content: "# nfarah2"
-  }
-}
-*/
 app.get("/api/fetchGradData", async (req, res) => {
   try {
     const client = await pool.connect();
@@ -459,9 +448,6 @@ app.get("/api/search", async (req, res) => {
   }
 });
 //---------------------------------End of search Functionality-------------------------------
-
-
-
 //---------------- listen --------------------
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

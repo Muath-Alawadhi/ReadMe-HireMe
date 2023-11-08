@@ -18,7 +18,6 @@ function RouterComponent() {
     color: "rgb(52, 71, 103)",
   };
 
-  
   const iconStyle = {
     marginRight: "5px",
   };
@@ -32,10 +31,16 @@ function RouterComponent() {
         >
           <div className="container">
             <Link className="navbar-brand" to="/Home" style={linkStyle}>
-              <span style={{ color: "#d12f2f", fontWeight: "bold" }}>
-               Hire
+              <span
+                style={{
+                  color: "#d12f2f",
+                  fontWeight: "bold",
+                  fontSize: "1.5rem",
+                }}
+              >
+                Hire
               </span>
-              <span style={{ fontWeight: "bold" }}>Me</span>
+              <span style={{ fontWeight: "bold", fontSize: "1.5rem" }}>Me</span>
             </Link>
             <button
               className="navbar-toggler"
@@ -52,20 +57,20 @@ function RouterComponent() {
               <ul className="navbar-nav ml-auto">
                 <li className="nav-item">
                   <Link className="nav-link" to="/Home" id="home">
-                    <i className="fa fa-home" style={iconStyle}></i> 
+                    <i className="fa fa-home" style={iconStyle}></i>
                     Home
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/graduates" id="graduate" >
+                  <Link className="nav-link" to="/graduates" id="graduate">
                     <i className="fa fa-graduation-cap" style={iconStyle}></i>{" "}
                     Graduates
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/signup" id="Signup" >
+                  <Link className="nav-link" to="/signup" id="Signup">
                     <i className="fa fa-user-plus" style={iconStyle}></i>
-                     Signup
+                    Signup
                   </Link>
                 </li>
               </ul>

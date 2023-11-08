@@ -1,5 +1,3 @@
-// For installing the last version of react-router-dom
-// npm install react-router-dom@latest
 import React, { useState, useEffect } from "react";
 import "./Graduates.css";
 import Card from "react-bootstrap/Card";
@@ -24,7 +22,7 @@ function GradCard({ grad, onViewMore }) {
         <ListGroup.Item>Username: {grad.github_username}</ListGroup.Item>
         <ListGroup.Item>Repo: {grad.repos_number}</ListGroup.Item>
         <ListGroup.Item>
-          Skills: {grad?.skills || grad.languages}
+          Skills: {grad?.skills?.join(" ,") || grad?.languages?.join(" ,")}
         </ListGroup.Item>
       </ListGroup>
       <Card.Body>
@@ -39,9 +37,9 @@ function GradCard({ grad, onViewMore }) {
 function Graduates() {
   const [graduates, setGraduates] = useState([]);
   const [filteredGraduates, setFilteredGraduates] = useState(null);
-
   const [selectedGrad, setSelectedGrad] = useState(null);
-  const [isLoading, setIsLoading] = useState(true); // Add a loading state
+  const [isLoading, setIsLoading] = useState(true);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const handleSearchResults = (filteredData) => {
     setFilteredGraduates(filteredData);
@@ -54,8 +52,7 @@ function Graduates() {
           `https://readme-hireme.onrender.com/api/fetchGradData`
         );
         const responseData = await response.json();
-        const data = responseData.graduates; // Access the 'graduates' key as the response from api is--> res.json({ graduates: grads });
-        console.log("Data from API:", data);
+        const data = responseData.graduates;
         setGraduates(data);
         setIsLoading(false);
       } catch (error) {
@@ -66,8 +63,19 @@ function Graduates() {
   }, []);
 
   useEffect(() => {
-    console.log(graduates);
-  }, [graduates]);
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const handleScroll = () => {
+    if (window.scrollY > 100) {
+      setIsScrolled(true);
+    } else {
+      setIsScrolled(false);
+    }
+  };
 
   const handleViewMore = (grad) => {
     setSelectedGrad(grad);
@@ -79,6 +87,14 @@ function Graduates() {
 
   return (
     <div>
+      <nav
+        className={`navbar navbar-expand-lg fixed-top ${
+          isScrolled ? "customNavbarStyle" : ""
+        }`}
+      >
+        <div className="container">{/* Your navigation bar content */}</div>
+      </nav>
+
       {selectedGrad ? (
         <GraduatesProfile grad={selectedGrad} onGoBack={handleGoBack} />
       ) : (

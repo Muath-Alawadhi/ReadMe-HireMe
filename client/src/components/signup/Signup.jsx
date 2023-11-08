@@ -10,11 +10,12 @@ const handleLoginClick = () => {
 
 const Signup = () => {
   return (
-    <div className="container d-flex justify-content-center align-items-center vh-100">
+    <div className="container d-flex justify-content-center align-items-center " id="container1">
       <div className="text-center">
         <div className="container2"></div>
         <div
-          className=" d-flex align-items-center justify-content-center " id="card"
+          className=" d-flex align-items-center justify-content-center "
+          id="card"
         >
           <div
             className="d-flex flex-column align-items-center"

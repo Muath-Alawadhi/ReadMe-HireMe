@@ -19,7 +19,6 @@ function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <img src={logo} alt="CYF" className="logo" />
         </a>
       </div>
       <footer className="footer">
@@ -38,9 +37,14 @@ function Home() {
               <i className="icon-js fab fa-js"></i>
               <i className="icon-react fab fa-react"></i>
               <i className="icon-node fab fa-node-js"></i>
-              <i className="icon-psql fab fa-postgresql"></i>
+              <img
+                src="https://cdn.icon-icons.com/icons2/2699/PNG/512/postgresql_src_logo_icon_170834.png"
+                alt=""
+                className="pasl"
+              />
             </div>
             <span className="border-line"></span>
+            <img src={logo} alt="CYF" className="logo" />
           </div>
         </div>
       </footer>
