@@ -12,7 +12,7 @@ function GitHubCallback() {
 
     if (code) {
       // Send the code to the backend to exchange it for an access token
-      fetch("http://localhost:9000/access-code", {
+      fetch("https://readme-hireme.onrender.com/access-code", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

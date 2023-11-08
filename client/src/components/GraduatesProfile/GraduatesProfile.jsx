@@ -19,7 +19,7 @@ function GraduatesProfile({ grad, onGoBack }) {
   const [commitData, setCommitData] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:9000/api/fetchGradData")
+    fetch("https://readme-hireme.onrender.com/api/fetchGradData")
       .then((res) => res.json())
       .then((data) => {
         const specificGrad = data.graduates.find(
