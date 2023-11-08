@@ -10,6 +10,8 @@ body {
   background-attachment: fixed;
 background: linear-gradient(0deg, rgba(236,234,234,0.9948354341736695) 0%, rgba(162,160,160,1) 0%, rgba(97,119,141,1) 18%, rgba(29,75,120,0.9920343137254902) 37%);
   background-size: cover;
+  /* background: linear-gradient(0deg, rgba(236,234,234,0.9948354341736695) 0%, rgb(113, 112, 112) 0%, rgb(79, 95, 112) 18%, rgba(37, 55, 72, 0.992) 37%); */
+
   background-size: contain;
 }
 
